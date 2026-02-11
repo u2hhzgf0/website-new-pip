@@ -19,6 +19,12 @@ interface Ticket {
   updatedAt: string
 }
 
+interface TicketsData {
+  results?: Ticket[]
+  totalPages?: number
+  totalResults?: number
+}
+
 export default function MyTickets() {
   const [filter, setFilter] = useState<'all' | 'open' | 'in_progress' | 'resolved' | 'closed'>('all')
   const [searchQuery, setSearchQuery] = useState('')
@@ -27,10 +33,10 @@ export default function MyTickets() {
   const { data, isLoading, error } = useGetMyTicketsQuery()
 
   // Handle both array and paginated response
-  const ticketsData = data?.data?.attributes
-  const tickets = Array.isArray(ticketsData)
+  const ticketsData = data?.data?.attributes as Ticket[] | TicketsData | undefined
+  const tickets: Ticket[] = Array.isArray(ticketsData)
     ? ticketsData
-    : (ticketsData?.results || [])
+    : ((ticketsData as TicketsData)?.results || [])
 
   const getStatusIcon = (status: Ticket['status']) => {
     switch (status) {

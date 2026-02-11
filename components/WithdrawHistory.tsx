@@ -6,6 +6,12 @@ import { useGetMyTransactionsQuery } from '@/store/api/transactionApi';
 import type { Transaction } from '@/store/api/transactionApi';
 import Link from 'next/link';
 
+interface TransactionsData {
+  results?: Transaction[]
+  totalPages?: number
+  totalResults?: number
+}
+
 const WithdrawHistory = () => {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -21,7 +27,7 @@ const WithdrawHistory = () => {
     search: search || undefined,
   });
 
-  const transactionsData = transactionsResponse?.data?.attributes || {};
+  const transactionsData = (transactionsResponse?.data?.attributes || {}) as TransactionsData;
   const withdrawals: Transaction[] = transactionsData.results || [];
   const totalPages = transactionsData.totalPages || 1;
   const totalResults = transactionsData.totalResults || 0;

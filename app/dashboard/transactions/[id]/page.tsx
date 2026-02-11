@@ -114,17 +114,17 @@ export default function TransactionDetail() {
 
       {/* Status Banner */}
       <div className={`rounded-xl p-6 border ${
-        transaction.status === 'approved' || transaction.status === 'completed'
+        transaction.status === 'completed'
           ? 'bg-emerald-500/5 border-emerald-500/30'
-          : transaction.status === 'rejected' || transaction.status === 'failed'
+          : transaction.status === 'rejected'
           ? 'bg-rose-500/5 border-rose-500/30'
           : 'bg-amber-500/5 border-amber-500/30'
       }`}>
         <div className="flex items-start gap-4">
           <div className={`p-3 rounded-lg ${
-            transaction.status === 'approved' || transaction.status === 'completed'
+            transaction.status === 'completed'
               ? 'bg-emerald-500/10'
-              : transaction.status === 'rejected' || transaction.status === 'failed'
+              : transaction.status === 'rejected'
               ? 'bg-rose-500/10'
               : 'bg-amber-500/10'
           }`}>

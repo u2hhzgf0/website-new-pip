@@ -5,6 +5,12 @@ import Link from 'next/link'
 import { DollarSign, TrendingUp, Calendar, Download, Eye, Loader2, AlertCircle } from 'lucide-react'
 import { useGetMyTransactionsQuery } from '@/store/api/transactionApi'
 
+interface TransactionsData {
+  results?: any[]
+  totalPages?: number
+  totalResults?: number
+}
+
 export default function ProfitHistory() {
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'pending'>('all')
   const [page, setPage] = useState(1)
@@ -18,7 +24,7 @@ export default function ProfitHistory() {
     status: statusFilter === 'all' ? undefined : statusFilter,
   })
 
-  const transactionsData = transactionsResponse?.data?.attributes || {}
+  const transactionsData = (transactionsResponse?.data?.attributes || {}) as TransactionsData
   const profitHistory = transactionsData.results || []
   const totalPages = transactionsData.totalPages || 1
   const totalResults = transactionsData.totalResults || 0

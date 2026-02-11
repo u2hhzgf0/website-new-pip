@@ -91,8 +91,6 @@ export default function SettingsNew() {
       // Update user in Redux with fresh data from API
       if (updatedProfile?.data?.attributes?.user) {
         dispatch(setUser(updatedProfile.data.attributes.user));
-      } else if (result?.data?.attributes?.user) {
-        dispatch(setUser(result.data.attributes.user));
       }
 
       setToast({ message: 'Profile image updated successfully!', type: 'success' });

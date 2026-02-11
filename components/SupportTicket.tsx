@@ -33,14 +33,14 @@ const SupportTicket = () => {
     try {
       const result = await createTicket({
         subject,
-        category,
+        category: category as 'investment' | 'deposit' | 'other' | 'account' | 'technical' | 'withdrawal',
         priority: priority as 'low' | 'normal' | 'high' | 'urgent',
         message,
       }).unwrap();
 
       const ticket = result.data.attributes;
       setCreatedTicketId(ticket.id);
-      setSuccessMsg(`Ticket #${ticket.ticketId || ticket.id} created successfully! $${TICKET_COST.toFixed(2)} has been deducted from your balance.`);
+      setSuccessMsg(`Ticket #${ticket.id} created successfully! $${TICKET_COST.toFixed(2)} has been deducted from your balance.`);
 
       // Reset form
       setSubject('');

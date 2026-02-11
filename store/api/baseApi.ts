@@ -85,6 +85,7 @@ export const baseApi = createApi({
     'Tickets',
     'Notifications',
     'Profits',
+    'PaymentGateways',
   ],
   endpoints: () => ({}),
 });

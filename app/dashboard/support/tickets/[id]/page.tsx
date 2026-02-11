@@ -229,6 +229,10 @@ export default function TicketDetail() {
     )
   }
 
+  if (!ticket) {
+    return null
+  }
+
   return (
     <div className="space-y-6">
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}

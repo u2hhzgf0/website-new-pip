@@ -6,6 +6,12 @@ import { useGetMyTransactionsQuery } from '@/store/api/transactionApi';
 import type { Transaction } from '@/store/api/transactionApi';
 import Link from 'next/link';
 
+interface TransactionsData {
+  results?: Transaction[]
+  totalPages?: number
+  totalResults?: number
+}
+
 const Transactions = () => {
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
@@ -20,7 +26,7 @@ const Transactions = () => {
     search: search || undefined,
   });
 
-  const transactionsData = transactionsResponse?.data?.attributes || {};
+  const transactionsData = (transactionsResponse?.data?.attributes || {}) as TransactionsData;
   const transactions: Transaction[] = transactionsData.results || [];
   const totalPages = transactionsData.totalPages || 1;
   const totalResults = transactionsData.totalResults || 0;

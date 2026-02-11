@@ -207,16 +207,16 @@ const WithdrawRequest = () => {
                 )}
                 {selectedGatewayData && parseFloat(amount) > 0 && (
                   <div className="text-xs text-slate-400 mt-2 space-y-1">
-                    {selectedGatewayData.withdrawFee > 0 && (
+                    {(selectedGatewayData.withdrawFee ?? 0) > 0 && (
                       <p>
                         Fee: ${selectedGatewayData.withdrawFeeType === 'percentage'
-                          ? ((parseFloat(amount) * selectedGatewayData.withdrawFee) / 100).toFixed(2)
-                          : selectedGatewayData.withdrawFee.toFixed(2)}
+                          ? ((parseFloat(amount) * (selectedGatewayData.withdrawFee ?? 0)) / 100).toFixed(2)
+                          : (selectedGatewayData.withdrawFee ?? 0).toFixed(2)}
                       </p>
                     )}
                     <p className="text-white font-medium">
                       You will receive: ${(parseFloat(amount) - (selectedGatewayData.withdrawFeeType === 'percentage'
-                        ? (parseFloat(amount) * selectedGatewayData.withdrawFee) / 100
+                        ? (parseFloat(amount) * (selectedGatewayData.withdrawFee ?? 0)) / 100
                         : selectedGatewayData.withdrawFee || 0)).toFixed(2)}
                     </p>
                   </div>

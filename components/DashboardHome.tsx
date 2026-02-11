@@ -6,6 +6,12 @@ import Link from 'next/link';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useGetMyTransactionsQuery } from '@/store/api/transactionApi';
 
+interface TransactionsData {
+  results?: any[]
+  totalPages?: number
+  totalResults?: number
+}
+
 // Simple Sparkline Component
 const Sparkline = ({ data, color = "white" }: { data: number[], color?: string }) => {
   const width = 100;
@@ -51,11 +57,10 @@ const DashboardHome = () => {
   const { data: transactionsData, isLoading: transactionsLoading, error: transactionsError } = useGetMyTransactionsQuery({
     page: 1,
     limit: 5,
-    sortBy: 'createdAt:desc',
   });
 
   const wallet = walletData?.data?.attributes;
-  const transactionsResponse = transactionsData?.data?.attributes || {};
+  const transactionsResponse = (transactionsData?.data?.attributes || {}) as TransactionsData;
   const transactions = transactionsResponse.results || [];
 
   // Calculate today's profit
@@ -183,9 +188,9 @@ const DashboardHome = () => {
             <ArrowDownLeft size={64} className="text-emerald-500" />
           </div>
           <p className="text-slate-400 font-medium mb-1 text-sm">Total Deposit</p>
-          <h3 className="text-2xl font-bold mb-3 text-emerald-400">${wallet?.totalDeposit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</h3>
+          <h3 className="text-2xl font-bold mb-3 text-emerald-400">${(wallet?.totalDeposited ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <div className="h-1 w-full bg-slate-700 rounded-full mt-2">
-            <div className="h-1 bg-emerald-500 rounded-full" style={{ width: wallet ? `${Math.min((wallet.totalDeposit / (wallet.totalDeposit + wallet.totalWithdraw + 1)) * 100, 100)}%` : '0%' }}></div>
+            <div className="h-1 bg-emerald-500 rounded-full" style={{ width: wallet ? `${Math.min((wallet.totalDeposited / (wallet.totalDeposited + wallet.totalWithdrawn + 1)) * 100, 100)}%` : '0%' }}></div>
           </div>
         </div>
 
@@ -195,9 +200,9 @@ const DashboardHome = () => {
              <ArrowUpRight size={64} className="text-rose-500" />
           </div>
           <p className="text-slate-400 font-medium mb-1 text-sm">Total Withdraw</p>
-          <h3 className="text-2xl font-bold mb-3 text-rose-400">${wallet?.totalWithdraw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</h3>
+          <h3 className="text-2xl font-bold mb-3 text-rose-400">${(wallet?.totalWithdrawn ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <div className="h-1 w-full bg-slate-700 rounded-full mt-2">
-            <div className="h-1 bg-rose-500 rounded-full" style={{ width: wallet ? `${Math.min((wallet.totalWithdraw / (wallet.totalDeposit + wallet.totalWithdraw + 1)) * 100, 100)}%` : '0%' }}></div>
+            <div className="h-1 bg-rose-500 rounded-full" style={{ width: wallet ? `${Math.min((wallet.totalWithdrawn / (wallet.totalDeposited + wallet.totalWithdrawn + 1)) * 100, 100)}%` : '0%' }}></div>
           </div>
         </div>
 
