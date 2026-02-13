@@ -21,11 +21,11 @@ const About = () => {
             </h2>
 
             <p className="text-slate-400 text-lg mb-6 leading-relaxed">
-              Founded in 2023, Pipguardian Premier was built on a simple premise: institutional-grade investment strategies shouldn&apos;t be reserved for the ultra-pipguardian. We combine advanced AI algorithms with seasoned financial expertise to deliver consistent, superior returns.
+              To make forex investment simple, secure, and accessible for everyone. We aim to empower individuals to transform their financial position through disciplined trading and structured growth opportunities.
             </p>
 
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-              Our platform processes millions of data points daily to identify high-yield opportunities across global markets, ensuring your capital is always working its hardest for you.
+              Beyond investing, we create pathways for career advancement, performance-based rewards, and global exposure. At PipGuardian, we are building a trusted platform where ambition meets opportunity and growth becomes a long-term journey.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

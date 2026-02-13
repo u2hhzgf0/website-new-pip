@@ -1,5 +1,6 @@
 import React from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { FaTelegramPlane, FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
 
 const Contact = () => {
   return (
@@ -28,8 +29,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Email Us</p>
-                    <p className="text-white font-medium">support@pipguardian.com</p>
-                    <p className="text-white font-medium">invest@pipguardian.com</p>
+                    <p className="text-white font-medium">pipguardian1@gmail.com</p>
+                    {/* <p className="text-white font-medium">invest@pipguardian.com</p> */}
                   </div>
                 </div>
 
@@ -39,7 +40,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Call Us</p>
-                    <p className="text-white font-medium">+1 (555) 123-4567</p>
+                    <p className="text-white font-medium">+33 (7) 62-19-06-06</p>
                     <p className="text-slate-500 text-sm">Mon-Fri from 8am to 5pm</p>
                   </div>
                 </div>
@@ -50,8 +51,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Visit Us</p>
-                    <p className="text-white font-medium">123 Financial District</p>
-                    <p className="text-white font-medium">New York, NY 10005</p>
+                    <p className="text-white font-medium">12 Rue de Rivoli, </p>
+                    <p className="text-white font-medium">75004 Paris, France</p>
                   </div>
                 </div>
               </div>
@@ -60,12 +61,18 @@ const Contact = () => {
             <div className="relative z-10 mt-12">
               <p className="text-slate-400 text-sm mb-4">Connect with us</p>
               <div className="flex space-x-4">
-                 {['twitter', 'linkedin', 'facebook', 'instagram'].map((social) => (
-                   <a key={social} href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
-                     <span className="sr-only">{social}</span>
-                     <div className="w-4 h-4 bg-current rounded-sm"></div>
-                   </a>
-                 ))}
+                <a href="https://t.me/pipguardiaan" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
+                  <FaTelegramPlane size={18} />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
+                  <FaLinkedinIn size={18} />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
+                  <FaFacebookF size={18} />
+                </a>
+                <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
+                  <FaInstagram size={18} />
+                </a>
               </div>
             </div>
           </div>

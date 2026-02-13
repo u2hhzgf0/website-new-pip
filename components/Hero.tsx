@@ -46,7 +46,7 @@ const Hero = () => {
         </h1>
 
         <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Experience the next evolution of asset management. Automated strategies, real-time analytics, and guaranteed returns designed for the modern investor.
+          PipGuardian is a smart forex platform built for confident growth. We focus on disciplined trading and capital protection.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">

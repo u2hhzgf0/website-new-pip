@@ -4,7 +4,7 @@ import { ReduxProvider } from '../components/ReduxProvider'
 
 export const metadata: Metadata = {
   title: 'Pipguardian Premier',
-  description: 'Experience the next evolution of asset management. Automated strategies, real-time analytics, and guaranteed returns designed for the modern investor.',
+  description: 'PipGuardian is a smart forex platform built for confident growth. We focus on disciplined trading and capital protection.',
 }
 
 export default function RootLayout({
