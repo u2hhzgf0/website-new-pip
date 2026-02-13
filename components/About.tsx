@@ -17,11 +17,11 @@ const About = () => {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
-              Redefining Wealth Management for the <span className="text-gold-500">Digital Age</span>
+              Redefining Pipguardian Management for the <span className="text-gold-500">Digital Age</span>
             </h2>
 
             <p className="text-slate-400 text-lg mb-6 leading-relaxed">
-              Founded in 2023, WealthFlow Premier was built on a simple premise: institutional-grade investment strategies shouldn&apos;t be reserved for the ultra-wealthy. We combine advanced AI algorithms with seasoned financial expertise to deliver consistent, superior returns.
+              Founded in 2023, Pipguardian Premier was built on a simple premise: institutional-grade investment strategies shouldn&apos;t be reserved for the ultra-pipguardian. We combine advanced AI algorithms with seasoned financial expertise to deliver consistent, superior returns.
             </p>
 
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
@@ -55,7 +55,7 @@ const About = () => {
             <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-transparent rounded-3xl transform rotate-3"></div>
             <img
               src="https://picsum.photos/seed/office/800/1000?grayscale"
-              alt="WealthFlow Office"
+              alt="Pipguardian Office"
               className="relative rounded-3xl shadow-2xl border border-slate-800 z-10 w-full object-cover h-[600px]"
             />
 

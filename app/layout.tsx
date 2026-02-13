@@ -3,7 +3,7 @@ import './globals.css'
 import { ReduxProvider } from '../components/ReduxProvider'
 
 export const metadata: Metadata = {
-  title: 'WealthFlow Premier',
+  title: 'Pipguardian Premier',
   description: 'Experience the next evolution of asset management. Automated strategies, real-time analytics, and guaranteed returns designed for the modern investor.',
 }
 

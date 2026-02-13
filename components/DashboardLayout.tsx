@@ -225,7 +225,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           {/* Logo Area */}
           <div className="h-20 flex items-center px-6 border-b border-slate-800">
             <span className="text-xl font-serif font-bold tracking-wide">
-              Wealth<span className="text-gold-500">Flow</span>
+              Pip<span className="text-gold-500">guardian</span>
             </span>
           </div>
 

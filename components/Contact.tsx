@@ -28,8 +28,8 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Email Us</p>
-                    <p className="text-white font-medium">support@wealthflow.com</p>
-                    <p className="text-white font-medium">invest@wealthflow.com</p>
+                    <p className="text-white font-medium">support@pipguardian.com</p>
+                    <p className="text-white font-medium">invest@pipguardian.com</p>
                   </div>
                 </div>
 

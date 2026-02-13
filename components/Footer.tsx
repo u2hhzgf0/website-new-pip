@@ -8,9 +8,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div className="col-span-1 md:col-span-1">
-            <h3 className="text-2xl font-serif font-bold text-white mb-4">Wealth<span className="text-gold-500">Flow</span></h3>
+            <h3 className="text-2xl font-serif font-bold text-white mb-4">Pip<span className="text-gold-500">guardian</span></h3>
             <p className="text-slate-500 text-sm leading-relaxed">
-              Leading the industry in automated wealth generation. Our algorithms work 24/7 so you don&apos;t have to.
+              Leading the industry in automated pipguardian generation. Our algorithms work 24/7 so you don&apos;t have to.
             </p>
           </div>
 
@@ -37,7 +37,7 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6">Contact</h4>
             <ul className="space-y-3 text-slate-400 text-sm">
-              <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> support@wealthflow.com</li>
+              <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> support@Pipguardian.com</li>
               <li>123 Wall Street, NY, USA</li>
             </ul>
           </div>
@@ -52,7 +52,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="text-center text-slate-600 text-sm mt-8">
-            &copy; {new Date().getFullYear()} WealthFlow. All rights reserved.
+            &copy; {new Date().getFullYear()} Pipguardian. All rights reserved.
           </div>
         </div>
       </div>

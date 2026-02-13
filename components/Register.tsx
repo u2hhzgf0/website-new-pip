@@ -75,7 +75,7 @@ function RegisterForm() {
               <TrendingUp className="h-6 w-6 text-slate-950" />
             </div>
             <span className="text-2xl font-serif font-bold text-white tracking-wide">
-              Wealth<span className="text-gold-500">Flow</span>
+              Pip<span className="text-gold-500">guardian</span>
             </span>
           </Link>
           <h2 className="text-2xl font-bold text-white">Join the Elite</h2>

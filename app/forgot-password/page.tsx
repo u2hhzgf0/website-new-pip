@@ -97,8 +97,8 @@ export default function ForgotPassword() {
         <div className="text-center mb-8">
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-bold">
-              <span className="text-white">Wealth</span>
-              <span className="text-gold-500">Flow</span>
+              <span className="text-white">Pip</span>
+              <span className="text-gold-500">guardian</span>
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-white mb-2">Forgot Password?</h2>
