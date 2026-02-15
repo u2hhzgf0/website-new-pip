@@ -8,6 +8,7 @@ export interface InvestmentPlan {
   maxDeposit: number;
   roi: number;
   roiType: 'hourly' | 'daily' | 'weekly' | 'monthly' | 'total';
+  approximateRoi?: string;
   duration: number;
   durationType: 'minutes' | 'hours' | 'days' | 'weeks' | 'months';
   referralBonus: number;

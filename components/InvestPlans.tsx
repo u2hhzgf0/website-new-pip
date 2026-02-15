@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Check, Info, TrendingUp, Loader2, AlertCircle, DollarSign, CheckCircle } from 'lucide-react';
+import Link from 'next/link';
+import { Check, Info, TrendingUp, Loader2, AlertCircle, DollarSign, CheckCircle, Eye } from 'lucide-react';
 import { useGetActivePlansQuery } from '@/store/api/investmentPlanApi';
 import { useCreateInvestmentMutation } from '@/store/api/investmentApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
@@ -178,8 +179,17 @@ const InvestPlans = () => {
               <h3 className={`text-xl font-bold mb-4 ${plan.isPopular ? 'text-white' : 'text-slate-300'}`}>{plan.name}</h3>
 
               <div className="mb-6 text-center bg-slate-950/50 rounded-xl p-4 border border-slate-800">
-                 <span className="block text-slate-400 text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
-                 <span className="text-4xl font-bold text-gold-500">{plan.roi}%</span>
+                 {plan.approximateRoi ? (
+                   <>
+                     <span className="block text-slate-400 text-xs uppercase tracking-wider mb-1">Approximate Return</span>
+                     <span className="text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
+                   </>
+                 ) : (
+                   <>
+                     <span className="block text-slate-400 text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
+                     <span className="text-4xl font-bold text-gold-500">{plan.roi}%</span>
+                   </>
+                 )}
                  <span className="block text-slate-500 text-xs mt-1">for {plan.duration} {plan.durationType}</span>
               </div>
 
@@ -230,6 +240,12 @@ const InvestPlans = () => {
                  >
                    Choose This Plan
                  </button>
+                 <Link
+                   href={`/dashboard/plans/${plan.id}`}
+                   className="w-full mt-2 py-2.5 rounded-lg border border-slate-700 text-slate-400 hover:text-white hover:border-slate-600 transition-all text-sm font-medium flex items-center justify-center gap-2"
+                 >
+                   <Eye size={14} /> View Details
+                 </Link>
               </div>
             </div>
           );
@@ -242,7 +258,7 @@ const InvestPlans = () => {
           <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
             <div className="p-6 border-b border-slate-800">
               <h3 className="text-white font-bold text-xl">Invest in {selectedPlanData.name}</h3>
-              <p className="text-slate-400 text-sm mt-1">{selectedPlanData.roi}% {selectedPlanData.roiType} ROI</p>
+              <p className="text-slate-400 text-sm mt-1">{selectedPlanData.approximateRoi || `${selectedPlanData.roi}% ${selectedPlanData.roiType} ROI`}</p>
             </div>
 
             <div className="p-6 space-y-6">

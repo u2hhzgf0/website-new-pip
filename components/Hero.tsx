@@ -40,7 +40,7 @@ const Hero = () => {
         </div>
 
         <h1 className="text-5xl md:text-7xl font-serif font-bold text-white mb-6 leading-tight">
-          Grow Your Pip<span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-amber-600">guardian.</span>
+          Build Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 via-gold-500 to-amber-600">Wealth.</span>
           <br />
           <span className="text-4xl md:text-6xl text-slate-400 font-sans font-light">Secure Your Future.</span>
         </h1>

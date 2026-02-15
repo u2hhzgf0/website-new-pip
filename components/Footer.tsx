@@ -37,7 +37,7 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-bold mb-6">Contact</h4>
             <ul className="space-y-3 text-slate-400 text-sm">
-              <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> pipguardian1@gmail.com</li>
+              {/* <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> pipguardian1@gmail.com</li> */}
               <li>12 Rue de Rivoli, 75004 Paris, France</li>
             </ul>
           </div>

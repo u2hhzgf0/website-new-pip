@@ -22,7 +22,7 @@ const AddFunds = () => {
   const [createDeposit, { isLoading: isSubmitting }] = useCreateDepositMutation();
 
   // Extract gateways from response
-  const IMAGE_BASE_URL = 'https://api.pipguardian.com';
+  const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com';
   const gateways: PaymentGateway[] = gatewaysResponse?.data?.attributes || [];
 
   const handleGatewaySelect = (id: string) => {

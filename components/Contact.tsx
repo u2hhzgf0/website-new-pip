@@ -23,16 +23,16 @@ const Contact = () => {
             <div className="relative z-10">
               <h3 className="text-2xl font-bold text-white mb-8">Contact Information</h3>
               <div className="space-y-8">
-                <div className="flex items-start space-x-4">
+                {/* <div className="flex items-start space-x-4">
                   <div className="bg-slate-700/50 p-3 rounded-lg text-gold-500">
                     <Mail size={20} />
                   </div>
                   <div>
                     <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Email Us</p>
                     <p className="text-white font-medium">pipguardian1@gmail.com</p>
-                    {/* <p className="text-white font-medium">invest@pipguardian.com</p> */}
+                    <p className="text-white font-medium">invest@pipguardian.com</p>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex items-start space-x-4">
                   <div className="bg-slate-700/50 p-3 rounded-lg text-gold-500">

@@ -350,7 +350,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <div className="flex items-center space-x-3 pl-4 border-l border-slate-800">
               {user?.image ? (
                 <img
-                  src={`https://api.pipguardian.com${user.image}`}
+                  src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com'}${user.image}`}
                   alt="Profile"
                   className="w-10 h-10 rounded-full object-cover border-2 border-gold-500"
                 />

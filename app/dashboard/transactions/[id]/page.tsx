@@ -16,7 +16,7 @@ export default function TransactionDetail() {
   // Fetch transaction from API
   const { data: transactionResponse, isLoading, error } = useGetTransactionByIdQuery(transactionId)
 
-  const IMAGE_BASE_URL = 'https://api.pipguardian.com'
+  const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com'
   const transaction = transactionResponse?.data?.attributes
 
   if (isLoading) {

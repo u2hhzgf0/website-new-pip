@@ -4,8 +4,8 @@ interface Wallet {
   id: string;
   userId: string;
   balance: number;
-  totalDeposited: number;
-  totalWithdrawn: number;
+  totalDeposit: number;
+  totalWithdraw: number;
   totalInvested: number;
   totalProfit: number;
   pendingWithdrawals: number;

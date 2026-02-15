@@ -88,8 +88,14 @@ const Plans = () => {
                 <h3 className={`text-2xl font-bold mb-2 ${plan.isPopular ? 'text-white' : 'text-slate-200'}`}>{plan.name}</h3>
                 <div className="mb-2">
                   <div className="flex items-baseline">
-                    <span className="text-4xl font-bold text-gold-500">{plan.roi}%</span>
-                    <span className="text-slate-400 ml-2">{plan.roiType} ROI</span>
+                    {plan.approximateRoi ? (
+                      <span className="text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
+                    ) : (
+                      <>
+                        <span className="text-4xl font-bold text-gold-500">{plan.roi}%</span>
+                        <span className="text-slate-400 ml-2">{plan.roiType} ROI</span>
+                      </>
+                    )}
                   </div>
                   {/* Detailed Breakdown */}
                   <div className="mt-2 bg-slate-950/50 rounded-lg p-3 border border-slate-800/50">

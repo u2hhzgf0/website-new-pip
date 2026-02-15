@@ -1,10 +1,12 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2 } from 'lucide-react';
+import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark } from 'lucide-react';
 import { useGetActiveGatewaysQuery } from '@/store/api/paymentGatewayApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useCreateWithdrawalMutation } from '@/store/api/transactionApi';
+import { useGetSavedAccountsQuery } from '@/store/api/savedAccountApi';
+import type { SavedAccount } from '@/store/api/savedAccountApi';
 
 const WithdrawRequest = () => {
   const [selectedGateway, setSelectedGateway] = useState('');
@@ -12,6 +14,7 @@ const WithdrawRequest = () => {
   const [walletAddress, setWalletAddress] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [accountName, setAccountName] = useState('');
+  const [selectedSavedAccount, setSelectedSavedAccount] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
@@ -24,10 +27,44 @@ const WithdrawRequest = () => {
   const { data: gatewaysResponse, isLoading: gatewaysLoading } = useGetActiveGatewaysQuery({ purpose: 'withdraw' });
   const gateways = gatewaysResponse?.data?.attributes || [];
 
+  // Fetch saved accounts
+  const { data: savedAccountsResponse } = useGetSavedAccountsQuery();
+  const savedAccounts: SavedAccount[] = (savedAccountsResponse?.data?.attributes as any)?.results || [];
+
   // Create withdrawal mutation
   const [createWithdrawal, { isLoading: submitting }] = useCreateWithdrawalMutation();
 
   const selectedGatewayData = gateways.find((g: any) => g.id === selectedGateway);
+
+  // Filter saved accounts matching the selected gateway type
+  const filteredSavedAccounts = selectedGatewayData
+    ? savedAccounts.filter((a: SavedAccount) =>
+        (selectedGatewayData.type === 'crypto' && a.accountType === 'crypto') ||
+        (selectedGatewayData.type === 'bank' && a.accountType === 'bank')
+      )
+    : [];
+
+  const handleSavedAccountSelect = (accountId: string) => {
+    setSelectedSavedAccount(accountId);
+    if (accountId) {
+      const account = savedAccounts.find((a: SavedAccount) => a.id === accountId);
+      if (account) {
+        if (account.accountType === 'crypto') {
+          setWalletAddress(account.walletAddress || '');
+          setAccountNumber('');
+          setAccountName('');
+        } else if (account.accountType === 'bank') {
+          setAccountNumber(account.bankDetails?.accountNumber || '');
+          setAccountName(account.bankDetails?.accountName || '');
+          setWalletAddress('');
+        }
+      }
+    } else {
+      setWalletAddress('');
+      setAccountNumber('');
+      setAccountName('');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,10 +105,24 @@ const WithdrawRequest = () => {
       if (selectedGatewayData?.type === 'crypto') {
         withdrawalData.walletAddress = walletAddress;
       } else if (selectedGatewayData?.type === 'bank') {
-        withdrawalData.bankDetails = {
-          accountNumber,
-          accountName,
-        };
+        // If using a saved account, include full bank details
+        const savedAccount = selectedSavedAccount
+          ? savedAccounts.find((a: SavedAccount) => a.id === selectedSavedAccount)
+          : null;
+        if (savedAccount?.bankDetails) {
+          withdrawalData.bankDetails = {
+            bankName: savedAccount.bankDetails.bankName,
+            accountNumber: savedAccount.bankDetails.accountNumber,
+            accountName: savedAccount.bankDetails.accountName,
+            routingNumber: savedAccount.bankDetails.routingNumber,
+            swiftCode: savedAccount.bankDetails.swiftCode,
+          };
+        } else {
+          withdrawalData.bankDetails = {
+            accountNumber,
+            accountName,
+          };
+        }
       }
 
       await createWithdrawal(withdrawalData).unwrap();
@@ -82,6 +133,7 @@ const WithdrawRequest = () => {
       setAccountNumber('');
       setAccountName('');
       setSelectedGateway('');
+      setSelectedSavedAccount('');
 
       setTimeout(() => {
         setSuccess(false);
@@ -113,7 +165,7 @@ const WithdrawRequest = () => {
         {/* Left Column: Form */}
         <div className="lg:col-span-2">
           <div className="bg-slate-900 rounded-xl p-8 border border-slate-800 shadow-xl">
-            
+
             {/* Balance Card */}
             <div className="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-lg p-6 mb-8 flex items-center justify-between text-white shadow-lg">
               <div>
@@ -148,12 +200,14 @@ const WithdrawRequest = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Step 1: Withdraw Method */}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Withdraw Method</label>
                 <select
                   value={selectedGateway}
                   onChange={(e) => {
                     setSelectedGateway(e.target.value);
+                    setSelectedSavedAccount('');
                     setWalletAddress('');
                     setAccountNumber('');
                     setAccountName('');
@@ -177,6 +231,7 @@ const WithdrawRequest = () => {
                 )}
               </div>
 
+              {/* Step 2: Withdraw Amount */}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Withdraw Amount</label>
                 <div className="relative">
@@ -223,60 +278,136 @@ const WithdrawRequest = () => {
                 )}
               </div>
 
-              {/* Crypto Wallet Address */}
-              {selectedGatewayData?.type === 'crypto' && (
-                <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
-                    {selectedGatewayData.currency} Wallet Address
-                  </label>
-                  <input
-                    type="text"
-                    value={walletAddress}
-                    onChange={(e) => setWalletAddress(e.target.value)}
-                    placeholder="e.g. 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors font-mono text-sm"
-                    required
-                  />
-                  <p className="text-xs text-amber-400 mt-2 flex items-start gap-1">
-                    <AlertCircle size={12} className="mt-0.5 flex-shrink-0" />
-                    Double-check your wallet address. Funds sent to wrong addresses cannot be recovered.
-                  </p>
-                </div>
-              )}
-
-              {/* Bank Account Details */}
-              {selectedGatewayData?.type === 'bank' && (
+              {/* Step 3: Withdrawal Account Details */}
+              {selectedGatewayData && (
                 <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-2">Account Number</label>
-                    <input
-                      type="text"
-                      value={accountNumber}
-                      onChange={(e) => setAccountNumber(e.target.value)}
-                      placeholder="Enter your account number"
-                      className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-slate-300 mb-2">Account Name</label>
-                    <input
-                      type="text"
-                      value={accountName}
-                      onChange={(e) => setAccountName(e.target.value)}
-                      placeholder="Enter account holder name"
-                      className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
-                      required
-                    />
-                  </div>
-                  {selectedGatewayData.bankDetails && (
-                    <div className="bg-blue-500/5 border border-blue-500/30 rounded-lg p-4">
-                      <p className="text-blue-400 text-xs font-medium mb-2">Bank Details</p>
-                      <div className="text-xs text-slate-300 space-y-1">
-                        {selectedGatewayData.bankDetails.bankName && <p>Bank: {selectedGatewayData.bankDetails.bankName}</p>}
-                        {selectedGatewayData.bankDetails.accountNumber && <p>Account: {selectedGatewayData.bankDetails.accountNumber}</p>}
-                        {selectedGatewayData.bankDetails.swiftCode && <p>SWIFT: {selectedGatewayData.bankDetails.swiftCode}</p>}
+                  <label className="block text-sm font-medium text-slate-300">
+                    {selectedGatewayData.type === 'crypto' ? 'Wallet Address' : 'Bank Account Details'}
+                  </label>
+
+                  {/* Saved Accounts Suggestion */}
+                  {filteredSavedAccounts.length > 0 && (
+                    <div className="bg-slate-950/50 border border-slate-700 rounded-xl p-4 space-y-3">
+                      <div className="flex items-center gap-2 text-sm text-slate-300">
+                        <Bookmark size={14} className="text-gold-500" />
+                        <span className="font-medium">Your Saved Accounts</span>
                       </div>
+                      <div className="grid gap-2">
+                        {filteredSavedAccounts.map((account: SavedAccount) => (
+                          <button
+                            key={account.id}
+                            type="button"
+                            onClick={() => handleSavedAccountSelect(account.id)}
+                            className={`w-full text-left p-3 rounded-lg border transition-all flex items-center justify-between ${
+                              selectedSavedAccount === account.id
+                                ? 'border-gold-500 bg-gold-500/10 text-white'
+                                : 'border-slate-700 bg-slate-900 text-slate-300 hover:border-slate-600 hover:bg-slate-800'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                                selectedSavedAccount === account.id ? 'bg-gold-500/20 text-gold-500' : 'bg-slate-800 text-slate-400'
+                              }`}>
+                                {account.accountType === 'crypto' ? <Wallet size={14} /> : <Bookmark size={14} />}
+                              </div>
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-medium">{account.label}</span>
+                                  {account.isDefault && (
+                                    <Star size={12} className="text-gold-500 fill-gold-500" />
+                                  )}
+                                </div>
+                                <p className="text-xs text-slate-500 mt-0.5 font-mono">
+                                  {account.accountType === 'crypto'
+                                    ? `${account.walletAddress?.slice(0, 10)}...${account.walletAddress?.slice(-8)}`
+                                    : `${account.bankDetails?.bankName} — ****${account.bankDetails?.accountNumber?.slice(-4)}`
+                                  }
+                                </p>
+                              </div>
+                            </div>
+                            {selectedSavedAccount === account.id && (
+                              <CheckCircle size={16} className="text-gold-500 flex-shrink-0" />
+                            )}
+                          </button>
+                        ))}
+                      </div>
+                      {selectedSavedAccount && (
+                        <button
+                          type="button"
+                          onClick={() => handleSavedAccountSelect('')}
+                          className="text-xs text-slate-400 hover:text-white transition-colors"
+                        >
+                          Clear selection and enter manually
+                        </button>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Manual Entry — Crypto Wallet Address */}
+                  {selectedGatewayData.type === 'crypto' && (
+                    <div>
+                      {filteredSavedAccounts.length > 0 && !selectedSavedAccount && (
+                        <p className="text-xs text-slate-400 mb-2">Or enter a wallet address manually:</p>
+                      )}
+                      {filteredSavedAccounts.length === 0 && (
+                        <p className="text-xs text-slate-400 mb-2">Enter your {selectedGatewayData.currency} wallet address:</p>
+                      )}
+                      <input
+                        type="text"
+                        value={walletAddress}
+                        onChange={(e) => { setWalletAddress(e.target.value); if (selectedSavedAccount) setSelectedSavedAccount(''); }}
+                        placeholder="e.g. 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
+                        className={`w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors font-mono text-sm ${selectedSavedAccount ? 'opacity-60' : ''}`}
+                        readOnly={!!selectedSavedAccount}
+                        required
+                      />
+                      <p className="text-xs text-amber-400 mt-2 flex items-start gap-1">
+                        <AlertCircle size={12} className="mt-0.5 flex-shrink-0" />
+                        Double-check your wallet address. Funds sent to wrong addresses cannot be recovered.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Manual Entry — Bank Account Details */}
+                  {selectedGatewayData.type === 'bank' && (
+                    <div className="space-y-4">
+                      {filteredSavedAccounts.length > 0 && !selectedSavedAccount && (
+                        <p className="text-xs text-slate-400">Or enter bank details manually:</p>
+                      )}
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Account Number</label>
+                        <input
+                          type="text"
+                          value={accountNumber}
+                          onChange={(e) => { setAccountNumber(e.target.value); if (selectedSavedAccount) setSelectedSavedAccount(''); }}
+                          placeholder="Enter your account number"
+                          className={`w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors ${selectedSavedAccount ? 'opacity-60' : ''}`}
+                          readOnly={!!selectedSavedAccount}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-300 mb-2">Account Name</label>
+                        <input
+                          type="text"
+                          value={accountName}
+                          onChange={(e) => { setAccountName(e.target.value); if (selectedSavedAccount) setSelectedSavedAccount(''); }}
+                          placeholder="Enter account holder name"
+                          className={`w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors ${selectedSavedAccount ? 'opacity-60' : ''}`}
+                          readOnly={!!selectedSavedAccount}
+                          required
+                        />
+                      </div>
+                      {selectedGatewayData.bankDetails && (
+                        <div className="bg-blue-500/5 border border-blue-500/30 rounded-lg p-4">
+                          <p className="text-blue-400 text-xs font-medium mb-2">Bank Details</p>
+                          <div className="text-xs text-slate-300 space-y-1">
+                            {selectedGatewayData.bankDetails.bankName && <p>Bank: {selectedGatewayData.bankDetails.bankName}</p>}
+                            {selectedGatewayData.bankDetails.accountNumber && <p>Account: {selectedGatewayData.bankDetails.accountNumber}</p>}
+                            {selectedGatewayData.bankDetails.swiftCode && <p>SWIFT: {selectedGatewayData.bankDetails.swiftCode}</p>}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>

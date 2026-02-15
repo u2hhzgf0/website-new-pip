@@ -73,7 +73,7 @@ const Referrals = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-white">Referral Program</h2>
-          <p className="text-slate-400 text-sm">Invite friends and earn a commission on every deposit they make.</p>
+          <p className="text-slate-400 text-sm">Invite friends and earn a commission from their investment profits.</p>
         </div>
         {activeReferrals > 0 && (
           <div className="inline-flex items-center space-x-2 bg-gold-500/10 border border-gold-500/20 px-4 py-2 rounded-lg text-gold-500">
@@ -128,7 +128,7 @@ const Referrals = () => {
             <div className="mb-6 md:mb-0">
                 <h3 className="text-xl font-bold text-white mb-2">Your Unique Referral Link</h3>
                 <p className="text-slate-400 text-sm max-w-md">
-                    Share this link with your network. You&apos;ll receive rewards instantly when they make their first deposit.
+                    Share this link with your network. You&apos;ll earn commissions whenever they receive investment profits.
                 </p>
             </div>
             <div className="flex-1 max-w-lg w-full">
