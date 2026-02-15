@@ -6,10 +6,11 @@ import { Calculator as CalcIcon } from 'lucide-react';
 const Calculator = () => {
   const [amount, setAmount] = useState<number>(1000);
   const [days, setDays] = useState<number>(30);
-  const roiPerDay = 1.5; // Example 1.5% daily
 
-  const totalReturn = Math.floor(amount + (amount * (roiPerDay / 100) * days));
-  const profit = totalReturn - amount;
+  // Profit scales linearly: 365 days = 100% (doubles), 30 days ≈ 10%, 60 days ≈ 20%, 90 days ≈ 30%
+  const profitPercentage = (days / 365) * 100;
+  const profit = Math.floor(amount * (profitPercentage / 100));
+  const totalReturn = amount + profit;
 
   return (
     <section id="calculator" className="py-24 bg-slate-900 relative overflow-hidden">
@@ -72,6 +73,10 @@ const Calculator = () => {
             {/* Results Display */}
             <div className="bg-slate-900 rounded-2xl p-6 border border-slate-800 flex flex-col justify-center space-y-6">
               <div>
+                <p className="text-slate-400 text-sm mb-1">Profit Rate</p>
+                <p className="text-2xl font-bold text-gold-500">{profitPercentage.toFixed(1)}%</p>
+              </div>
+              <div>
                 <p className="text-slate-400 text-sm mb-1">Total Return</p>
                 <p className="text-4xl font-bold text-white">${totalReturn.toLocaleString()}</p>
               </div>
@@ -80,7 +85,7 @@ const Calculator = () => {
                 <p className="text-3xl font-bold text-green-500">+${profit.toLocaleString()}</p>
               </div>
               <p className="text-sm text-slate-500 italic border-t border-slate-800 pt-4">
-                &quot;If I invest <span className="text-white">${amount}</span>, I will earn <span className="text-gold-500">${totalReturn}</span> in <span className="text-white">{days}</span> days.&quot;
+                &quot;If I invest <span className="text-white">${amount.toLocaleString()}</span> for <span className="text-white">{days}</span> days, I earn <span className="text-green-400">{profitPercentage.toFixed(1)}%</span> profit — totaling <span className="text-gold-500">${totalReturn.toLocaleString()}</span>.&quot;
               </p>
             </div>
           </div>

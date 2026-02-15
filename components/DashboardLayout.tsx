@@ -253,6 +253,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                           <Link
                             key={sub.label}
                             href={sub.path || '#'}
+                            onClick={() => setSidebarOpen(false)}
                             className={`block px-4 py-2 text-sm transition-colors ${
                               isActive(sub.path) ? 'text-gold-500 font-medium' : 'text-slate-500 hover:text-gold-400'
                             }`}
@@ -266,6 +267,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 ) : (
                   <Link
                     href={item.path || '#'}
+                    onClick={() => setSidebarOpen(false)}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive(item.path)
                         ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20'
