@@ -127,7 +127,7 @@ export default function InvestmentDetail() {
         </button>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 sm:gap-3 mb-1 flex-wrap">
-            <h1 className="text-xl sm:text-xl sm:text-2xl font-bold text-white">{investment.planName}</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white">{investment.planName}</h1>
             <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(investment.status)}`}>
               {investment.status}
             </span>
