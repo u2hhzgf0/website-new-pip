@@ -105,7 +105,7 @@ export default function ForgotPassword() {
           <p className="text-slate-400">No worries, we'll send you reset instructions.</p>
         </div>
 
-        <div className="bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-8">
+        <div className="bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-5 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-slate-300 mb-2">

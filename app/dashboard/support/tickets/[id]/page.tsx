@@ -246,24 +246,24 @@ export default function TicketDetail() {
           <ArrowLeft className="text-slate-400" size={20} />
         </Link>
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-xl font-bold text-white">{ticket.subject}</h1>
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 flex-wrap">
+            <h1 className="text-base sm:text-xl font-bold text-white">{ticket.subject}</h1>
             <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(ticket.status)}`}>
               {ticket.status.replace('_', ' ')}
             </span>
-            <span className={`px-2 py-1 rounded text-xs font-medium ${getPriorityColor(ticket.priority)}`}>
+            <span className={`hidden sm:inline px-2 py-1 rounded text-xs font-medium ${getPriorityColor(ticket.priority)}`}>
               {ticket.priority} priority
             </span>
           </div>
-          <p className="text-slate-400 text-sm">
+          <p className="text-slate-400 text-xs sm:text-sm">
             #{ticket.ticketId || (ticket.id || ticket._id || '').substring(0, 8).toUpperCase()} • {ticket.category} • Created {formatTime(ticket.createdAt)}
           </p>
         </div>
       </div>
 
       {/* Ticket Info Card */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <div>
             <p className="text-slate-400 text-sm mb-1">Status</p>
             <div className="flex items-center gap-2">
@@ -323,11 +323,11 @@ export default function TicketDetail() {
 
       {/* Conversation Thread */}
       <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
-        <div className="p-6 border-b border-slate-800">
+        <div className="p-4 sm:p-6 border-b border-slate-800">
           <h2 className="text-white font-semibold">Conversation</h2>
           <p className="text-slate-500 text-sm mt-0.5">{(ticket.messages || []).length} message{(ticket.messages || []).length !== 1 ? 's' : ''}</p>
         </div>
-        <div className="p-6 space-y-6 max-h-[600px] overflow-y-auto">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[600px] overflow-y-auto">
           {(!ticket.messages || ticket.messages.length === 0) ? (
             <div className="text-center py-8">
               <p className="text-slate-400">No messages yet. Send a reply to start the conversation.</p>
@@ -382,7 +382,7 @@ export default function TicketDetail() {
 
       {/* Reply Form */}
       {ticket.status !== 'closed' ? (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <form onSubmit={handleSendReply}>
             <label className="block text-white font-medium mb-3">Reply to Ticket</label>
             <textarea
@@ -393,7 +393,7 @@ export default function TicketDetail() {
               placeholder="Type your message here..."
               disabled={isReplying}
             />
-            <div className="flex justify-between items-center mt-4">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mt-4">
               <p className="text-slate-500 text-sm">
                 Average response time: 2-4 hours
               </p>

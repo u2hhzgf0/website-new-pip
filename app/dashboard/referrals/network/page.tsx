@@ -192,36 +192,36 @@ export default function ReferralNetwork() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white">7-Level Referral Network</h1>
-        <p className="text-slate-400 text-sm mt-1">View your complete referral structure and commission earnings</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-white">7-Level Referral Network</h1>
+        <p className="text-slate-400 text-xs sm:text-sm mt-1">View your complete referral structure and commission earnings</p>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Referrals</p>
             <Users className="text-gold-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">{totalStats.totalReferrals.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">{totalStats.totalReferrals.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Across all 7 levels</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Commission</p>
             <DollarSign className="text-emerald-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${totalStats.totalCommission.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${totalStats.totalCommission.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2">All-time earnings</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Active Referrals</p>
             <Activity className="text-blue-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">{totalStats.activeReferrals.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">{totalStats.activeReferrals.toLocaleString()}</p>
           <p className="text-xs text-slate-400 mt-2">
             {totalStats.totalReferrals > 0
               ? `${((totalStats.activeReferrals / totalStats.totalReferrals) * 100).toFixed(1)}% active rate`
@@ -229,18 +229,18 @@ export default function ReferralNetwork() {
           </p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">This Month</p>
             <TrendingUp className="text-rose-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${totalStats.thisMonthCommission.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${totalStats.thisMonthCommission.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2">Monthly commission</p>
         </div>
       </div>
 
       {/* Commission Structure Info */}
-      <div className="bg-gradient-to-r from-gold-500/10 to-amber-600/10 border border-gold-500/30 rounded-xl p-6">
+      <div className="bg-gradient-to-r from-gold-500/10 to-amber-600/10 border border-gold-500/30 rounded-xl p-4 sm:p-6">
         <div className="flex items-start gap-3">
           <Award className="text-gold-500 flex-shrink-0 mt-1" size={24} />
           <div>
@@ -267,7 +267,7 @@ export default function ReferralNetwork() {
             <button
               key={level.level}
               onClick={() => setSelectedLevel(level.level)}
-              className={`bg-slate-900/50 border ${getLevelBorderColor(level.level)} rounded-xl p-6 text-left hover:bg-slate-800/50 transition-all group relative overflow-hidden`}
+              className={`bg-slate-900/50 border ${getLevelBorderColor(level.level)} rounded-xl p-4 sm:p-6 text-left hover:bg-slate-800/50 transition-all group relative overflow-hidden`}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${getLevelColor(level.level)} opacity-5 group-hover:opacity-10 transition-opacity`} />
@@ -314,14 +314,14 @@ export default function ReferralNetwork() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
           <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col">
             {/* Modal Header */}
-            <div className="p-6 border-b border-slate-800">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${getLevelColor(selectedLevel)} flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+            <div className="p-4 sm:p-6 border-b border-slate-800">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                  <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${getLevelColor(selectedLevel)} flex items-center justify-center text-white font-bold text-base sm:text-xl shadow-lg flex-shrink-0`}>
                     L{selectedLevel}
                   </div>
-                  <div>
-                    <h2 className="text-xl font-bold text-white">Level {selectedLevel} Referrals</h2>
+                  <div className="min-w-0">
+                    <h2 className="text-base sm:text-xl font-bold text-white">Level {selectedLevel} Referrals</h2>
                     <p className="text-slate-400 text-sm mt-1">
                       {selectedLevelData.count} users • {selectedLevelData.commission}% commission rate
                     </p>
@@ -336,24 +336,24 @@ export default function ReferralNetwork() {
               </div>
 
               {/* Level Stats */}
-              <div className="grid grid-cols-3 gap-4 mt-6">
-                <div className="bg-slate-800/50 rounded-lg p-4">
-                  <p className="text-slate-400 text-xs mb-1">Total Users</p>
-                  <p className="text-2xl font-bold text-white">{selectedLevelData.count}</p>
+              <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4 sm:mt-6">
+                <div className="bg-slate-800/50 rounded-lg p-3 sm:p-4">
+                  <p className="text-slate-400 text-[10px] sm:text-xs mb-1">Total Users</p>
+                  <p className="text-lg sm:text-2xl font-bold text-white">{selectedLevelData.count}</p>
                 </div>
-                <div className="bg-slate-800/50 rounded-lg p-4">
-                  <p className="text-slate-400 text-xs mb-1">Commission Rate</p>
-                  <p className="text-2xl font-bold text-gold-500">{selectedLevelData.commission}%</p>
+                <div className="bg-slate-800/50 rounded-lg p-3 sm:p-4">
+                  <p className="text-slate-400 text-[10px] sm:text-xs mb-1">Commission</p>
+                  <p className="text-lg sm:text-2xl font-bold text-gold-500">{selectedLevelData.commission}%</p>
                 </div>
-                <div className="bg-slate-800/50 rounded-lg p-4">
-                  <p className="text-slate-400 text-xs mb-1">Total Earned</p>
-                  <p className="text-2xl font-bold text-emerald-400">${selectedLevelData.totalCommission.toFixed(2)}</p>
+                <div className="bg-slate-800/50 rounded-lg p-3 sm:p-4">
+                  <p className="text-slate-400 text-[10px] sm:text-xs mb-1">Earned</p>
+                  <p className="text-lg sm:text-2xl font-bold text-emerald-400">${selectedLevelData.totalCommission.toFixed(2)}</p>
                 </div>
               </div>
 
               {/* Search and Filter */}
               {selectedLevelData.users.length > 0 && (
-                <div className="flex gap-3 mt-6">
+                <div className="flex flex-col sm:flex-row gap-3 mt-4 sm:mt-6">
                   <input
                     type="text"
                     placeholder="Search by name or email..."
@@ -375,7 +375,7 @@ export default function ReferralNetwork() {
             </div>
 
             {/* User List */}
-            <div className="flex-1 overflow-y-auto p-6">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               {isLoadingNetwork ? (
                 <div className="text-center py-12">
                   <Loader2 className="mx-auto text-gold-500 mb-4 animate-spin" size={36} />
@@ -446,7 +446,7 @@ export default function ReferralNetwork() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-6 border-t border-slate-800">
+            <div className="p-4 sm:p-6 border-t border-slate-800">
               <div className="flex items-center justify-between">
                 <p className="text-slate-400 text-sm">
                   Showing {getFilteredUsers(selectedLevelData.users).length} of {selectedLevelData.users.length} users

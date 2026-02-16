@@ -38,10 +38,10 @@ export default function WalletStats() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-start">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Wallet Statistics</h1>
-          <p className="text-slate-400 text-sm mt-1">Complete financial analytics and insights</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Wallet Statistics</h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">Complete financial analytics and insights</p>
         </div>
         <select
           value={timeRange}
@@ -56,46 +56,46 @@ export default function WalletStats() {
       </div>
 
       {/* Main Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Current Balance</p>
             <Wallet className="text-gold-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${stats.balance.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${stats.balance.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Available funds</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Deposits</p>
             <ArrowDownLeft className="text-emerald-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${stats.totalDeposit.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${stats.totalDeposit.toLocaleString()}</p>
           <p className="text-xs text-slate-400 mt-2">All-time deposits</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Withdrawals</p>
             <ArrowUpRight className="text-rose-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${stats.totalWithdraw.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${stats.totalWithdraw.toLocaleString()}</p>
           <p className="text-xs text-slate-400 mt-2">All-time withdrawals</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Profit</p>
             <TrendingUp className="text-blue-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${stats.totalProfit.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${stats.totalProfit.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Lifetime earnings</p>
         </div>
       </div>
 
       {/* Balance Trend Chart */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
         <h3 className="text-white font-semibold text-lg mb-4">Balance Trend</h3>
         {stats.balanceTrend && stats.balanceTrend.length > 0 ? (
           <div className="h-[300px]">
@@ -137,7 +137,7 @@ export default function WalletStats() {
 
       {/* Income vs Expense */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Income vs Expense</h3>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -161,7 +161,7 @@ export default function WalletStats() {
           </div>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Transaction Distribution</h3>
           <div className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -188,7 +188,7 @@ export default function WalletStats() {
       </div>
 
       {/* Income Breakdown */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
         <h3 className="text-white font-semibold text-lg mb-4">Income Breakdown</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {stats.incomeBreakdown.map((item, index) => (
@@ -210,7 +210,7 @@ export default function WalletStats() {
       </div>
 
       {/* Additional Info */}
-      <div className="bg-gradient-to-r from-gold-500/10 to-amber-600/10 border border-gold-500/30 rounded-xl p-6">
+      <div className="bg-gradient-to-r from-gold-500/10 to-amber-600/10 border border-gold-500/30 rounded-xl p-4 sm:p-6">
         <div className="flex items-start gap-3">
           <DollarSign className="text-gold-500 flex-shrink-0 mt-1" size={24} />
           <div>

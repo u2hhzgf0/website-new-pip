@@ -69,13 +69,13 @@ const MyPlans = () => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-white">My Active Plans</h2>
-        <p className="text-slate-400 text-sm">Monitor the progress of your active investments.</p>
+        <h2 className="text-xl sm:text-2xl font-bold text-white">My Active Plans</h2>
+        <p className="text-slate-400 text-xs sm:text-sm">Monitor the progress of your active investments.</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {activePlans.length > 0 ? (
           activePlans.map((investment) => {
              const daysElapsed = calculateDaysElapsed(investment.startDate);
@@ -84,18 +84,19 @@ const MyPlans = () => {
              const currentProfit = investment.earnedProfit;
 
              return (
-              <div key={investment.id} className="bg-slate-900 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+              <div key={investment.id} className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden">
                 {/* Background decoration */}
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
-                <div className="flex justify-between items-start mb-6 relative z-10">
-                  <div className="flex items-center space-x-3">
-                    <div className="bg-gradient-to-br from-gold-500 to-amber-600 p-2.5 rounded-lg text-slate-950">
-                      <TrendingUp size={24} />
+                <div className="flex justify-between items-start mb-4 sm:mb-6 relative z-10">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
+                    <div className="bg-gradient-to-br from-gold-500 to-amber-600 p-2 sm:p-2.5 rounded-lg text-slate-950">
+                      <TrendingUp size={20} className="sm:hidden" />
+                      <TrendingUp size={24} className="hidden sm:block" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-white">{investment.plan.name}</h3>
-                      <p className="text-xs text-slate-400 font-mono">{investment.transactionId}</p>
+                      <h3 className="text-base sm:text-xl font-bold text-white">{investment.plan.name}</h3>
+                      <p className="text-[10px] sm:text-xs text-slate-400 font-mono">{investment.transactionId}</p>
                     </div>
                   </div>
                   <div className={`flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-bold border ${
@@ -121,22 +122,22 @@ const MyPlans = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-slate-950/50 p-3 rounded-lg border border-slate-800">
-                    <p className="text-xs text-slate-400 mb-1">Invested Amount</p>
-                    <p className="text-lg font-bold text-white">${investment.amount.toLocaleString()}</p>
+                <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-4 sm:mb-6">
+                  <div className="bg-slate-950/50 p-2.5 sm:p-3 rounded-lg border border-slate-800">
+                    <p className="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1">Invested Amount</p>
+                    <p className="text-sm sm:text-lg font-bold text-white">${investment.amount.toLocaleString()}</p>
                   </div>
-                  <div className="bg-slate-950/50 p-3 rounded-lg border border-slate-800">
-                    <p className="text-xs text-slate-400 mb-1">Expected Return</p>
-                    <p className="text-lg font-bold text-gold-500">${(investment.amount + investment.expectedProfit).toLocaleString()}</p>
+                  <div className="bg-slate-950/50 p-2.5 sm:p-3 rounded-lg border border-slate-800">
+                    <p className="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1">Expected Return</p>
+                    <p className="text-sm sm:text-lg font-bold text-gold-500">${(investment.amount + investment.expectedProfit).toLocaleString()}</p>
                   </div>
-                  <div className="bg-slate-950/50 p-3 rounded-lg border border-slate-800">
-                    <p className="text-xs text-slate-400 mb-1">Current Profit</p>
-                    <p className="text-lg font-bold text-green-400">+${currentProfit.toFixed(2)}</p>
+                  <div className="bg-slate-950/50 p-2.5 sm:p-3 rounded-lg border border-slate-800">
+                    <p className="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1">Current Profit</p>
+                    <p className="text-sm sm:text-lg font-bold text-green-400">+${currentProfit.toFixed(2)}</p>
                   </div>
-                  <div className="bg-slate-950/50 p-3 rounded-lg border border-slate-800">
-                    <p className="text-xs text-slate-400 mb-1">Daily Profit</p>
-                    <p className="text-lg font-bold text-blue-400">${investment.dailyProfitAmount.toFixed(2)}</p>
+                  <div className="bg-slate-950/50 p-2.5 sm:p-3 rounded-lg border border-slate-800">
+                    <p className="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1">Daily Profit</p>
+                    <p className="text-sm sm:text-lg font-bold text-blue-400">${investment.dailyProfitAmount.toFixed(2)}</p>
                   </div>
                 </div>
 
@@ -180,12 +181,13 @@ const MyPlans = () => {
              );
           })
         ) : (
-          <div className="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-2xl p-12 text-center">
-             <div className="bg-slate-800 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-500">
-                <AlertCircle size={32} />
+          <div className="col-span-1 lg:col-span-2 bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-8 sm:p-12 text-center">
+             <div className="bg-slate-800 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-500">
+                <AlertCircle size={28} className="sm:hidden" />
+                <AlertCircle size={32} className="hidden sm:block" />
              </div>
-             <h3 className="text-xl font-bold text-white mb-2">No Active Plans</h3>
-             <p className="text-slate-400 mb-6">You don't have any active investments at the moment.</p>
+             <h3 className="text-lg sm:text-xl font-bold text-white mb-2">No Active Plans</h3>
+             <p className="text-slate-400 text-sm mb-6">You don't have any active investments at the moment.</p>
              <Link href="/dashboard/plans/invest" className="inline-block bg-gold-500 text-slate-950 px-6 py-2 rounded-lg font-bold hover:bg-gold-600 transition-colors">
                Start Investing
              </Link>

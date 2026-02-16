@@ -113,7 +113,7 @@ export default function MyTickets() {
         {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-bold text-white">Support Tickets</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white">Support Tickets</h1>
             <p className="text-slate-400 text-sm mt-1">View and manage your support requests</p>
           </div>
         </div>
@@ -131,10 +131,10 @@ export default function MyTickets() {
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
       {/* Header */}
-      <div className="flex justify-between items-start">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Support Tickets</h1>
-          <p className="text-slate-400 text-sm mt-1">View and manage your support requests</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Support Tickets</h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">View and manage your support requests</p>
         </div>
         <Link
           href="/dashboard/support"
@@ -146,12 +146,12 @@ export default function MyTickets() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-400 text-sm">Total Tickets</p>
-              <p className="text-2xl font-bold text-white mt-1">{isLoading ? '-' : stats.total}</p>
+              <p className="text-xl sm:text-2xl font-bold text-white mt-1">{isLoading ? '-' : stats.total}</p>
             </div>
             <MessageSquare className="text-gold-500" size={24} />
           </div>
@@ -160,7 +160,7 @@ export default function MyTickets() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-400 text-sm">Open</p>
-              <p className="text-2xl font-bold text-blue-500 mt-1">{isLoading ? '-' : stats.open}</p>
+              <p className="text-xl sm:text-2xl font-bold text-blue-500 mt-1">{isLoading ? '-' : stats.open}</p>
             </div>
             <Clock className="text-blue-500" size={24} />
           </div>
@@ -169,7 +169,7 @@ export default function MyTickets() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-400 text-sm">In Progress</p>
-              <p className="text-2xl font-bold text-amber-500 mt-1">{isLoading ? '-' : stats.inProgress}</p>
+              <p className="text-xl sm:text-2xl font-bold text-amber-500 mt-1">{isLoading ? '-' : stats.inProgress}</p>
             </div>
             <AlertCircle className="text-amber-500" size={24} />
           </div>
@@ -178,7 +178,7 @@ export default function MyTickets() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-400 text-sm">Resolved</p>
-              <p className="text-2xl font-bold text-emerald-500 mt-1">{isLoading ? '-' : stats.resolved}</p>
+              <p className="text-xl sm:text-2xl font-bold text-emerald-500 mt-1">{isLoading ? '-' : stats.resolved}</p>
             </div>
             <CheckCircle className="text-emerald-500" size={24} />
           </div>
@@ -246,26 +246,24 @@ export default function MyTickets() {
               <Link
                 key={ticket.id}
                 href={`/dashboard/support/tickets/${ticket.id}`}
-                className="block p-6 hover:bg-slate-800/30 transition-colors group"
+                className="block p-4 sm:p-6 hover:bg-slate-800/30 transition-colors group"
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-start gap-3 flex-1">
-                    <div className="mt-1">{getStatusIcon(ticket.status)}</div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="text-white font-medium group-hover:text-gold-500 transition-colors">
-                          {ticket.subject}
-                        </h3>
-                      </div>
-                      <p className="text-slate-500 text-sm">#{ticket.id.substring(0, 8).toUpperCase()}</p>
+                <div className="flex items-start justify-between mb-3 gap-2">
+                  <div className="flex items-start gap-3 flex-1 min-w-0">
+                    <div className="mt-1 flex-shrink-0">{getStatusIcon(ticket.status)}</div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-white font-medium group-hover:text-gold-500 transition-colors truncate mb-1">
+                        {ticket.subject}
+                      </h3>
+                      <p className="text-slate-500 text-xs sm:text-sm">#{ticket.id.substring(0, 8).toUpperCase()}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {getPriorityBadge(ticket.priority)}
+                  <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+                    <span className="hidden sm:inline">{getPriorityBadge(ticket.priority)}</span>
                     {getStatusBadge(ticket.status)}
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-xs text-slate-500 ml-7">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-slate-500 ml-7">
                   <span className="flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 bg-slate-600 rounded-full" />
                     {ticket.category}

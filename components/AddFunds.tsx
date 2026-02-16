@@ -114,12 +114,13 @@ const AddFunds = () => {
 
   if (success) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 bg-slate-900 rounded-2xl border border-slate-800 text-center px-4">
-        <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 mb-6">
-          <CheckCircle2 size={40} />
+      <div className="flex flex-col items-center justify-center py-10 sm:py-16 bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-800 text-center px-4">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 mb-4 sm:mb-6">
+          <CheckCircle2 size={32} className="sm:hidden" />
+          <CheckCircle2 size={40} className="hidden sm:block" />
         </div>
-        <h2 className="text-3xl font-bold text-white mb-2">Deposit Submitted!</h2>
-        <p className="text-slate-400 max-w-md mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Deposit Submitted!</h2>
+        <p className="text-slate-400 max-w-md mb-6 sm:mb-8 text-sm sm:text-base">
           Your payment proof has been submitted successfully. Our team will verify your transaction shortly.
         </p>
         <button
@@ -133,11 +134,11 @@ const AddFunds = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center mb-6">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-white">Add Funds</h2>
-          <span className="text-slate-400 text-sm">
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Add Funds</h2>
+          <span className="text-slate-400 text-xs sm:text-sm">
             {step === 1 ? 'Select a payment method to proceed' : 'Complete your payment'}
           </span>
         </div>
@@ -151,9 +152,9 @@ const AddFunds = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         {/* Main Content Area */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4 sm:space-y-6">
 
           {step === 1 ? (
             /* STEP 1: Gateway & Amount Selection */
@@ -181,22 +182,22 @@ const AddFunds = () => {
                       <button
                         key={gateway.id}
                         onClick={() => handleGatewaySelect(gateway.id)}
-                        className={`relative p-6 rounded-xl border flex flex-col items-start transition-all duration-200 ${
+                        className={`relative p-4 sm:p-6 rounded-xl border flex flex-col items-start transition-all duration-200 ${
                           selectedGateway === gateway.id
                             ? 'bg-slate-800 border-gold-500 shadow-[0_0_15px_rgba(234,179,8,0.1)]'
                             : 'bg-slate-900 border-slate-800 hover:border-slate-700'
                         }`}
                       >
                         {selectedGateway === gateway.id && (
-                          <div className="absolute top-3 right-3 text-gold-500">
-                            <CheckCircle2 size={20} />
+                          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 text-gold-500">
+                            <CheckCircle2 size={18} />
                           </div>
                         )}
-                        <div className={`p-3 rounded-lg mb-4 ${selectedGateway === gateway.id ? 'bg-gold-500 text-slate-900' : 'bg-slate-800 text-slate-400'}`}>
+                        <div className={`p-2 sm:p-3 rounded-lg mb-3 sm:mb-4 ${selectedGateway === gateway.id ? 'bg-gold-500 text-slate-900' : 'bg-slate-800 text-slate-400'}`}>
                           {icon}
                         </div>
-                        <h3 className="text-white font-bold text-lg">{gateway.name}</h3>
-                        <p className="text-xs text-slate-500 mt-1">
+                        <h3 className="text-white font-bold text-sm sm:text-lg">{gateway.name}</h3>
+                        <p className="text-[10px] sm:text-xs text-slate-500 mt-1">
                           Min: ${gateway.minDeposit || 0} • Max: ${(gateway.maxDeposit || 0).toLocaleString()}
                         </p>
                         {gateway.depositFee && gateway.depositFee > 0 && (
@@ -210,8 +211,8 @@ const AddFunds = () => {
                 </div>
               )}
 
-              <div className="bg-slate-900 rounded-xl p-6 border border-slate-800">
-                <label className="block text-sm font-medium text-slate-300 mb-2">Enter Amount (USD)</label>
+              <div className="bg-slate-900 rounded-xl p-4 sm:p-6 border border-slate-800">
+                <label className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">Enter Amount (USD)</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">$</span>
                   <input
@@ -299,7 +300,7 @@ const AddFunds = () => {
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">Upload Screenshot</label>
                   <div
-                    className={`border-2 border-dashed rounded-xl p-8 text-center transition-colors cursor-pointer ${
+                    className={`border-2 border-dashed rounded-xl p-5 sm:p-8 text-center transition-colors cursor-pointer ${
                       screenshot ? 'border-gold-500/50 bg-gold-500/5' : 'border-slate-700 hover:border-slate-600 bg-slate-950'
                     }`}
                     onClick={() => fileInputRef.current?.click()}
@@ -369,10 +370,10 @@ const AddFunds = () => {
 
         {/* Right Column: Summary */}
         <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-6 border border-slate-700 sticky top-6">
-            <h3 className="text-xl font-bold text-white mb-6">Payment Summary</h3>
+          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 sm:p-6 border border-slate-700 sticky top-6">
+            <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Payment Summary</h3>
 
-            <div className="space-y-4 mb-6">
+            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
               <div className="flex justify-between text-sm">
                 <span className="text-slate-400">Payment Method</span>
                 <span className="text-white font-medium">{selectedGatewayData?.name || '-'}</span>

@@ -145,26 +145,26 @@ const InvestPlans = () => {
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex justify-between items-center">
+    <div className="space-y-4 sm:space-y-8">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         <div>
-          <h2 className="text-2xl font-bold text-white">Invest & Earn</h2>
-          <p className="text-slate-400 text-sm">Select a plan to start growing your portfolio today.</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Invest & Earn</h2>
+          <p className="text-slate-400 text-xs sm:text-sm">Select a plan to start growing your portfolio today.</p>
         </div>
-        <div className="hidden sm:flex items-center space-x-2 text-gold-500 bg-gold-500/10 px-4 py-2 rounded-lg">
-          <DollarSign size={20} />
-          <span className="font-bold">Balance: ${balance.toLocaleString()}</span>
+        <div className="flex items-center space-x-2 text-gold-500 bg-gold-500/10 px-3 sm:px-4 py-2 rounded-lg w-fit">
+          <DollarSign size={18} />
+          <span className="font-bold text-sm sm:text-base">Balance: ${balance.toLocaleString()}</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8">
         {plans.map((plan) => {
           const { totalReturn, profit, daily } = calculateReturns(plan.minDeposit, plan.roi, plan.roiType, plan.duration, plan.durationType);
 
           return (
             <div
               key={plan.id}
-              className={`relative bg-slate-900 rounded-2xl p-6 border flex flex-col h-full transition-all duration-300 ${
+              className={`relative bg-slate-900 rounded-xl sm:rounded-2xl p-4 sm:p-6 border flex flex-col h-full transition-all duration-300 ${
                 plan.isPopular
                   ? 'border-gold-500 shadow-xl shadow-gold-500/10'
                   : 'border-slate-800 hover:border-slate-700'
@@ -176,25 +176,25 @@ const InvestPlans = () => {
                 </div>
               )}
 
-              <h3 className={`text-xl font-bold mb-4 ${plan.isPopular ? 'text-white' : 'text-slate-300'}`}>{plan.name}</h3>
+              <h3 className={`text-lg sm:text-xl font-bold mb-3 sm:mb-4 ${plan.isPopular ? 'text-white' : 'text-slate-300'}`}>{plan.name}</h3>
 
-              <div className="mb-6 text-center bg-slate-950/50 rounded-xl p-4 border border-slate-800">
+              <div className="mb-4 sm:mb-6 text-center bg-slate-950/50 rounded-xl p-3 sm:p-4 border border-slate-800">
                  {plan.approximateRoi ? (
                    <>
-                     <span className="block text-slate-400 text-xs uppercase tracking-wider mb-1">Approximate Return</span>
-                     <span className="text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
+                     <span className="block text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">Approximate Return</span>
+                     <span className="text-xl sm:text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
                    </>
                  ) : (
                    <>
-                     <span className="block text-slate-400 text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
-                     <span className="text-4xl font-bold text-gold-500">{plan.roi}%</span>
+                     <span className="block text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
+                     <span className="text-3xl sm:text-4xl font-bold text-gold-500">{plan.roi}%</span>
                    </>
                  )}
                  <span className="block text-slate-500 text-xs mt-1">for {plan.duration} {plan.durationType}</span>
               </div>
 
               {/* Breakdown */}
-              <div className="mb-6 bg-slate-800/30 rounded-lg p-4 border border-slate-800/50">
+              <div className="mb-4 sm:mb-6 bg-slate-800/30 rounded-lg p-3 sm:p-4 border border-slate-800/50">
                  <div className="flex items-center space-x-2 mb-3">
                     <Info size={16} className="text-slate-400" />
                     <span className="text-sm font-semibold text-slate-200">Profit Calculator</span>

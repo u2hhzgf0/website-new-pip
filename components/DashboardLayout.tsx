@@ -298,35 +298,36 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       {/* Main Content Wrapper */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top Bar */}
-        <header className="h-20 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-6 lg:px-8 sticky top-0 z-10">
+        <header className="h-16 sm:h-20 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-3 sm:px-6 lg:px-8 sticky top-0 z-10">
           <div className="flex items-center">
             <button
               onClick={() => setSidebarOpen(true)}
-              className="lg:hidden mr-4 text-slate-400 hover:text-white"
+              className="lg:hidden mr-2 sm:mr-4 text-slate-400 hover:text-white"
             >
-              <Menu size={24} />
+              <Menu size={22} />
             </button>
-            <h1 className="text-xl font-semibold text-white hidden sm:block">Dashboard</h1>
+            <h1 className="text-base sm:text-xl font-semibold text-white hidden sm:block">Dashboard</h1>
           </div>
 
-          <div className="flex items-center space-x-4 sm:space-x-6">
-            {/* Balance Display */}
-            <div className="hidden sm:flex flex-col items-end mr-2">
-              <span className="text-xs text-slate-400 uppercase tracking-wider font-semibold">Current Balance</span>
-              <span className="text-xl font-bold text-green-400">${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+          <div className="flex items-center space-x-2 sm:space-x-6">
+            {/* Balance Display - visible on all screens */}
+            <div className="flex flex-col items-end mr-1 sm:mr-2">
+              <span className="text-[10px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold">Balance</span>
+              <span className="text-xs sm:text-xl font-bold text-green-400">${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
 
             {/* Notification Bell with Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
-                className="relative p-2 text-slate-400 hover:text-white transition-colors outline-none"
+                className="relative p-1.5 sm:p-2 text-slate-400 hover:text-white transition-colors outline-none"
                 aria-label="Notifications"
                 aria-expanded={showNotifications}
               >
-                <Bell size={20} />
+                <Bell size={18} className="sm:hidden" />
+                <Bell size={20} className="hidden sm:block" />
                 {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 min-w-[18px] h-[18px] bg-red-500 rounded-full border-2 border-slate-900 flex items-center justify-center text-[10px] font-bold text-white">
+                  <span className="absolute top-0.5 right-0.5 sm:top-1 sm:right-1 min-w-[16px] h-[16px] sm:min-w-[18px] sm:h-[18px] bg-red-500 rounded-full border-2 border-slate-900 flex items-center justify-center text-[9px] sm:text-[10px] font-bold text-white">
                     {unreadCount > 9 ? '9+' : unreadCount}
                   </span>
                 )}
@@ -349,15 +350,15 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             </div>
 
             {/* Profile Avatar */}
-            <div className="flex items-center space-x-3 pl-4 border-l border-slate-800">
+            <div className="flex items-center space-x-2 sm:space-x-3 pl-2 sm:pl-4 border-l border-slate-800">
               {user?.image ? (
                 <img
                   src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com'}${user.image}`}
                   alt="Profile"
-                  className="w-10 h-10 rounded-full object-cover border-2 border-gold-500"
+                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gold-500"
                 />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 border-2 border-gold-500 text-white flex items-center justify-center font-bold text-sm">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 border-2 border-gold-500 text-white flex items-center justify-center font-bold text-xs sm:text-sm">
                   {user?.firstName?.[0]}{user?.lastName?.[0]}
                 </div>
               )}
@@ -372,7 +373,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         </header>
 
         {/* Scrollable Content Area */}
-        <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8">
           <div className="max-w-7xl mx-auto">
             {children}
           </div>

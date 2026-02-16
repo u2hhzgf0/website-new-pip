@@ -102,8 +102,8 @@ export default function TransactionDetail() {
           <ArrowLeft className="text-slate-400" size={20} />
         </button>
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-2xl font-bold text-white">Transaction Details</h1>
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 flex-wrap">
+            <h1 className="text-lg sm:text-2xl font-bold text-white">Transaction Details</h1>
             <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(transaction.status)}`}>
               {transaction.status}
             </span>
@@ -113,7 +113,7 @@ export default function TransactionDetail() {
       </div>
 
       {/* Status Banner */}
-      <div className={`rounded-xl p-6 border ${
+      <div className={`rounded-xl p-4 sm:p-6 border ${
         transaction.status === 'completed'
           ? 'bg-emerald-500/5 border-emerald-500/30'
           : transaction.status === 'rejected'
@@ -147,37 +147,37 @@ export default function TransactionDetail() {
 
       {/* Transaction Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Amount</p>
             <DollarSign className="text-gold-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${transaction.amount.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${transaction.amount.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2 capitalize">{transaction.type} amount</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Fee</p>
             <CreditCard className="text-blue-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${transaction.fee.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${transaction.fee.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2">Transaction fee</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Net Amount</p>
             <CheckCircle className="text-emerald-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-emerald-400">${transaction.netAmount.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-emerald-400">${transaction.netAmount.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2">After fees</p>
         </div>
       </div>
 
       {/* Transaction Information */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Transaction Information</h3>
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-3 bg-slate-800/30 rounded-lg">
@@ -238,7 +238,7 @@ export default function TransactionDetail() {
           </div>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Timeline</h3>
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-3 bg-slate-800/30 rounded-lg">
@@ -298,7 +298,7 @@ export default function TransactionDetail() {
 
       {/* Admin Notes */}
       {transaction.adminNotes && (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Admin Notes</h3>
           <div className="p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg">
             <p className="text-slate-300 text-sm">{transaction.adminNotes}</p>

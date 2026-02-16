@@ -332,51 +332,51 @@ export default function SettingsNew() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
       <div>
-        <h1 className="text-2xl font-bold text-white">Settings</h1>
-        <p className="text-slate-400 text-sm mt-1">Manage your account settings and preferences</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-white">Settings</h1>
+        <p className="text-slate-400 text-xs sm:text-sm mt-1">Manage your account settings and preferences</p>
       </div>
 
       <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
         {/* Tabs */}
-        <div className="flex border-b border-slate-800">
+        <div className="flex border-b border-slate-800 overflow-x-auto">
           {[
             { key: 'profile', label: 'Profile', icon: User },
             { key: 'security', label: 'Security', icon: Lock },
-            { key: 'wallets', label: 'Wallets & Bank', icon: Wallet },
+            { key: 'wallets', label: 'Wallets', icon: Wallet },
             { key: 'account', label: 'Account', icon: AlertTriangle },
           ].map((tab) => (
             <button
               key={tab.key}
               onClick={() => setActiveTab(tab.key as any)}
-              className={`flex-1 py-4 text-sm font-medium flex items-center justify-center gap-2 border-b-2 transition-colors ${
+              className={`flex-1 min-w-0 py-3 sm:py-4 text-xs sm:text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.key
                   ? 'border-gold-500 text-white'
                   : 'border-transparent text-slate-400 hover:text-white'
               }`}
             >
-              <tab.icon size={18} /> {tab.label}
+              <tab.icon size={16} /> <span className="hidden sm:inline">{tab.label}</span><span className="sm:hidden">{tab.label}</span>
             </button>
           ))}
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Profile Tab */}
           {activeTab === 'profile' && (
             <form onSubmit={handleProfileUpdate} className="space-y-6">
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
                 <div className="relative">
                   {previewImage || profileImageUrl ? (
                     <img
                       src={previewImage || profileImageUrl!}
                       alt="Profile"
-                      className="w-24 h-24 rounded-full object-cover border-4 border-slate-800"
+                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-slate-800"
                     />
                   ) : (
-                    <div className="w-24 h-24 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 text-white flex items-center justify-center text-3xl font-bold">
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 text-white flex items-center justify-center text-2xl sm:text-3xl font-bold">
                       {getInitials()}
                     </div>
                   )}
@@ -510,15 +510,15 @@ export default function SettingsNew() {
 
           {/* Wallets & Bank Tab */}
           {activeTab === 'wallets' && (
-            <div className="space-y-6">
-              <div className="flex items-center justify-between">
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
-                  <h3 className="text-lg font-semibold text-white">Saved Withdrawal Accounts</h3>
-                  <p className="text-sm text-slate-400">Manage your saved wallets and bank accounts for quick withdrawals</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-white">Saved Withdrawal Accounts</h3>
+                  <p className="text-xs sm:text-sm text-slate-400">Manage your saved wallets and bank accounts</p>
                 </div>
                 <button
                   onClick={handleOpenAddModal}
-                  className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                  className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors w-fit"
                 >
                   <Plus size={16} /> Add Account
                 </button>
@@ -539,21 +539,21 @@ export default function SettingsNew() {
                   {savedAccounts.map((account: SavedAccount) => (
                     <div
                       key={account.id}
-                      className="bg-slate-950/50 border border-slate-700 rounded-xl p-4 flex items-center justify-between"
+                      className="bg-slate-950/50 border border-slate-700 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                     >
-                      <div className="flex items-center gap-4">
-                        <div className={`p-3 rounded-full ${account.accountType === 'crypto' ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500'}`}>
-                          {account.accountType === 'crypto' ? <Wallet size={20} /> : <CreditCard size={20} />}
+                      <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                        <div className={`p-2.5 sm:p-3 rounded-full flex-shrink-0 ${account.accountType === 'crypto' ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500'}`}>
+                          {account.accountType === 'crypto' ? <Wallet size={18} /> : <CreditCard size={18} />}
                         </div>
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-white font-medium">{account.label}</span>
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                            <span className="text-white font-medium text-sm">{account.label}</span>
                             {account.isDefault && (
-                              <span className="bg-gold-500/20 text-gold-500 text-xs px-2 py-0.5 rounded-full font-medium">Default</span>
+                              <span className="bg-gold-500/20 text-gold-500 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-medium">Default</span>
                             )}
-                            <span className="bg-slate-800 text-slate-400 text-xs px-2 py-0.5 rounded-full capitalize">{account.accountType}</span>
+                            <span className="bg-slate-800 text-slate-400 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full capitalize">{account.accountType}</span>
                           </div>
-                          <p className="text-sm text-slate-400 mt-0.5">
+                          <p className="text-xs sm:text-sm text-slate-400 mt-0.5 truncate">
                             {account.accountType === 'crypto'
                               ? `${account.currency || ''} ${account.network ? `(${account.network})` : ''} — ${account.walletAddress ? account.walletAddress.slice(0, 8) + '...' + account.walletAddress.slice(-6) : ''}`
                               : `${account.bankDetails?.bankName || ''} — ****${account.bankDetails?.accountNumber?.slice(-4) || ''} (${account.bankDetails?.accountName || ''})`
@@ -561,7 +561,7 @@ export default function SettingsNew() {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 self-end sm:self-center">
                         {!account.isDefault && (
                           <button
                             onClick={() => handleSetDefault(account.id)}

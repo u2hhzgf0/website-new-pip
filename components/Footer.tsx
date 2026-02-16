@@ -3,20 +3,20 @@ import { Mail, ShieldAlert, FileText, Lock } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-slate-950 border-t border-slate-900 pt-16 pb-8">
+    <footer className="bg-slate-950 border-t border-slate-900 pt-10 sm:pt-16 pb-6 sm:pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-12 mb-8 sm:mb-12">
           {/* Brand */}
-          <div className="col-span-1 md:col-span-1">
-            <h3 className="text-2xl font-serif font-bold text-white mb-4">Pip<span className="text-gold-500">guardian</span></h3>
-            <p className="text-slate-500 text-sm leading-relaxed">
+          <div className="col-span-2 md:col-span-1">
+            <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-3 sm:mb-4">Pip<span className="text-gold-500">guardian</span></h3>
+            <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
               Leading the industry in automated pipguardian generation. Our algorithms work 24/7 so you don&apos;t have to.
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-white font-bold mb-6">Company</h4>
+            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6">Company</h4>
             <ul className="space-y-3 text-slate-400 text-sm">
               <li><a href="#" className="hover:text-gold-500 transition-colors">About Us</a></li>
               <li><a href="#" className="hover:text-gold-500 transition-colors">Careers</a></li>
@@ -26,7 +26,7 @@ const Footer = () => {
 
           {/* Legal */}
           <div>
-            <h4 className="text-white font-bold mb-6">Legal</h4>
+            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6">Legal</h4>
             <ul className="space-y-3 text-slate-400 text-sm">
               <li className="flex items-center"><Lock className="w-3 h-3 mr-2" /><a href="#" className="hover:text-gold-500 transition-colors">Privacy Policy</a></li>
               <li className="flex items-center"><FileText className="w-3 h-3 mr-2" /><a href="#" className="hover:text-gold-500 transition-colors">Terms of Service</a></li>
@@ -35,7 +35,7 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h4 className="text-white font-bold mb-6">Contact</h4>
+            <h4 className="text-white font-bold text-sm sm:text-base mb-4 sm:mb-6">Contact</h4>
             <ul className="space-y-3 text-slate-400 text-sm">
               {/* <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> pipguardian1@gmail.com</li> */}
               <li>12 Rue de Rivoli, 75004 Paris, France</li>

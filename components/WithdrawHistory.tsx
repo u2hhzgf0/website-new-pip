@@ -33,12 +33,10 @@ const WithdrawHistory = () => {
   const totalResults = transactionsData.totalResults || 0;
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString('en-US', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
       year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
     });
   };
 
@@ -54,27 +52,33 @@ const WithdrawHistory = () => {
     return address;
   };
 
+  const getStatusColor = (status: string) => {
+    if (status === 'completed') return 'bg-green-500/10 text-green-500';
+    if (status === 'pending' || status === 'processing') return 'bg-yellow-500/10 text-yellow-500';
+    return 'bg-red-500/10 text-red-500';
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Withdrawal History</h2>
-          <p className="text-slate-400 text-sm">View your payout records and status</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Withdrawal History</h2>
+          <p className="text-slate-400 text-xs sm:text-sm">View your payout records and status</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <div className="relative">
+          <div className="relative w-full sm:w-auto">
             <input
               type="text"
               placeholder="Search ID..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold-500"
+              className="w-full sm:w-auto bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold-500"
             />
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {[
-              { value: '', label: 'All Status' },
+              { value: '', label: 'All' },
               { value: 'pending', label: 'Pending' },
               { value: 'processing', label: 'Processing' },
               { value: 'completed', label: 'Completed' },
@@ -86,7 +90,7 @@ const WithdrawHistory = () => {
                   setStatusFilter(status.value);
                   setPage(1);
                 }}
-                className={`px-3 py-2 rounded-lg text-xs font-medium transition-colors border ${
+                className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-medium transition-colors border ${
                   statusFilter === status.value
                     ? 'bg-gold-500 text-slate-900 border-gold-500'
                     : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
@@ -99,7 +103,7 @@ const WithdrawHistory = () => {
         </div>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="animate-spin text-gold-500" size={32} />
@@ -111,7 +115,8 @@ const WithdrawHistory = () => {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* Desktop Table */}
+            <div className="hidden sm:block overflow-x-auto">
               <table className="w-full text-left">
                 <thead className="bg-slate-950 text-slate-400 text-sm uppercase tracking-wider">
                   <tr>
@@ -145,11 +150,7 @@ const WithdrawHistory = () => {
                         -${tx.netAmount.toLocaleString()}
                       </td>
                       <td className="px-6 py-4">
-                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                          tx.status === 'completed' ? 'bg-green-500/10 text-green-500' :
-                          tx.status === 'pending' || tx.status === 'processing' ? 'bg-yellow-500/10 text-yellow-500' :
-                          'bg-red-500/10 text-red-500'
-                        }`}>
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(tx.status)}`}>
                           {formatStatus(tx.status)}
                         </span>
                       </td>
@@ -165,24 +166,59 @@ const WithdrawHistory = () => {
               )}
             </div>
 
+            {/* Mobile Card View */}
+            <div className="sm:hidden divide-y divide-slate-800">
+              {withdrawals.length === 0 ? (
+                <div className="p-8 text-center text-slate-500 text-sm">
+                  No withdrawal records found.
+                </div>
+              ) : (
+                withdrawals.map((tx) => (
+                  <Link key={tx.id} href={`/dashboard/transactions/${tx.id}`} className="block p-3 hover:bg-slate-800/50 transition-colors">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-3 min-w-0">
+                        <div className="bg-red-500/10 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-red-500">
+                          <ArrowUpRight size={14} />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-medium text-white">
+                            {tx.paymentGateway?.name || tx.paymentMethod || 'Withdrawal'}
+                          </p>
+                          <p className="text-[10px] text-slate-500">{formatDate(tx.createdAt)}</p>
+                        </div>
+                      </div>
+                      <div className="text-right flex-shrink-0 ml-2">
+                        <p className="text-sm font-bold text-red-400">
+                          -${tx.netAmount.toLocaleString()}
+                        </p>
+                        <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${getStatusColor(tx.status)}`}>
+                          {formatStatus(tx.status)}
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+              )}
+            </div>
+
             {/* Pagination */}
-            <div className="p-4 border-t border-slate-800 flex justify-between items-center text-sm text-slate-500">
+            <div className="p-3 sm:p-4 border-t border-slate-800 flex justify-between items-center text-xs sm:text-sm text-slate-500">
               <span>
-                Showing {withdrawals.length} of {totalResults} records
-                {totalPages > 1 && ` (Page ${page} of ${totalPages})`}
+                {withdrawals.length} of {totalResults}
+                {totalPages > 1 && <span className="hidden sm:inline"> (Page {page} of {totalPages})</span>}
               </span>
               <div className="flex space-x-2">
                 <button
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Prev
                 </button>
                 <button
                   onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>

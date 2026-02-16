@@ -57,43 +57,43 @@ const Plans = () => {
   }
 
   return (
-    <section id="plans" className="py-24 bg-slate-950 relative">
+    <section id="plans" className="py-12 sm:py-24 bg-slate-950 relative">
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">Investment Plans</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">Choose a plan that aligns with your financial goals. Transparent returns, zero hidden fees.</p>
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 sm:mb-4">Investment Plans</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">Choose a plan that aligns with your financial goals. Transparent returns, zero hidden fees.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 items-start">
           {plans.map((plan) => {
             const { totalReturn, profit, daily } = calculateReturns(plan.minDeposit, plan.roi, plan.roiType, plan.duration);
 
             return (
               <div
                 key={plan.id}
-                className={`relative bg-slate-900 rounded-2xl p-8 border ${
+                className={`relative bg-slate-900 rounded-xl sm:rounded-2xl p-5 sm:p-8 border ${
                   plan.isPopular
-                    ? 'border-gold-500/50 shadow-2xl shadow-gold-500/10 scale-105 z-10'
+                    ? 'border-gold-500/50 shadow-2xl shadow-gold-500/10 md:scale-105 z-10'
                     : 'border-slate-800 hover:border-slate-700'
                 } transition-all duration-300 flex flex-col h-full`}
               >
                 {plan.isPopular && (
-                  <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gold-500 text-slate-950 text-xs font-bold uppercase tracking-wider py-1 px-4 rounded-full">
+                  <div className="absolute -top-3 sm:-top-4 left-1/2 transform -translate-x-1/2 bg-gold-500 text-slate-950 text-[10px] sm:text-xs font-bold uppercase tracking-wider py-1 px-3 sm:px-4 rounded-full">
                     Most Popular
                   </div>
                 )}
 
-                <h3 className={`text-2xl font-bold mb-2 ${plan.isPopular ? 'text-white' : 'text-slate-200'}`}>{plan.name}</h3>
+                <h3 className={`text-lg sm:text-2xl font-bold mb-2 ${plan.isPopular ? 'text-white' : 'text-slate-200'}`}>{plan.name}</h3>
                 <div className="mb-2">
                   <div className="flex items-baseline">
                     {plan.approximateRoi ? (
-                      <span className="text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
+                      <span className="text-xl sm:text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
                     ) : (
                       <>
-                        <span className="text-4xl font-bold text-gold-500">{plan.roi}%</span>
-                        <span className="text-slate-400 ml-2">{plan.roiType} ROI</span>
+                        <span className="text-2xl sm:text-4xl font-bold text-gold-500">{plan.roi}%</span>
+                        <span className="text-slate-400 ml-2 text-sm">{plan.roiType} ROI</span>
                       </>
                     )}
                   </div>
@@ -120,24 +120,24 @@ const Plans = () => {
                   </div>
                 </div>
 
-                <div className="space-y-4 mb-8 flex-1 mt-4">
-                  <div className="flex justify-between py-2 border-b border-slate-800">
+                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-1 mt-3 sm:mt-4">
+                  <div className="flex justify-between py-1.5 sm:py-2 border-b border-slate-800 text-sm">
                     <span className="text-slate-400">Duration</span>
                     <span className="text-white font-medium">{plan.duration} {plan.durationType}</span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-slate-800">
+                  <div className="flex justify-between py-1.5 sm:py-2 border-b border-slate-800 text-sm">
                     <span className="text-slate-400">Min Deposit</span>
                     <span className="text-white font-medium">${plan.minDeposit}</span>
                   </div>
-                  <div className="flex justify-between py-2 border-b border-slate-800">
+                  <div className="flex justify-between py-1.5 sm:py-2 border-b border-slate-800 text-sm">
                     <span className="text-slate-400">Max Deposit</span>
                     <span className="text-white font-medium">${plan.maxDeposit.toLocaleString()}</span>
                   </div>
                   {plan.features && plan.features.length > 0 && (
-                    <div className="pt-4 space-y-3">
+                    <div className="pt-3 sm:pt-4 space-y-2 sm:space-y-3">
                       {plan.features.map((feat, i) => (
-                        <div key={i} className="flex items-center text-sm text-slate-300">
-                          <Check className="w-4 h-4 text-green-500 mr-3" />
+                        <div key={i} className="flex items-center text-xs sm:text-sm text-slate-300">
+                          <Check className="w-4 h-4 text-green-500 mr-2 sm:mr-3 flex-shrink-0" />
                           {feat}
                         </div>
                       ))}
@@ -147,7 +147,7 @@ const Plans = () => {
 
                 <Link
                   href="/dashboard/plans/invest"
-                  className={`w-full py-4 rounded-xl font-bold text-center transition-all block ${
+                  className={`w-full py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base text-center transition-all block ${
                     plan.isPopular
                       ? 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg'
                       : 'bg-slate-800 hover:bg-slate-700 text-white'

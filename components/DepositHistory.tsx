@@ -11,16 +11,22 @@ const DepositHistory = () => {
     { id: 'DEP-93818', date: 'Oct 10, 2023, 09:00 AM', method: 'Ethereum', amount: 1200, status: 'Rejected', txHash: '-' },
   ];
 
+  const getStatusColor = (status: string) => {
+    if (status === 'Completed') return 'bg-green-500/10 text-green-500';
+    if (status === 'Pending') return 'bg-yellow-500/10 text-yellow-500';
+    return 'bg-red-500/10 text-red-500';
+  };
+
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Deposit History</h2>
-          <p className="text-slate-400 text-sm">Track all your funding transactions</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Deposit History</h2>
+          <p className="text-slate-400 text-xs sm:text-sm">Track all your funding transactions</p>
         </div>
         <div className="flex space-x-2">
-           <div className="relative">
-             <input type="text" placeholder="Search ID..." className="bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold-500" />
+           <div className="relative w-full sm:w-auto">
+             <input type="text" placeholder="Search ID..." className="w-full sm:w-auto bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold-500" />
              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
            </div>
            <button className="p-2 bg-slate-900 border border-slate-800 rounded-lg text-slate-400 hover:text-white">
@@ -29,8 +35,9 @@ const DepositHistory = () => {
         </div>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-lg">
-        <div className="overflow-x-auto">
+      <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+        {/* Desktop Table */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left">
             <thead className="bg-slate-950 text-slate-400 text-sm uppercase tracking-wider">
               <tr>
@@ -59,11 +66,7 @@ const DepositHistory = () => {
                     +${tx.amount.toLocaleString()}
                   </td>
                   <td className="px-6 py-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${
-                      tx.status === 'Completed' ? 'bg-green-500/10 text-green-500' :
-                      tx.status === 'Pending' ? 'bg-yellow-500/10 text-yellow-500' :
-                      'bg-red-500/10 text-red-500'
-                    }`}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(tx.status)}`}>
                       {tx.status}
                     </span>
                   </td>
@@ -77,12 +80,46 @@ const DepositHistory = () => {
             </tbody>
           </table>
         </div>
-        {/* Pagination Mock */}
-        <div className="p-4 border-t border-slate-800 flex justify-between items-center text-sm text-slate-500">
+
+        {/* Mobile Card View */}
+        <div className="sm:hidden divide-y divide-slate-800">
+          {deposits.length === 0 ? (
+            <div className="p-8 text-center text-slate-500 text-sm">
+              No deposit records found.
+            </div>
+          ) : (
+            deposits.map((tx) => (
+              <div key={tx.id} className="p-3 hover:bg-slate-800/50 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3 min-w-0">
+                    <div className="bg-green-500/10 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-green-500">
+                      <ArrowDownLeft size={14} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium text-white">{tx.method}</p>
+                      <p className="text-[10px] text-slate-500">{tx.date}</p>
+                    </div>
+                  </div>
+                  <div className="text-right flex-shrink-0 ml-2">
+                    <p className="text-sm font-bold text-green-400">
+                      +${tx.amount.toLocaleString()}
+                    </p>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold ${getStatusColor(tx.status)}`}>
+                      {tx.status}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+
+        {/* Pagination */}
+        <div className="p-3 sm:p-4 border-t border-slate-800 flex justify-between items-center text-xs sm:text-sm text-slate-500">
           <span>Showing 4 of 24 transactions</span>
           <div className="flex space-x-2">
-            <button className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white disabled:opacity-50">Prev</button>
-            <button className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white">Next</button>
+            <button className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs disabled:opacity-50">Prev</button>
+            <button className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs">Next</button>
           </div>
         </div>
       </div>

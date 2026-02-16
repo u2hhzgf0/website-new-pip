@@ -4,25 +4,25 @@ import { FaTelegramPlane, FaLinkedinIn, FaFacebookF, FaInstagram } from "react-i
 
 const Contact = () => {
   return (
-    <section id="contact" className="py-24 bg-slate-950 relative">
+    <section id="contact" className="py-12 sm:py-24 bg-slate-950 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-white mb-4">Get in Touch</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white mb-3 sm:mb-4">Get in Touch</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
             Have questions about our investment plans or need technical assistance? Our dedicated support team is available 24/7.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 lg:gap-12 bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-800 shadow-2xl">
           {/* Contact Info Sidebar */}
-          <div className="lg:col-span-2 bg-gradient-to-br from-slate-800 to-slate-900 p-10 flex flex-col justify-between relative overflow-hidden">
+          <div className="lg:col-span-2 bg-gradient-to-br from-slate-800 to-slate-900 p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
              {/* Decorative circles */}
             <div className="absolute top-0 right-0 -mr-16 -mt-16 w-48 h-48 bg-gold-500/20 rounded-full blur-2xl"></div>
             <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-48 h-48 bg-blue-500/20 rounded-full blur-2xl"></div>
 
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold text-white mb-8">Contact Information</h3>
-              <div className="space-y-8">
+              <h3 className="text-xl sm:text-2xl font-bold text-white mb-5 sm:mb-8">Contact Information</h3>
+              <div className="space-y-5 sm:space-y-8">
                 {/* <div className="flex items-start space-x-4">
                   <div className="bg-slate-700/50 p-3 rounded-lg text-gold-500">
                     <Mail size={20} />
@@ -78,7 +78,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Form */}
-          <div className="lg:col-span-3 p-10">
+          <div className="lg:col-span-3 p-6 sm:p-10">
             <form className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>

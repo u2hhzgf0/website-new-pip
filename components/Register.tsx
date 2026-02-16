@@ -83,9 +83,9 @@ function RegisterForm() {
         </div>
 
         {/* Register Card */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-8 rounded-2xl shadow-2xl">
+        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-5 sm:p-8 rounded-2xl shadow-2xl">
           <form onSubmit={handleRegister} className="space-y-5">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">First Name</label>
                 <div className="relative">

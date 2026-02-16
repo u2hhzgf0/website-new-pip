@@ -118,71 +118,71 @@ export default function InvestmentDetail() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-start gap-3 sm:gap-4 flex-wrap">
         <button
           onClick={() => router.back()}
           className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
         >
           <ArrowLeft className="text-slate-400" size={20} />
         </button>
-        <div className="flex-1">
-          <div className="flex items-center gap-3 mb-1">
-            <h1 className="text-2xl font-bold text-white">{investment.planName}</h1>
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-3 mb-1 flex-wrap">
+            <h1 className="text-xl sm:text-xl sm:text-2xl font-bold text-white">{investment.planName}</h1>
             <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(investment.status)}`}>
               {investment.status}
             </span>
           </div>
-          <p className="text-slate-400 text-sm">Investment ID: #{investment.id}</p>
+          <p className="text-slate-400 text-xs sm:text-sm">Investment ID: #{investment.id}</p>
         </div>
         <Link
           href={`/dashboard/profits/investment/${investmentId}`}
-          className="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-white rounded-lg font-medium transition-colors"
+          className="px-3 sm:px-4 py-2 bg-gold-500 hover:bg-gold-600 text-white rounded-lg font-medium transition-colors text-sm"
         >
-          View Profit History
+          Profit History
         </Link>
       </div>
 
       {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Investment Amount</p>
             <DollarSign className="text-gold-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${investment.amount.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${investment.amount.toLocaleString()}</p>
           <p className="text-xs text-slate-400 mt-2">Principal amount</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">ROI</p>
             <Percent className="text-emerald-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-emerald-400">{investment.roi}%</p>
+          <p className="text-2xl sm:text-3xl font-bold text-emerald-400">{investment.roi}%</p>
           <p className="text-xs text-slate-400 mt-2">Return rate</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Profit</p>
             <TrendingUp className="text-blue-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${investment.totalProfit.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${investment.totalProfit.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Expected earnings</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Daily Profit</p>
             <Calendar className="text-rose-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${investment.dailyProfit.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${investment.dailyProfit.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2">Per day earning</p>
         </div>
       </div>
 
       {/* Progress Section */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-white font-semibold text-lg">Investment Progress</h3>
@@ -191,7 +191,7 @@ export default function InvestmentDetail() {
             </p>
           </div>
           <div className="text-right">
-            <p className="text-2xl font-bold text-gold-500">{investment.progress.toFixed(1)}%</p>
+            <p className="text-xl sm:text-2xl font-bold text-gold-500">{investment.progress.toFixed(1)}%</p>
             <p className="text-xs text-slate-400 mt-1">Complete</p>
           </div>
         </div>
@@ -231,13 +231,13 @@ export default function InvestmentDetail() {
 
       {/* Profit Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Profit Breakdown</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-slate-800/30 rounded-lg">
               <div>
                 <p className="text-slate-400 text-sm">Total Expected Profit</p>
-                <p className="text-2xl font-bold text-white mt-1">${investment.totalProfit.toLocaleString()}</p>
+                <p className="text-xl sm:text-2xl font-bold text-white mt-1">${investment.totalProfit.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
                 <TrendingUp className="text-blue-500" size={24} />
@@ -247,7 +247,7 @@ export default function InvestmentDetail() {
             <div className="flex items-center justify-between p-4 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
               <div>
                 <p className="text-emerald-400 text-sm">Profit Received</p>
-                <p className="text-2xl font-bold text-emerald-400 mt-1">${investment.paidProfit.toLocaleString()}</p>
+                <p className="text-xl sm:text-2xl font-bold text-emerald-400 mt-1">${investment.paidProfit.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center">
                 <CheckCircle className="text-emerald-500" size={24} />
@@ -257,7 +257,7 @@ export default function InvestmentDetail() {
             <div className="flex items-center justify-between p-4 bg-slate-800/30 rounded-lg">
               <div>
                 <p className="text-slate-400 text-sm">Remaining Profit</p>
-                <p className="text-2xl font-bold text-white mt-1">${investment.remainingProfit.toLocaleString()}</p>
+                <p className="text-xl sm:text-2xl font-bold text-white mt-1">${investment.remainingProfit.toLocaleString()}</p>
               </div>
               <div className="w-12 h-12 bg-gold-500/10 rounded-lg flex items-center justify-center">
                 <Clock className="text-gold-500" size={24} />
@@ -266,7 +266,7 @@ export default function InvestmentDetail() {
           </div>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <h3 className="text-white font-semibold text-lg mb-4">Investment Details</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between py-3 border-b border-slate-800">
@@ -303,10 +303,10 @@ export default function InvestmentDetail() {
 
       {/* Recent Profit History */}
       <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+        <div className="p-4 sm:p-6 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
-            <h3 className="text-white font-semibold text-lg">Recent Profit Distributions</h3>
-            <p className="text-slate-400 text-sm mt-1">Last 5 profit payments</p>
+            <h3 className="text-white font-semibold text-base sm:text-lg">Recent Profit Distributions</h3>
+            <p className="text-slate-400 text-xs sm:text-sm mt-1">Last 5 profit payments</p>
           </div>
           <Link
             href={`/dashboard/profits/investment/${investmentId}`}
@@ -318,7 +318,7 @@ export default function InvestmentDetail() {
         </div>
         <div className="divide-y divide-slate-800">
           {profitHistory.map((profit) => (
-            <div key={profit.id} className="p-6 hover:bg-slate-800/30 transition-colors">
+            <div key={profit.id} className="p-4 sm:p-6 hover:bg-slate-800/30 transition-colors">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center">

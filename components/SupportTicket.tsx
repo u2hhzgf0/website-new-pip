@@ -64,11 +64,11 @@ const SupportTicket = () => {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-bold text-white">Support Center</h2>
-          <p className="text-slate-400 text-sm">Get expert assistance from our dedicated team.</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-white">Support Center</h2>
+          <p className="text-slate-400 text-xs sm:text-sm">Get expert assistance from our dedicated team.</p>
         </div>
 
         {/* Balance Display for Context */}
@@ -83,10 +83,10 @@ const SupportTicket = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         {/* Left Column: Ticket Form */}
         <div className="lg:col-span-2">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 relative overflow-hidden">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-8 relative overflow-hidden">
              {/* Fee Badge */}
             <div className="absolute top-0 right-0 bg-gold-500 text-slate-950 text-xs font-bold px-4 py-1.5 rounded-bl-xl z-10">
               Fee: ${TICKET_COST.toFixed(2)} / Ticket
@@ -135,7 +135,7 @@ const SupportTicket = () => {
 
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Priority Level</label>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                   {[
                     { label: 'Low', value: 'low' },
                     { label: 'Normal', value: 'normal' },
@@ -201,8 +201,8 @@ const SupportTicket = () => {
         </div>
 
         {/* Right Column: Info & FAQs */}
-        <div className="lg:col-span-1 space-y-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+        <div className="lg:col-span-1 space-y-4 sm:space-y-6">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
             <div className="flex items-center space-x-2 text-white font-bold mb-4">
                <HelpCircle size={20} className="text-gold-500" />
                <h3>Quick Help</h3>
@@ -225,7 +225,7 @@ const SupportTicket = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-indigo-900/50 to-slate-900 border border-indigo-500/20 rounded-xl p-6 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-indigo-900/50 to-slate-900 border border-indigo-500/20 rounded-xl p-4 sm:p-6 relative overflow-hidden">
              <div className="relative z-10">
                <h4 className="text-white font-bold mb-2">Live Chat</h4>
                <p className="text-sm text-indigo-200 mb-4">Need urgent help? Connect with an agent instantly.</p>

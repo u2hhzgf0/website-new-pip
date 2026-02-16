@@ -114,7 +114,7 @@ function VerifyEmailContent() {
         <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
       )}
 
-      <div className="max-w-md w-full bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-8">
+      <div className="max-w-md w-full bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-5 sm:p-8">
 
         {status === 'success' ? (
           <div className="text-center">
@@ -153,7 +153,7 @@ function VerifyEmailContent() {
 
             {/* OTP Form */}
             <form onSubmit={handleVerify}>
-              <div className="flex justify-center gap-3 mb-6" onPaste={handlePaste}>
+              <div className="flex justify-center gap-2 sm:gap-3 mb-6" onPaste={handlePaste}>
                 {otp.map((digit, index) => (
                   <input
                     key={index}
@@ -164,7 +164,7 @@ function VerifyEmailContent() {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className={`w-12 h-14 text-center text-xl font-bold rounded-lg border bg-slate-950/50 text-white focus:outline-none focus:ring-2 transition-all ${
+                    className={`w-10 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-lg border bg-slate-950/50 text-white focus:outline-none focus:ring-2 transition-all ${
                       status === 'error'
                         ? 'border-rose-500/50 focus:ring-rose-500/50 focus:border-rose-500'
                         : 'border-slate-700 focus:ring-gold-500/50 focus:border-gold-500'

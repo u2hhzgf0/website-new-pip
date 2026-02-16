@@ -84,10 +84,10 @@ export default function ProfitHistory() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-start">
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-white">Profit History</h1>
-          <p className="text-slate-400 text-sm mt-1">View all your profit distributions</p>
+          <h1 className="text-xl sm:text-2xl font-bold text-white">Profit History</h1>
+          <p className="text-slate-400 text-xs sm:text-sm mt-1">View all your profit distributions</p>
         </div>
         <button className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white px-4 py-2 rounded-lg transition-colors">
           <Download size={18} />
@@ -96,31 +96,31 @@ export default function ProfitHistory() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Total Profit Earned</p>
             <DollarSign className="text-emerald-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${stats.totalProfit.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${stats.totalProfit.toFixed(2)}</p>
           <p className="text-xs text-emerald-400 mt-2">All-time earnings</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Pending Profit</p>
             <TrendingUp className="text-amber-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">${stats.pendingProfit.toFixed(2)}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">${stats.pendingProfit.toFixed(2)}</p>
           <p className="text-xs text-slate-400 mt-2">To be distributed</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
+        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-400 text-sm">Distributions</p>
             <TrendingUp className="text-gold-500" size={20} />
           </div>
-          <p className="text-3xl font-bold text-white">{stats.distributionCount}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-white">{stats.distributionCount}</p>
           <p className="text-xs text-slate-400 mt-2">Total payments</p>
         </div>
       </div>

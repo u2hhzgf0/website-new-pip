@@ -117,7 +117,7 @@ const Login = () => {
         </div>
 
         {/* Login Card */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-8 rounded-2xl shadow-2xl">
+        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-5 sm:p-8 rounded-2xl shadow-2xl">
           <form onSubmit={handleLogin} className="space-y-6">
             {/* Error Message */}
             {errorMessage && (
@@ -221,7 +221,7 @@ const Login = () => {
         </div>
 
         {/* Footer Links */}
-        <div className="mt-8 flex justify-center space-x-6 text-xs text-slate-500">
+        <div className="mt-8 flex justify-center space-x-4 sm:space-x-6 text-xs text-slate-500">
           <a href="#" className="hover:text-slate-300">Privacy Policy</a>
           <a href="#" className="hover:text-slate-300">Terms of Service</a>
           <a href="#" className="hover:text-slate-300">Help Center</a>

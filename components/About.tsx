@@ -3,28 +3,28 @@ import { ShieldCheck, Globe } from 'lucide-react';
 
 const About = () => {
   return (
-    <section id="about" className="py-24 bg-slate-950 relative overflow-hidden">
+    <section id="about" className="py-12 sm:py-24 bg-slate-950 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-16 items-center">
           {/* Left Column: Content */}
           <div>
             <div className="inline-flex items-center space-x-2 bg-slate-900 border border-slate-800 rounded-full px-4 py-1.5 mb-6">
               <span className="text-gold-500 text-sm font-bold uppercase tracking-wider">Our Mission</span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6 leading-tight">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4 sm:mb-6 leading-tight">
               Redefining Pipguardian Management for the <span className="text-gold-500">Digital Age</span>
             </h2>
 
-            <p className="text-slate-400 text-lg mb-6 leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-lg mb-4 sm:mb-6 leading-relaxed">
               To make forex investment simple, secure, and accessible for everyone. We aim to empower individuals to transform their financial position through disciplined trading and structured growth opportunities.
             </p>
 
-            <p className="text-slate-400 text-lg mb-8 leading-relaxed">
+            <p className="text-slate-400 text-sm sm:text-lg mb-6 sm:mb-8 leading-relaxed">
               Beyond investing, we create pathways for career advancement, performance-based rewards, and global exposure. At PipGuardian, we are building a trusted platform where ambition meets opportunity and growth becomes a long-term journey.
             </p>
 
@@ -56,15 +56,15 @@ const About = () => {
             <img
               src="https://picsum.photos/seed/office/800/1000?grayscale"
               alt="Pipguardian Office"
-              className="relative rounded-3xl shadow-2xl border border-slate-800 z-10 w-full object-cover h-[600px]"
+              className="relative rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-800 z-10 w-full object-cover h-[300px] sm:h-[450px] lg:h-[600px]"
             />
 
             {/* Floating Stats Card */}
-            <div className="absolute -bottom-10 -left-10 md:left-10 z-20 bg-slate-900/90 backdrop-blur-md border border-slate-700 p-8 rounded-2xl shadow-xl max-w-xs">
-              <div className="flex items-center justify-between mb-6">
+            <div className="relative sm:absolute sm:-bottom-10 sm:-left-10 md:left-10 z-20 bg-slate-900/90 backdrop-blur-md border border-slate-700 p-4 sm:p-8 rounded-xl sm:rounded-2xl shadow-xl max-w-xs mt-4 sm:mt-0">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div>
-                  <p className="text-slate-400 text-sm">Total Assets Managed</p>
-                  <p className="text-3xl font-bold text-white">$150M+</p>
+                  <p className="text-slate-400 text-xs sm:text-sm">Total Assets Managed</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">$150M+</p>
                 </div>
                 <div className="bg-green-500/10 p-2 rounded-lg">
                   <TrendingUpIcon />

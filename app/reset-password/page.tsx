@@ -158,7 +158,7 @@ function ResetPasswordForm() {
           <p className="text-slate-400">Choose a strong password for your account</p>
         </div>
 
-        <div className="bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-8">
+        <div className="bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-5 sm:p-8">
           {!token ? (
             <div className="bg-rose-500/10 border border-rose-500/50 rounded-lg p-4">
               <div className="flex items-start gap-3">
@@ -203,7 +203,7 @@ function ResetPasswordForm() {
                 {formData.password && (
                   <div className="mt-3 space-y-2">
                     <p className="text-xs text-slate-400 font-medium">Password must contain:</p>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {['At least 8 characters', 'One uppercase letter', 'One lowercase letter', 'One number'].map((req, idx) => {
                         const isValid = !validationErrors.includes(req)
                         return (

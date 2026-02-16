@@ -49,9 +49,9 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose, duration =
   return (
     <div
       className={`
-        fixed top-5 right-5 z-50 flex items-center gap-3 p-4 rounded-lg border backdrop-blur-xl shadow-2xl
+        fixed top-3 right-3 sm:top-5 sm:right-5 left-3 sm:left-auto z-50 flex items-center gap-3 p-3 sm:p-4 rounded-lg border backdrop-blur-xl shadow-2xl
         animate-in slide-in-from-right fade-in duration-300
-        min-w-[320px] max-w-md
+        min-w-0 sm:min-w-[320px] max-w-md
         ${getStyles()}
       `}
     >

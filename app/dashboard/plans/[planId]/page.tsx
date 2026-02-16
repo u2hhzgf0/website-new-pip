@@ -166,7 +166,7 @@ export default function PlanDetailPage() {
         </Link>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <h2 className="text-2xl font-bold text-white">{plan.name}</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white">{plan.name}</h2>
             {plan.isPopular && (
               <span className="flex items-center gap-1 bg-gold-500/20 text-gold-500 px-2.5 py-1 rounded-full text-xs font-bold">
                 <Star size={12} fill="currentColor" /> Popular
@@ -181,7 +181,7 @@ export default function PlanDetailPage() {
         <div className="lg:col-span-2 space-y-6">
 
           {/* ROI Hero Card */}
-          <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden">
+          <div className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-5 sm:p-8 text-white shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 opacity-10">
               <TrendingUp size={120} />
             </div>
@@ -190,19 +190,19 @@ export default function PlanDetailPage() {
                 {plan.approximateRoi ? (
                   <>
                     <p className="text-indigo-200 text-sm font-medium mb-1 uppercase tracking-wider">Approximate Return</p>
-                    <p className="text-3xl font-bold">{plan.approximateRoi}</p>
+                    <p className="text-2xl sm:text-3xl font-bold">{plan.approximateRoi}</p>
                   </>
                 ) : (
                   <>
                     <p className="text-indigo-200 text-sm font-medium mb-1 uppercase tracking-wider">{plan.roiType} Return</p>
-                    <p className="text-5xl font-bold">{plan.roi}%</p>
+                    <p className="text-3xl sm:text-5xl font-bold">{plan.roi}%</p>
                   </>
                 )}
                 <p className="text-indigo-200 mt-2">for {plan.duration} {plan.durationType}</p>
               </div>
               <div className="text-right">
                 <p className="text-indigo-200 text-sm font-medium mb-1">Total Duration</p>
-                <p className="text-3xl font-bold">{Math.round(totalDays)}</p>
+                <p className="text-2xl sm:text-3xl font-bold">{Math.round(totalDays)}</p>
                 <p className="text-indigo-200">days</p>
               </div>
             </div>
@@ -210,14 +210,14 @@ export default function PlanDetailPage() {
 
           {/* Description */}
           {plan.description && (
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
               <h3 className="text-white font-semibold mb-3">About This Plan</h3>
               <p className="text-slate-300 text-sm leading-relaxed">{plan.description}</p>
             </div>
           )}
 
           {/* Details Grid */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-4">Plan Details</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <DetailCard icon={DollarSign} label="Min Deposit" value={`$${plan.minDeposit.toLocaleString()}`} color="emerald" />
@@ -231,7 +231,7 @@ export default function PlanDetailPage() {
 
           {/* Features */}
           {plan.features && plan.features.length > 0 && (
-            <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+            <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
               <h3 className="text-white font-semibold mb-4">Features</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 {plan.features.map((feature: string, idx: number) => (
@@ -245,7 +245,7 @@ export default function PlanDetailPage() {
           )}
 
           {/* Profit Calculator */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
               <Calculator size={18} className="text-gold-500" /> Profit Calculator
             </h3>
@@ -299,7 +299,7 @@ export default function PlanDetailPage() {
         <div className="space-y-6">
 
           {/* Quick Stats */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-4">Quick Stats</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
@@ -326,7 +326,7 @@ export default function PlanDetailPage() {
           </div>
 
           {/* Timestamps */}
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
             <h3 className="text-white font-semibold mb-4 flex items-center gap-2">
               <Calendar size={16} className="text-slate-400" /> Timeline
             </h3>

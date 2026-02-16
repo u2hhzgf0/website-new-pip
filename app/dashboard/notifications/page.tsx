@@ -324,7 +324,7 @@ export default function NotificationCenter() {
         </div>
 
         {/* Stats Skeleton */}
-        <div className="grid grid-cols-2 md:grid-cols-7 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
           {[...Array(7)].map((_, i) => (
             <div key={i} className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 animate-pulse">
               <div className="h-3 bg-slate-800 rounded w-16 mb-2" />
@@ -356,7 +356,7 @@ export default function NotificationCenter() {
       <div className="space-y-6">
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-bold text-white">Notifications</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white">Notifications</h1>
             <p className="text-slate-400 text-sm mt-1">Error loading notifications</p>
           </div>
         </div>
@@ -389,7 +389,7 @@ export default function NotificationCenter() {
       <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-white">Notifications</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-white">Notifications</h1>
             {unreadCount > 0 && (
               <span className="px-2.5 py-1 bg-gold-500 text-white text-xs font-bold rounded-full">
                 {unreadCount}
@@ -438,31 +438,31 @@ export default function NotificationCenter() {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">All</p>
-          <p className="text-2xl font-bold text-white">{stats.all}</p>
+          <p className="text-xl sm:text-2xl font-bold text-white">{stats.all}</p>
         </div>
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">Unread</p>
-          <p className="text-2xl font-bold text-gold-500">{stats.unread}</p>
+          <p className="text-xl sm:text-2xl font-bold text-gold-500">{stats.unread}</p>
         </div>
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">Read</p>
-          <p className="text-2xl font-bold text-emerald-500">{stats.read}</p>
+          <p className="text-xl sm:text-2xl font-bold text-emerald-500">{stats.read}</p>
         </div>
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">Transactions</p>
-          <p className="text-2xl font-bold text-emerald-500">{stats.transaction}</p>
+          <p className="text-xl sm:text-2xl font-bold text-emerald-500">{stats.transaction}</p>
         </div>
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">System</p>
-          <p className="text-2xl font-bold text-blue-500">{stats.system}</p>
+          <p className="text-xl sm:text-2xl font-bold text-blue-500">{stats.system}</p>
         </div>
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">Promotions</p>
-          <p className="text-2xl font-bold text-gold-500">{stats.promotion}</p>
+          <p className="text-xl sm:text-2xl font-bold text-gold-500">{stats.promotion}</p>
         </div>
         <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 hover:border-slate-700 transition-colors">
           <p className="text-slate-400 text-xs mb-1 font-medium">Security</p>
-          <p className="text-2xl font-bold text-rose-500">{stats.security}</p>
+          <p className="text-xl sm:text-2xl font-bold text-rose-500">{stats.security}</p>
         </div>
       </div>
 
@@ -496,7 +496,7 @@ export default function NotificationCenter() {
       {/* Notifications List */}
       <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
         {filteredNotifications.length === 0 ? (
-          <div className="p-12 text-center">
+          <div className="p-8 sm:p-12 text-center">
             <div className="w-20 h-20 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
               <Bell className="text-slate-600" size={40} />
             </div>
@@ -524,7 +524,7 @@ export default function NotificationCenter() {
               return (
                 <div
                   key={notification.id}
-                  className={`p-5 hover:bg-slate-800/30 transition-all group cursor-pointer ${
+                  className={`p-4 sm:p-5 hover:bg-slate-800/30 transition-all group cursor-pointer ${
                     notification.status === 'unread' ? 'bg-slate-800/20 border-l-2 border-l-gold-500' : ''
                   } ${isDeleting ? 'opacity-50' : ''}`}
                   onClick={() => handleNotificationClick(notification)}
@@ -567,7 +567,7 @@ export default function NotificationCenter() {
                               handleMarkAsRead(notification.id)
                             }}
                             disabled={isMarkingAsRead}
-                            className="text-xs text-gold-500 hover:text-gold-400 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity font-medium"
+                            className="text-xs text-gold-500 hover:text-gold-400 flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity font-medium"
                           >
                             <Check size={14} />
                             Mark as read
@@ -579,7 +579,7 @@ export default function NotificationCenter() {
                             handleDelete(notification.id)
                           }}
                           disabled={isDeleting}
-                          className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity ml-auto font-medium"
+                          className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity ml-auto font-medium"
                         >
                           {isDeleting ? (
                             <Loader2 className="animate-spin" size={14} />
