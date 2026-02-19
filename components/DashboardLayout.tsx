@@ -135,8 +135,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       icon: PieChart,
       subItems: [
         { label: 'Invest', path: '/dashboard/plans/invest' },
-        { label: 'My Plans', path: '/dashboard/plans/my-plans' },
-        { label: 'Investment History', path: '/dashboard/plans/history' }
+        { label: 'My Plans', path: '/dashboard/plans/my-plans' }
       ]
     },
     { label: 'Transactions', icon: History, path: '/dashboard/transactions' },
