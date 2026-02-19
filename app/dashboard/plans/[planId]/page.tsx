@@ -152,6 +152,23 @@ export default function PlanDetailPage() {
   const calc = calculateReturns(calcAmountNum, plan.roi, plan.roiType, plan.duration, plan.durationType);
   const totalDays = getDurationInDays(plan.duration, plan.durationType);
 
+  // Boosted display numbers based on plan name
+  const boostMap: Record<string, { investors: number; invested: number }> = {
+    'advance': { investors: 23000, invested: 29900000 },
+    'basic': { investors: 17000, invested: 11900000 },
+    'premium': { investors: 11000, invested: 13700000 },
+  };
+  const planKey = plan.name?.toLowerCase();
+  const boost = boostMap[planKey] || { investors: 0, invested: 0 };
+  const displayInvestors = (plan.totalInvestors || 0) + boost.investors;
+  const displayInvested = (plan.totalInvested || 0) + boost.invested;
+
+  const formatCompact = (num: number): string => {
+    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (num >= 1_000) return (num / 1_000).toFixed(1).replace(/\.0$/, '') + 'K';
+    return num.toLocaleString();
+  };
+
   // For invest modal preview
   const investCalc = investAmount && parseFloat(investAmount) >= plan.minDeposit
     ? calculateReturns(parseFloat(investAmount), plan.roi, plan.roiType, plan.duration, plan.durationType)
@@ -224,8 +241,8 @@ export default function PlanDetailPage() {
               <DetailCard icon={DollarSign} label="Max Deposit" value={`$${plan.maxDeposit.toLocaleString()}`} color="blue" />
               <DetailCard icon={Clock} label="Duration" value={`${plan.duration} ${plan.durationType}`} color="purple" />
               <DetailCard icon={Gift} label="Referral Bonus" value={`${plan.referralBonus}%`} color="amber" />
-              <DetailCard icon={Users} label="Total Investors" value={(plan.totalInvestors || 0).toLocaleString()} color="cyan" />
-              <DetailCard icon={TrendingUp} label="Total Invested" value={`$${(plan.totalInvested || 0).toLocaleString()}`} color="gold" />
+              <DetailCard icon={Users} label="Total Investors" value={formatCompact(displayInvestors)} color="cyan" />
+              <DetailCard icon={TrendingUp} label="Total Invested" value={`$${formatCompact(displayInvested)}`} color="gold" />
             </div>
           </div>
 

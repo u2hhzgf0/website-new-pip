@@ -1,8 +1,8 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Users, DollarSign, Copy, Share2, CheckCheck, TrendingUp, Loader2, AlertCircle } from 'lucide-react';
-import { useGetReferralStatsQuery } from '@/store/api/referralApi';
+import { Users, DollarSign, Copy, Share2, CheckCheck, TrendingUp, Loader2, AlertCircle, Award } from 'lucide-react';
+import { useGetReferralStatsQuery, useGetCommissionRatesQuery } from '@/store/api/referralApi';
 
 const REFERRAL_BASE_DOMAIN = process.env.NEXT_PUBLIC_REFERRAL_BASE_DOMAIN || 'http://localhost:3000';
 
@@ -10,7 +10,9 @@ const Referrals = () => {
   const [copied, setCopied] = useState(false);
 
   const { data, isLoading, error } = useGetReferralStatsQuery();
+  const { data: ratesData } = useGetCommissionRatesQuery();
   const stats = data?.data?.attributes as any;
+  const commissionRates = ratesData?.data?.attributes || [];
 
   const referralCode = stats?.referralCode || '';
   const referralLink = referralCode ? `${REFERRAL_BASE_DOMAIN}/register?ref=${referralCode}` : '';
@@ -20,8 +22,12 @@ const Referrals = () => {
   const activeReferrals = stats?.activeReferrals ?? 0;
   const referrals = stats?.referrals ?? [];
 
-  // Get level 1 commission rate from level breakdown
-  const level1Rate = stats?.levelBreakdown?.level1?.commissionRate ?? 8;
+  // Get commission rates from API, fallback to server defaults
+  const defaultRates = [10, 5, 4, 3, 2, 1, 1];
+  const rates = commissionRates.length > 0
+    ? commissionRates.map((r: any) => ({ level: r.level, rate: r.commissionRate }))
+    : defaultRates.map((rate, i) => ({ level: i + 1, rate }));
+  const totalCommissionRate = rates.reduce((sum: number, r: any) => sum + r.rate, 0);
 
   const handleCopy = () => {
     if (!referralLink) return;
@@ -92,7 +98,7 @@ const Referrals = () => {
           <p className="text-slate-400 font-medium mb-1 text-xs sm:text-base">Total Earnings</p>
           <h3 className="text-xl sm:text-3xl font-bold text-white">${totalEarnings.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <p className="text-[10px] sm:text-xs text-slate-500 mt-1 sm:mt-2">
-            From all referral levels
+            From all 7 referral levels
           </p>
         </div>
 
@@ -111,11 +117,30 @@ const Referrals = () => {
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform">
             <Share2 size={64} className="text-purple-500" />
           </div>
-          <p className="text-slate-400 font-medium mb-1 text-xs sm:text-base">Commission</p>
-          <h3 className="text-xl sm:text-3xl font-bold text-white">{level1Rate}%</h3>
+          <p className="text-slate-400 font-medium mb-1 text-xs sm:text-base">Total Commission</p>
+          <h3 className="text-xl sm:text-3xl font-bold text-white">{totalCommissionRate}%</h3>
           <p className="text-[10px] sm:text-xs text-slate-500 mt-1 sm:mt-2">
-            Direct referral bonus
+            Across 7 levels
           </p>
+        </div>
+      </div>
+
+      {/* 7-Level Commission Structure */}
+      <div className="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-700 rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gold-500/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-4">
+            <Award className="text-gold-500" size={22} />
+            <h3 className="text-sm sm:text-base font-bold text-white">7-Level Commission Structure</h3>
+          </div>
+          <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 sm:gap-3">
+            {rates.map((r: any) => (
+              <div key={r.level} className="bg-slate-800/80 border border-slate-700 rounded-lg p-2 sm:p-3 text-center">
+                <p className="text-[10px] sm:text-xs text-slate-400 mb-1">Level {r.level}</p>
+                <p className="text-sm sm:text-lg font-bold text-gold-500">{r.rate}%</p>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 

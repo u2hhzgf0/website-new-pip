@@ -115,7 +115,7 @@ export default function ReferralNetwork() {
     // Default empty
     return Array.from({ length: 7 }, (_, i) => ({
       level: i + 1,
-      commission: [8, 4, 3, 2, 1, 1, 1][i],
+      commission: [10, 5, 4, 3, 2, 1, 1][i],
       count: 0,
       totalCommission: 0,
       activeCount: 0,

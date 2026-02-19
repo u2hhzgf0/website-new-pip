@@ -2,68 +2,93 @@ import { baseApi } from './baseApi';
 
 interface Referral {
   id: string;
-  referrerId: string;
-  referredUserId: string;
-  level: number;
-  commissionEarned: number;
-  status: 'active' | 'inactive';
-  referredUser?: {
+  referrer: {
     id: string;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     email: string;
-    isEmailVerified: boolean;
-    totalInvested?: number;
+    referralCode?: string;
   };
+  referred: {
+    id: string;
+    fullName: string;
+    email: string;
+  };
+  referralCode: string;
+  level: number;
+  commissionRate: number;
+  totalEarnings: number;
+  status: 'pending' | 'active' | 'inactive';
+  firstDepositAmount: number;
+  firstDepositDate: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
+interface LevelBreakdown {
+  commissionRate: number;
+  count: number;
+  active: number;
+  earnings: number;
+}
+
 interface ReferralStats {
+  referralCode: string;
   totalReferrals: number;
   activeReferrals: number;
-  totalCommissionEarned: number;
+  totalEarnings: number;
   monthlyCommission: number;
   weeklyCommission: number;
-  level1Count: number;
-  level2Count: number;
-  level3Count: number;
+  referrals: Array<{
+    id: string;
+    user: string;
+    level: number;
+    date: string;
+    status: 'active' | 'inactive' | 'pending';
+    earnings: number;
+  }>;
+  levelBreakdown: {
+    level1: LevelBreakdown;
+    level2: LevelBreakdown;
+    level3: LevelBreakdown;
+    level4: LevelBreakdown;
+    level5: LevelBreakdown;
+    level6: LevelBreakdown;
+    level7: LevelBreakdown;
+  };
 }
 
 interface ValidateReferralCodeResponse {
-  isValid: boolean;
-  referrer?: {
-    id: string;
-    firstName: string;
-    lastName: string;
-  };
+  valid: boolean;
+  referrerName: string;
 }
 
 interface TeamMember {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
+  fullName?: string;
   email: string;
   level: number;
+  image?: string;
   totalInvested: number;
-  commissionGenerated: number;
-  joinedAt: string;
-  isActive: boolean;
+  totalEarned: number;
+  earnings: number;
+  commissionEarned: number;
+  status: 'active' | 'inactive' | 'pending';
+  joinedDate: string;
+  children?: TeamMember[];
 }
 
-interface CommissionBreakdown {
-  level1Commission: number;
-  level2Commission: number;
-  level3Commission: number;
-  totalCommission: number;
-  level1Count: number;
-  level2Count: number;
-  level3Count: number;
+interface CommissionLevelBreakdown {
+  level: number;
+  commissionRate: number;
+  totalMembers: number;
+  activeMembers: number;
+  totalEarnings: number;
 }
 
 interface CommissionRate {
   level: number;
-  rate: number;
+  commissionRate: number;
   description: string;
 }
 
@@ -101,7 +126,7 @@ export const referralApi = baseApi.injectEndpoints({
     }),
 
     // Get Commission Breakdown
-    getCommissionBreakdown: builder.query<ApiResponse<CommissionBreakdown>, void>({
+    getCommissionBreakdown: builder.query<ApiResponse<CommissionLevelBreakdown[]>, void>({
       query: () => '/referrals/commission-breakdown',
       providesTags: ['Referrals'],
     }),
