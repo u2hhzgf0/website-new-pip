@@ -1,13 +1,18 @@
 'use client'
 
-import React from 'react';
-import { TrendingUp, AlertCircle, PlayCircle, Loader2, Clock } from 'lucide-react';
-import { useGetActiveInvestmentsQuery } from '@/store/api/investmentApi';
+import React, { useState } from 'react';
+import { TrendingUp, AlertCircle, PlayCircle, Loader2, Clock, Trash2, AlertTriangle, X } from 'lucide-react';
+import { useGetActiveInvestmentsQuery, useDestroyInvestmentMutation } from '@/store/api/investmentApi';
+import type { Investment } from '@/store/api/investmentApi';
 import Link from 'next/link';
+import { Toast, ToastType } from '@/components/Toast';
 
 const MyPlans = () => {
   const { data: investmentsResponse, isLoading, error } = useGetActiveInvestmentsQuery();
   const activePlans = investmentsResponse?.data?.attributes || [];
+  const [destroyInvestment, { isLoading: isDestroying }] = useDestroyInvestmentMutation();
+  const [destroyModal, setDestroyModal] = useState<Investment | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -68,8 +73,20 @@ const MyPlans = () => {
     );
   }
 
+  const handleDestroyInvestment = async () => {
+    if (!destroyModal) return;
+    try {
+      await destroyInvestment(destroyModal.id).unwrap();
+      setToast({ message: 'Investment destroyed successfully. 50% refunded to your wallet.', type: 'success' });
+      setDestroyModal(null);
+    } catch (err: any) {
+      setToast({ message: err?.data?.message || 'Failed to destroy investment', type: 'error' });
+    }
+  };
+
   return (
     <div className="space-y-4 sm:space-y-8">
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
       <div>
         <h2 className="text-xl sm:text-2xl font-bold text-white">My Active Plans</h2>
         <p className="text-slate-400 text-xs sm:text-sm">Monitor the progress of your active investments.</p>
@@ -177,6 +194,17 @@ const MyPlans = () => {
                     Last profit: {formatDate(investment.lastProfitDate)}
                   </div>
                 )}
+
+                {/* Destroy Plan Button */}
+                {investment.status === 'active' && (
+                  <button
+                    onClick={() => setDestroyModal(investment)}
+                    className="mt-4 w-full flex items-center justify-center gap-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 text-rose-400 hover:text-rose-300 px-4 py-2.5 rounded-lg text-sm font-medium transition-all"
+                  >
+                    <Trash2 size={16} />
+                    Destroy Plan
+                  </button>
+                )}
               </div>
              );
           })
@@ -194,6 +222,80 @@ const MyPlans = () => {
           </div>
         )}
       </div>
+      {/* Destroy Confirmation Modal */}
+      {destroyModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 relative">
+            <button
+              onClick={() => setDestroyModal(null)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-rose-500/10 p-2.5 rounded-lg">
+                <AlertTriangle className="text-rose-500" size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-white">Destroy Investment</h3>
+            </div>
+
+            <p className="text-slate-400 text-sm mb-5">
+              Are you sure you want to destroy this investment? This action cannot be undone.
+            </p>
+
+            <div className="bg-slate-950/50 border border-slate-800 rounded-xl p-4 space-y-3 mb-5">
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">Plan</span>
+                <span className="text-white font-medium">{destroyModal.plan.name}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-slate-400">Invested Amount</span>
+                <span className="text-white font-medium">${destroyModal.amount.toLocaleString()}</span>
+              </div>
+              <div className="border-t border-slate-800 pt-3 flex justify-between text-sm">
+                <span className="text-rose-400">Penalty (50%)</span>
+                <span className="text-rose-400 font-semibold">-${(destroyModal.amount * 0.5).toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-emerald-400">Refund Amount</span>
+                <span className="text-emerald-400 font-semibold">${(destroyModal.amount * 0.5).toLocaleString()}</span>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-500 mb-5">
+              Profits already earned will remain in your wallet.
+            </p>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setDestroyModal(null)}
+                disabled={isDestroying}
+                className="flex-1 bg-slate-800 hover:bg-slate-700 text-white py-2.5 rounded-lg font-medium transition-colors disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDestroyInvestment}
+                disabled={isDestroying}
+                className="flex-1 bg-rose-600 hover:bg-rose-700 text-white py-2.5 rounded-lg font-medium transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {isDestroying ? (
+                  <>
+                    <Loader2 size={16} className="animate-spin" />
+                    Destroying...
+                  </>
+                ) : (
+                  <>
+                    <Trash2 size={16} />
+                    Confirm Destroy
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

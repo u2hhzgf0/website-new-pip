@@ -23,6 +23,10 @@ export interface Investment {
   status: 'active' | 'completed' | 'cancelled' | 'paused';
   isPaused: boolean;
   autoReinvest: boolean;
+  cancelledAt?: string;
+  cancelledBy?: string;
+  cancellationPenalty: number;
+  refundAmount: number;
   transactionId: string;
   createdAt: string;
   updatedAt: string;
@@ -83,6 +87,15 @@ export const investmentApi = baseApi.injectEndpoints({
       query: () => '/investments/stats',
       providesTags: ['Investments'],
     }),
+
+    // Destroy Investment
+    destroyInvestment: builder.mutation<ApiResponse<Investment>, string>({
+      query: (id) => ({
+        url: `/investments/${id}/destroy`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Investments', 'Wallet'],
+    }),
   }),
 });
 
@@ -92,4 +105,5 @@ export const {
   useGetActiveInvestmentsQuery,
   useGetInvestmentByIdQuery,
   useGetInvestmentStatsQuery,
+  useDestroyInvestmentMutation,
 } = investmentApi;

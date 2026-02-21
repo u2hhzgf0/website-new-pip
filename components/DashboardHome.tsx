@@ -1,11 +1,10 @@
 'use client'
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Wallet, TrendingUp, DollarSign, ArrowUpRight, ArrowDownLeft, Loader2, AlertCircle, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { useGetWalletQuery } from '@/store/api/walletApi';
-import { useGetMyTransactionsQuery } from '@/store/api/transactionApi';
-import { useGetActiveInvestmentsQuery } from '@/store/api/investmentApi';
+import { useGetMyTransactionsQuery, useGetTodaysProfitQuery } from '@/store/api/transactionApi';
 
 interface TransactionsData {
   results?: any[]
@@ -59,33 +58,13 @@ const DashboardHome = () => {
     page: 1,
     limit: 5,
   });
-  const { data: investmentsData } = useGetActiveInvestmentsQuery();
+  // Fetch today's profit from server (sums all profit transactions for today)
+  const { data: todaysProfitData } = useGetTodaysProfitQuery();
 
   const wallet = walletData?.data?.attributes;
   const transactionsResponse = (transactionsData?.data?.attributes || {}) as TransactionsData;
   const transactions = transactionsResponse.results || [];
-  const activeInvestments = investmentsData?.data?.attributes || [];
-
-  // Calculate today's profit from ALL active investments
-  const todaysProfit = useMemo(() => {
-    if (!activeInvestments.length) return 0;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    return activeInvestments.reduce((sum, investment) => {
-      if (investment.lastProfitDate) {
-        const lastProfitDate = new Date(investment.lastProfitDate);
-        lastProfitDate.setHours(0, 0, 0, 0);
-
-        // If profit was distributed today for this investment, add its daily amount
-        if (lastProfitDate.getTime() === today.getTime()) {
-          return sum + (investment.dailyProfitAmount || 0);
-        }
-      }
-      return sum;
-    }, 0);
-  }, [activeInvestments]);
+  const todaysProfit = todaysProfitData?.data?.attributes?.todaysProfit ?? 0;
 
   // Mock data for the last 7 days balance trend (can be enhanced later)
   const balanceTrend = wallet ? [

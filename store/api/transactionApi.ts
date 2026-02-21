@@ -84,6 +84,12 @@ export const transactionApi = baseApi.injectEndpoints({
       query: (id) => `/transactions/${id}`,
       providesTags: (result, error, id) => [{ type: 'Transactions', id }],
     }),
+
+    // Get Today's Profit Total
+    getTodaysProfit: builder.query<ApiResponse<{ todaysProfit: number }>, void>({
+      query: () => '/transactions/todays-profit',
+      providesTags: ['Transactions'],
+    }),
   }),
 });
 
@@ -92,4 +98,5 @@ export const {
   useCreateWithdrawalMutation,
   useGetMyTransactionsQuery,
   useGetTransactionByIdQuery,
+  useGetTodaysProfitQuery,
 } = transactionApi;
