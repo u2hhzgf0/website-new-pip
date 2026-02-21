@@ -5,6 +5,7 @@ import { Wallet, TrendingUp, DollarSign, ArrowUpRight, ArrowDownLeft, Loader2, A
 import Link from 'next/link';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useGetMyTransactionsQuery } from '@/store/api/transactionApi';
+import { useGetActiveInvestmentsQuery } from '@/store/api/investmentApi';
 
 interface TransactionsData {
   results?: any[]
@@ -58,26 +59,33 @@ const DashboardHome = () => {
     page: 1,
     limit: 5,
   });
+  const { data: investmentsData } = useGetActiveInvestmentsQuery();
 
   const wallet = walletData?.data?.attributes;
   const transactionsResponse = (transactionsData?.data?.attributes || {}) as TransactionsData;
   const transactions = transactionsResponse.results || [];
+  const activeInvestments = investmentsData?.data?.attributes || [];
 
-  // Calculate today's profit
+  // Calculate today's profit from ALL active investments
   const todaysProfit = useMemo(() => {
-    if (!transactions.length) return 0;
+    if (!activeInvestments.length) return 0;
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    return transactions
-      .filter((tx: any) => {
-        const txDate = new Date(tx.createdAt);
-        txDate.setHours(0, 0, 0, 0);
-        return tx.type === 'profit' && tx.status === 'completed' && txDate.getTime() === today.getTime();
-      })
-      .reduce((sum: number, tx: any) => sum + tx.netAmount, 0);
-  }, [transactions]);
+    return activeInvestments.reduce((sum, investment) => {
+      if (investment.lastProfitDate) {
+        const lastProfitDate = new Date(investment.lastProfitDate);
+        lastProfitDate.setHours(0, 0, 0, 0);
+
+        // If profit was distributed today for this investment, add its daily amount
+        if (lastProfitDate.getTime() === today.getTime()) {
+          return sum + (investment.dailyProfitAmount || 0);
+        }
+      }
+      return sum;
+    }, 0);
+  }, [activeInvestments]);
 
   // Mock data for the last 7 days balance trend (can be enhanced later)
   const balanceTrend = wallet ? [
@@ -167,7 +175,7 @@ const DashboardHome = () => {
           </div>
           <div className="relative z-10">
             <p className="text-indigo-200 font-medium mb-1 text-xs sm:text-sm">Available Balance</p>
-            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">${wallet?.balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">${(wallet?.balance ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
             <div className="flex justify-between items-end">
               <div className="flex items-center text-[10px] sm:text-xs bg-indigo-500/30 px-2 py-1 rounded-md backdrop-blur-sm">
                 <Wallet size={10} className="mr-1" />
@@ -215,7 +223,7 @@ const DashboardHome = () => {
              <DollarSign size={64} className="hidden sm:block" />
           </div>
           <p className="text-slate-900/70 font-bold mb-1 text-[11px] sm:text-sm">Total Profit</p>
-          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">${wallet?.totalProfit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</h3>
+          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">${(wallet?.totalProfit ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <div className="flex items-center text-[10px] sm:text-xs bg-black/10 w-fit px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md font-bold">
             All time earnings
           </div>
