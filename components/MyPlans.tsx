@@ -77,7 +77,7 @@ const MyPlans = () => {
     if (!destroyModal) return;
     try {
       await destroyInvestment(destroyModal.id).unwrap();
-      setToast({ message: 'Investment destroyed successfully. 50% refunded to your wallet.', type: 'success' });
+      setToast({ message: 'Investment destroyed successfully. 70% refunded to your wallet.', type: 'success' });
       setDestroyModal(null);
     } catch (err: any) {
       setToast({ message: err?.data?.message || 'Failed to destroy investment', type: 'error' });
@@ -254,12 +254,12 @@ const MyPlans = () => {
                 <span className="text-white font-medium">${destroyModal.amount.toLocaleString()}</span>
               </div>
               <div className="border-t border-slate-800 pt-3 flex justify-between text-sm">
-                <span className="text-rose-400">Penalty (50%)</span>
-                <span className="text-rose-400 font-semibold">-${(destroyModal.amount * 0.5).toLocaleString()}</span>
+                <span className="text-rose-400">Penalty (30%)</span>
+                <span className="text-rose-400 font-semibold">-${(destroyModal.amount * 0.3).toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-emerald-400">Refund Amount</span>
-                <span className="text-emerald-400 font-semibold">${(destroyModal.amount * 0.5).toLocaleString()}</span>
+                <span className="text-emerald-400 font-semibold">${(destroyModal.amount * 0.7).toLocaleString()}</span>
               </div>
             </div>
 

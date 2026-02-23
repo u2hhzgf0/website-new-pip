@@ -81,8 +81,9 @@ const WithdrawRequest = () => {
       return;
     }
 
-    if (parseFloat(amount) > balance) {
-      setError('Insufficient balance');
+    const requiredBalance = parseFloat(amount) * 1.15;
+    if (requiredBalance > balance) {
+      setError(`Insufficient balance. You need $${requiredBalance.toFixed(2)} (withdrawal amount + 15%) but your balance is $${balance.toFixed(2)}.`);
       return;
     }
 
@@ -255,10 +256,10 @@ const WithdrawRequest = () => {
                     MAX
                   </button>
                 </div>
-                {parseFloat(amount) > balance && (
+                {parseFloat(amount) > 0 && parseFloat(amount) * 1.15 > balance && (
                   <p className="text-red-500 text-xs mt-2 flex items-center">
                     <AlertCircle size={12} className="mr-1" />
-                    Insufficient balance
+                    Insufficient balance. Required: ${(parseFloat(amount) * 1.15).toFixed(2)} (amount + 15%)
                   </p>
                 )}
                 {selectedGatewayData && parseFloat(amount) > 0 && (
@@ -424,7 +425,7 @@ const WithdrawRequest = () => {
               <div className="pt-4">
                 <button
                   type="submit"
-                  disabled={submitting || !selectedGateway || !amount || parseFloat(amount) > balance}
+                  disabled={submitting || !selectedGateway || !amount || parseFloat(amount) * 1.15 > balance}
                   className="w-full bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-slate-950 font-bold py-4 px-4 rounded-lg shadow-lg shadow-gold-500/20 transform hover:-translate-y-1 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {submitting ? (
