@@ -15,6 +15,7 @@ const DEMO_STATS = {
   totalDeposit: 600,
   totalWithdraw: 12570,
   todaysProfit: 3000,
+  totalProfit: 169873.00,
 };
 
 interface TransactionsData {
@@ -85,7 +86,7 @@ const DashboardHome = () => {
   const displayBalance = isDemoUser ? DEMO_STATS.balance : (wallet?.balance ?? 0);
   const displayTotalDeposit = isDemoUser ? DEMO_STATS.totalDeposit : (wallet?.totalDeposit ?? 0);
   const displayTotalWithdraw = isDemoUser ? DEMO_STATS.totalWithdraw : (wallet?.totalWithdraw ?? 0);
-  const displayTotalProfit = wallet?.totalProfit ?? 0;
+  const displayTotalProfit = isDemoUser ? DEMO_STATS.totalProfit : (wallet?.totalProfit ?? 0);
   const todaysProfit = isDemoUser ? DEMO_STATS.todaysProfit : todaysProfitFromApi;
 
   // 7-day balance trend for sparkline
