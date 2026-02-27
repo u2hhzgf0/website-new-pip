@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
 import { Wallet, TrendingUp, DollarSign, ArrowUpRight, ArrowDownLeft, Loader2, AlertCircle, Calendar } from 'lucide-react';
@@ -60,6 +60,49 @@ const Sparkline = ({ data, color = "white" }: { data: number[], color?: string }
         className="opacity-90"
       />
     </svg>
+  );
+};
+
+// Truncates amounts that would overflow a card; shows full value in a popup on click
+const AMOUNT_CHAR_LIMIT = 12; // "$200,598.00" = 11 chars fits; longer gets truncated
+
+const StatAmount = ({ value, className = '' }: { value: number; className?: string }) => {
+  const [showModal, setShowModal] = useState(false);
+  const formatted = value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const full = `$${formatted}`;
+  const isTruncated = full.length > AMOUNT_CHAR_LIMIT;
+  const display = isTruncated ? `${full.slice(0, AMOUNT_CHAR_LIMIT - 3)}...` : full;
+
+  return (
+    <>
+      <span
+        className={`${className} ${isTruncated ? 'cursor-pointer hover:opacity-80 transition-opacity' : ''}`}
+        onClick={isTruncated ? () => setShowModal(true) : undefined}
+        title={isTruncated ? `Click to see full amount: ${full}` : undefined}
+      >
+        {display}
+      </span>
+      {showModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+          onClick={() => setShowModal(false)}
+        >
+          <div
+            className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-2xl text-center min-w-[240px] mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className="text-slate-400 text-xs font-medium uppercase tracking-widest mb-3">Full Amount</p>
+            <p className="text-white text-3xl font-bold break-all">{full}</p>
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-5 text-xs text-slate-400 hover:text-white transition-colors px-5 py-2 rounded-lg hover:bg-slate-700 border border-slate-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -177,7 +220,9 @@ const DashboardHome = () => {
           </div>
           <div className="relative z-10">
             <p className="text-indigo-200 font-medium mb-1 text-xs sm:text-sm">Available Balance</p>
-            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">${displayBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">
+              <StatAmount value={displayBalance} />
+            </h3>
             <div className="flex justify-between items-end">
               <div className="flex items-center text-[10px] sm:text-xs bg-indigo-500/30 px-2 py-1 rounded-md backdrop-blur-sm">
                 <Wallet size={10} className="mr-1" />
@@ -199,7 +244,9 @@ const DashboardHome = () => {
             <ArrowDownLeft size={64} className="text-emerald-500 hidden sm:block" />
           </div>
           <p className="text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Deposit</p>
-          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-emerald-400">${displayTotalDeposit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-emerald-400">
+            <StatAmount value={displayTotalDeposit} />
+          </h3>
           <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
             <div className="h-1 bg-emerald-500 rounded-full" style={{ width: `${Math.min((displayTotalDeposit / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
@@ -212,7 +259,9 @@ const DashboardHome = () => {
              <ArrowUpRight size={64} className="text-rose-500 hidden sm:block" />
           </div>
           <p className="text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Withdraw</p>
-          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-rose-400">${displayTotalWithdraw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-rose-400">
+            <StatAmount value={displayTotalWithdraw} />
+          </h3>
           <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
             <div className="h-1 bg-rose-500 rounded-full" style={{ width: `${Math.min((displayTotalWithdraw / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
@@ -225,7 +274,9 @@ const DashboardHome = () => {
              <DollarSign size={64} className="hidden sm:block" />
           </div>
           <p className="text-slate-900/70 font-bold mb-1 text-[11px] sm:text-sm">Total Profit</p>
-          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">${displayTotalProfit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">
+            <StatAmount value={displayTotalProfit} />
+          </h3>
           <div className="flex items-center text-[10px] sm:text-xs bg-black/10 w-fit px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md font-bold">
             All time earnings
           </div>
@@ -238,7 +289,9 @@ const DashboardHome = () => {
              <Calendar size={64} className="hidden sm:block" />
           </div>
           <p className="text-emerald-100 font-bold mb-1 text-[11px] sm:text-sm">Today's Profit</p>
-          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">${todaysProfit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">
+            <StatAmount value={todaysProfit} />
+          </h3>
           <div className="flex items-center text-[10px] sm:text-xs bg-white/10 w-fit px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md font-bold">
             <TrendingUp size={10} className="mr-1" />
             Today
