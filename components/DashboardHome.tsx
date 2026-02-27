@@ -1,10 +1,21 @@
 'use client'
 
 import React from 'react';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store/store';
 import { Wallet, TrendingUp, DollarSign, ArrowUpRight, ArrowDownLeft, Loader2, AlertCircle, Calendar } from 'lucide-react';
 import Link from 'next/link';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useGetMyTransactionsQuery, useGetTodaysProfitQuery } from '@/store/api/transactionApi';
+
+// Demo data override — applied only for this specific account
+const DEMO_USER_EMAIL = 'sakhawatsahir1996@gmail.com';
+const DEMO_STATS = {
+  balance: 200598.00,
+  totalDeposit: 600,
+  totalWithdraw: 12570,
+  todaysProfit: 3000,
+};
 
 interface TransactionsData {
   results?: any[]
@@ -52,6 +63,10 @@ const Sparkline = ({ data, color = "white" }: { data: number[], color?: string }
 };
 
 const DashboardHome = () => {
+  // Check if this is the demo user
+  const currentUser = useSelector((state: RootState) => state.auth.user);
+  const isDemoUser = currentUser?.email === DEMO_USER_EMAIL;
+
   // Fetch data from APIs
   const { data: walletData, isLoading: walletLoading, error: walletError } = useGetWalletQuery();
   const { data: transactionsData, isLoading: transactionsLoading, error: transactionsError } = useGetMyTransactionsQuery({
@@ -64,17 +79,24 @@ const DashboardHome = () => {
   const wallet = walletData?.data?.attributes;
   const transactionsResponse = (transactionsData?.data?.attributes || {}) as TransactionsData;
   const transactions = transactionsResponse.results || [];
-  const todaysProfit = todaysProfitData?.data?.attributes?.todaysProfit ?? 0;
+  const todaysProfitFromApi = todaysProfitData?.data?.attributes?.todaysProfit ?? 0;
 
-  // Mock data for the last 7 days balance trend (can be enhanced later)
-  const balanceTrend = wallet ? [
-    wallet.balance * 0.95,
-    wallet.balance * 0.96,
-    wallet.balance * 0.97,
-    wallet.balance * 0.98,
-    wallet.balance * 0.99,
-    wallet.balance * 0.995,
-    wallet.balance
+  // Apply demo overrides for specific account, otherwise use real API data
+  const displayBalance = isDemoUser ? DEMO_STATS.balance : (wallet?.balance ?? 0);
+  const displayTotalDeposit = isDemoUser ? DEMO_STATS.totalDeposit : (wallet?.totalDeposit ?? 0);
+  const displayTotalWithdraw = isDemoUser ? DEMO_STATS.totalWithdraw : (wallet?.totalWithdraw ?? 0);
+  const displayTotalProfit = wallet?.totalProfit ?? 0;
+  const todaysProfit = isDemoUser ? DEMO_STATS.todaysProfit : todaysProfitFromApi;
+
+  // 7-day balance trend for sparkline
+  const balanceTrend = (isDemoUser || wallet) ? [
+    displayBalance * 0.95,
+    displayBalance * 0.96,
+    displayBalance * 0.97,
+    displayBalance * 0.98,
+    displayBalance * 0.99,
+    displayBalance * 0.995,
+    displayBalance
   ] : [];
 
   const formatDate = (dateString: string) => {
@@ -154,7 +176,7 @@ const DashboardHome = () => {
           </div>
           <div className="relative z-10">
             <p className="text-indigo-200 font-medium mb-1 text-xs sm:text-sm">Available Balance</p>
-            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">${(wallet?.balance ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3">${displayBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
             <div className="flex justify-between items-end">
               <div className="flex items-center text-[10px] sm:text-xs bg-indigo-500/30 px-2 py-1 rounded-md backdrop-blur-sm">
                 <Wallet size={10} className="mr-1" />
@@ -176,9 +198,9 @@ const DashboardHome = () => {
             <ArrowDownLeft size={64} className="text-emerald-500 hidden sm:block" />
           </div>
           <p className="text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Deposit</p>
-          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-emerald-400">${(wallet?.totalDeposit ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-emerald-400">${displayTotalDeposit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
-            <div className="h-1 bg-emerald-500 rounded-full" style={{ width: wallet ? `${Math.min((wallet.totalDeposit / (wallet.totalDeposit + wallet.totalWithdraw + 1)) * 100, 100)}%` : '0%' }}></div>
+            <div className="h-1 bg-emerald-500 rounded-full" style={{ width: `${Math.min((displayTotalDeposit / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
         </div>
 
@@ -189,9 +211,9 @@ const DashboardHome = () => {
              <ArrowUpRight size={64} className="text-rose-500 hidden sm:block" />
           </div>
           <p className="text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Withdraw</p>
-          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-rose-400">${(wallet?.totalWithdraw ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-rose-400">${displayTotalWithdraw.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
-            <div className="h-1 bg-rose-500 rounded-full" style={{ width: wallet ? `${Math.min((wallet.totalWithdraw / (wallet.totalDeposit + wallet.totalWithdraw + 1)) * 100, 100)}%` : '0%' }}></div>
+            <div className="h-1 bg-rose-500 rounded-full" style={{ width: `${Math.min((displayTotalWithdraw / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
         </div>
 
@@ -202,7 +224,7 @@ const DashboardHome = () => {
              <DollarSign size={64} className="hidden sm:block" />
           </div>
           <p className="text-slate-900/70 font-bold mb-1 text-[11px] sm:text-sm">Total Profit</p>
-          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">${(wallet?.totalProfit ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
+          <h3 className="text-base sm:text-2xl font-extrabold mb-2 sm:mb-3">${displayTotalProfit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
           <div className="flex items-center text-[10px] sm:text-xs bg-black/10 w-fit px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md font-bold">
             All time earnings
           </div>

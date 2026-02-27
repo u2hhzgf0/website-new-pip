@@ -250,7 +250,7 @@ const WithdrawRequest = () => {
                   />
                   <button
                     type="button"
-                    onClick={() => setAmount(balance.toString())}
+                    onClick={() => setAmount((Math.floor((balance / 1.15) * 100) / 100).toString())}
                     className="absolute right-3 top-1/2 -translate-y-1/2 text-xs bg-slate-800 text-gold-500 px-2 py-1 rounded hover:bg-slate-700 transition-colors"
                   >
                     MAX
@@ -259,23 +259,23 @@ const WithdrawRequest = () => {
                 {parseFloat(amount) > 0 && parseFloat(amount) * 1.15 > balance && (
                   <p className="text-red-500 text-xs mt-2 flex items-center">
                     <AlertCircle size={12} className="mr-1" />
-                    Insufficient balance. Required: ${(parseFloat(amount) * 1.15).toFixed(2)} (amount + 15%)
+                    Insufficient balance. Required: ${(parseFloat(amount) * 1.15).toFixed(2)} (amount + 15% service fee)
                   </p>
                 )}
-                {selectedGatewayData && parseFloat(amount) > 0 && (
-                  <div className="text-xs text-slate-400 mt-2 space-y-1">
-                    {(selectedGatewayData.withdrawFee ?? 0) > 0 && (
-                      <p>
-                        Fee: ${selectedGatewayData.withdrawFeeType === 'percentage'
-                          ? ((parseFloat(amount) * (selectedGatewayData.withdrawFee ?? 0)) / 100).toFixed(2)
-                          : (selectedGatewayData.withdrawFee ?? 0).toFixed(2)}
-                      </p>
-                    )}
-                    <p className="text-white font-medium">
-                      You will receive: ${(parseFloat(amount) - (selectedGatewayData.withdrawFeeType === 'percentage'
-                        ? (parseFloat(amount) * (selectedGatewayData.withdrawFee ?? 0)) / 100
-                        : selectedGatewayData.withdrawFee || 0)).toFixed(2)}
-                    </p>
+                {parseFloat(amount) > 0 && parseFloat(amount) * 1.15 <= balance && (
+                  <div className="text-xs mt-2 space-y-1 bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+                    <div className="flex justify-between text-slate-400">
+                      <span>Service fee (15%)</span>
+                      <span className="text-rose-400">-${(parseFloat(amount) * 0.15).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-slate-400">
+                      <span>Total deducted from balance</span>
+                      <span className="text-slate-300">${(parseFloat(amount) * 1.15).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between font-medium border-t border-slate-700 pt-1 mt-1">
+                      <span className="text-slate-300">You will receive</span>
+                      <span className="text-emerald-400">${parseFloat(amount).toFixed(2)}</span>
+                    </div>
                   </div>
                 )}
               </div>
