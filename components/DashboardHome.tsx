@@ -11,11 +11,11 @@ import { useGetMyTransactionsQuery, useGetTodaysProfitQuery } from '@/store/api/
 // Demo data override — applied only for this specific account
 const DEMO_USER_EMAIL = 'sakhawatsahir1996@gmail.com';
 const DEMO_STATS = {
-  balance: 200598.00,
-  totalDeposit: 600,
-  totalWithdraw: 12570,
-  todaysProfit: 3000,
-  totalProfit: 169873.00,
+  balance: 13.85,
+  totalDeposit: 7500,
+  totalWithdraw: 68327,
+  todaysProfit: 352.92,
+  totalProfit: 68340.85,
 };
 
 interface TransactionsData {
