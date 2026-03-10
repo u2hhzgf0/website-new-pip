@@ -53,7 +53,7 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
   const displayNotifications = notifications.slice(0, 5); // Show only 5 most recent
 
   return (
-    <div className="absolute top-full right-0 mt-4 w-[90vw] sm:w-96 z-50 px-4 sm:px-0 max-w-sm">
+    <div className="fixed left-3 right-3 top-[64px] sm:left-auto sm:right-4 sm:w-96 z-[60]">
       <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/80 backdrop-blur-md">

@@ -186,6 +186,22 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         ></div>
       )}
 
+      {/* Notifications Dropdown - rendered outside header to avoid stacking context issues */}
+      {showNotifications && (
+        <>
+          <div
+            className="fixed inset-0 z-[55]"
+            onClick={() => setShowNotifications(false)}
+            aria-hidden="true"
+          ></div>
+          <NotificationsDropdown
+            notifications={notifications}
+            onClose={() => setShowNotifications(false)}
+            onMarkAllRead={handleMarkAllRead}
+          />
+        </>
+      )}
+
       {/* Logout Confirmation Modal */}
       {showLogoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
@@ -315,7 +331,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               <span className="text-xs sm:text-xl font-bold text-green-400">${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
 
-            {/* Notification Bell with Dropdown */}
+            {/* Notification Bell */}
             <div className="relative">
               <button
                 onClick={() => setShowNotifications(!showNotifications)}
@@ -331,21 +347,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                   </span>
                 )}
               </button>
-
-              {showNotifications && (
-                <>
-                  <div
-                    className="fixed inset-0 z-40"
-                    onClick={() => setShowNotifications(false)}
-                    aria-hidden="true"
-                  ></div>
-                  <NotificationsDropdown
-                    notifications={notifications}
-                    onClose={() => setShowNotifications(false)}
-                    onMarkAllRead={handleMarkAllRead}
-                  />
-                </>
-              )}
             </div>
 
             {/* Profile Avatar */}

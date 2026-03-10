@@ -214,7 +214,7 @@ const DashboardHome = () => {
       {/* Row 1: Stats Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-6">
         {/* Available Balance - full width on mobile */}
-        <div className="col-span-2 lg:col-span-1 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white shadow-xl shadow-indigo-900/20 relative overflow-hidden group">
+        <Link href="/dashboard/wallet/stats" className="col-span-2 lg:col-span-1 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-white shadow-xl shadow-indigo-900/20 relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-3 sm:p-4 opacity-10">
             <Wallet size={48} />
           </div>
@@ -235,10 +235,10 @@ const DashboardHome = () => {
               )}
             </div>
           </div>
-        </div>
+        </Link>
 
         {/* Total Deposit */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-lg relative overflow-hidden group">
+        <Link href="/dashboard/deposit" className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-lg relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10">
             <ArrowDownLeft size={40} className="text-emerald-500 sm:hidden" />
             <ArrowDownLeft size={64} className="text-emerald-500 hidden sm:block" />
@@ -250,10 +250,10 @@ const DashboardHome = () => {
           <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
             <div className="h-1 bg-emerald-500 rounded-full" style={{ width: `${Math.min((displayTotalDeposit / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
-        </div>
+        </Link>
 
         {/* Total Withdraw */}
-        <div className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-lg relative overflow-hidden group">
+        <Link href="/dashboard/withdraw" className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-lg relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10">
              <ArrowUpRight size={40} className="text-rose-500 sm:hidden" />
              <ArrowUpRight size={64} className="text-rose-500 hidden sm:block" />
@@ -265,10 +265,10 @@ const DashboardHome = () => {
           <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
             <div className="h-1 bg-rose-500 rounded-full" style={{ width: `${Math.min((displayTotalWithdraw / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
-        </div>
+        </Link>
 
         {/* Total Profit */}
-        <div className="bg-gradient-to-br from-gold-500 to-amber-600 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-slate-950 shadow-xl shadow-gold-500/20 relative overflow-hidden group">
+        <Link href="/dashboard/profits/history" className="bg-gradient-to-br from-gold-500 to-amber-600 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-slate-950 shadow-xl shadow-gold-500/20 relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10">
              <DollarSign size={40} className="sm:hidden" />
              <DollarSign size={64} className="hidden sm:block" />
@@ -280,10 +280,10 @@ const DashboardHome = () => {
           <div className="flex items-center text-[10px] sm:text-xs bg-black/10 w-fit px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md font-bold">
             All time earnings
           </div>
-        </div>
+        </Link>
 
         {/* Today's Profit */}
-        <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-xl shadow-emerald-500/20 relative overflow-hidden group">
+        <Link href="/dashboard/profits/history" className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-xl shadow-emerald-500/20 relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10">
              <Calendar size={40} className="sm:hidden" />
              <Calendar size={64} className="hidden sm:block" />
@@ -296,7 +296,7 @@ const DashboardHome = () => {
             <TrendingUp size={10} className="mr-1" />
             Today
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* Row 2: Action Buttons */}
