@@ -54,9 +54,9 @@ const About = () => {
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-transparent rounded-3xl transform rotate-3"></div>
             <img
-              src="https://picsum.photos/seed/office/800/1000?grayscale"
-              alt="Pipguardian Office"
-              className="relative rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-800 z-10 w-full object-cover h-[300px] sm:h-[450px] lg:h-[600px]"
+              src="https://res.cloudinary.com/dshkbza19/image/upload/v1775410956/WhatsApp_Image_2026-04-05_at_6.04.47_PM_uz3rva.jpg"
+              alt="Pipguardian — Trade Forex, Crypto and Commodities"
+              className="relative rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-800 z-10 w-full h-[300px] sm:h-[450px] lg:h-[600px] object-cover object-top"
             />
 
             {/* Floating Stats Card */}
