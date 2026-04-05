@@ -52,7 +52,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="text-center text-slate-600 text-sm mt-8">
-            &copy; {new Date().getFullYear()} Pipguardian. All rights reserved.
+            @ 2016 Pipguardian. All rights reserved.
           </div>
         </div>
       </div>
