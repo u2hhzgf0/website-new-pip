@@ -46,13 +46,36 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <div className="bg-slate-700/50 p-3 rounded-lg text-gold-500">
+                  <div className="bg-slate-700/50 p-3 rounded-lg text-gold-500 shrink-0">
                     <MapPin size={20} />
                   </div>
-                  <div>
-                    <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-1">Visit Us</p>
-                    <p className="text-white font-medium">12 Rue de Rivoli, </p>
-                    <p className="text-white font-medium">75004 Paris, France</p>
+                  <div className="min-w-0">
+                    <p className="text-sm text-slate-400 font-medium uppercase tracking-wider mb-3">Our Offices</p>
+                    <div className="space-y-4 text-sm">
+                      <div>
+                        <p className="text-gold-500/90 text-xs font-semibold uppercase tracking-wider mb-1">Dakar, Senegal</p>
+                        <p className="text-white">Unit 8B, Floor 8</p>
+                        <p className="text-white">Boulevard du Général de Gaulle</p>
+                        <p className="text-slate-400">Dakar, Senegal, 11500</p>
+                      </div>
+                      <div className="border-t border-slate-700/80 pt-4">
+                        <p className="text-gold-500/90 text-xs font-semibold uppercase tracking-wider mb-1">Moscow, Russia</p>
+                        <p className="text-white">Suite 45, Floor 12, Freedom Tower East</p>
+                        <p className="text-white">12 Presnenskaya Naberezhnaya</p>
+                        <p className="text-slate-400">Moscow, Russia, 123112</p>
+                      </div>
+                      <div className="border-t border-slate-700/80 pt-4">
+                        <p className="text-gold-500/90 text-xs font-semibold uppercase tracking-wider mb-1">Kuala Lumpur, Malaysia</p>
+                        <p className="text-white">Unit 15-03, Level 15</p>
+                        <p className="text-white">2A, Jalan Sentral 2</p>
+                        <p className="text-slate-400">Kuala Lumpur, Malaysia, 50470</p>
+                      </div>
+                      <div className="border-t border-slate-700/80 pt-4">
+                        <p className="text-gold-500/90 text-xs font-semibold uppercase tracking-wider mb-1">Lisbon, Portugal</p>
+                        <p className="text-white">Unit 5.3, Level 5, Edifício Liberdade 225</p>
+                        <p className="text-slate-400">Lisbon, Portugal, 1250-142</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
