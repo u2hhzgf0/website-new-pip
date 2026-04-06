@@ -39,6 +39,7 @@ const Footer = () => {
             <ul className="space-y-3 text-slate-400 text-sm">
               {/* <li className="flex items-center"><Mail className="w-4 h-4 mr-2" /> pipguardian1@gmail.com</li> */}
               <li>12 Rue de Rivoli, 75004 Paris, France</li>
+              <li>Moscow, Russia — Suite 45, Floor 12, Freedom Tower East, 12 Presnenskaya Naberezhnaya, 123112</li>
             </ul>
           </div>
         </div>

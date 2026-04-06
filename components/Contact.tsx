@@ -87,7 +87,7 @@ const Contact = () => {
                 <a href="https://t.me/pipguardiaan" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
                   <FaTelegramPlane size={18} />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
+                {/* <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
                   <FaLinkedinIn size={18} />
                 </a>
                 <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
@@ -95,7 +95,7 @@ const Contact = () => {
                 </a>
                 <a href="#" className="w-10 h-10 rounded-full bg-slate-700/50 flex items-center justify-center text-white hover:bg-gold-500 hover:text-slate-900 transition-colors">
                   <FaInstagram size={18} />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
