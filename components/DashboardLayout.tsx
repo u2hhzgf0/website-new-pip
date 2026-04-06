@@ -20,7 +20,8 @@ import {
   Menu,
   ChevronDown,
   ChevronRight,
-  TrendingUp
+  TrendingUp,
+  BookOpen
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -114,6 +115,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   const menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+    { label: 'Investing Info', icon: BookOpen, path: '/dashboard/investing-info' },
     {
       label: 'Wallet',
       icon: ArrowDownLeft,
@@ -163,6 +165,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const isActive = (path?: string) => {
     if (!path) return false;
     if (path === '/dashboard' && pathname === '/dashboard') return true;
+    if (path === '/investing-info') return false;
     if (path !== '/dashboard' && pathname.startsWith(path)) return true;
     return false;
   };

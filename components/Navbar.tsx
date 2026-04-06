@@ -42,6 +42,7 @@ const Navbar = () => {
              <a href={getLink('about')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">About Us</a>
              <a href={getLink('plans')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Investment Plans</a>
              <a href={getLink('calculator')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Calculator</a>
+             <Link href="/investing-info" className={`transition-colors text-sm font-medium uppercase tracking-wider ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
              <a href={getLink('contact')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Contact</a>
           </div>
 
@@ -72,6 +73,7 @@ const Navbar = () => {
             <a href={getLink('about')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">About Us</a>
             <a href={getLink('plans')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Investment Plans</a>
             <a href={getLink('calculator')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Calculator</a>
+            <Link href="/investing-info" onClick={() => setMobileMenuOpen(false)} className={`font-medium block ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
             <a href={getLink('contact')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Contact</a>
 
             <div className="h-px bg-slate-800 my-2"></div>

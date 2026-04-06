@@ -5,6 +5,7 @@ import Plans from '@/components/Plans'
 import Calculator from '@/components/Calculator'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+// import InvestingInfo from '@/components/investing-info'
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <About />
       <Plans />
       <Calculator />
+      {/* <InvestingInfo /> */}
       <Contact />
       <Footer />
     </>
