@@ -10,6 +10,7 @@ interface User {
   image?: string | null;
   walletBalance?: number;
   referralCode?: string;
+  rank?: number;
 }
 
 interface AuthState {

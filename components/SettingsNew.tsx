@@ -13,6 +13,9 @@ import {
 import { useChangePasswordMutation, useDeleteAccountMutation } from '../store/api/authApi';
 import { Toast, ToastType } from './Toast';
 import { Save, Lock, User, Upload, Trash2, Loader2, AlertTriangle, Wallet, Plus, Edit3, Star, CreditCard } from 'lucide-react';
+import { useGetMyRankQuery, useCheckAndUpgradeRankMutation, useGetRankDefinitionsQuery } from '../store/api/rankApi';
+import { RankJourney } from './RankJourney';
+import { ProfileAvatar } from './ProfileAvatar';
 import {
   useGetSavedAccountsQuery,
   useCreateSavedAccountMutation,
@@ -30,6 +33,29 @@ export default function SettingsNew() {
   const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'wallets' | 'account'>('profile');
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  // Rank API hooks
+  const { data: rankData, refetch: refetchRank } = useGetMyRankQuery();
+  const [checkUpgrade, { isLoading: isCheckingUpgrade }] = useCheckAndUpgradeRankMutation();
+  const rankInfo = rankData?.data?.attributes;
+  const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com';
+  const { data: rankDefsData } = useGetRankDefinitionsQuery();
+  const rankDefinitions = rankDefsData?.data?.attributes || [];
+
+  const handleCheckRankUpgrade = async () => {
+    try {
+      const result = await checkUpgrade().unwrap();
+      const attrs = result?.data?.attributes as any;
+      if (attrs?.upgraded) {
+        setToast({ message: `Congratulations! You upgraded to rank ${attrs.newRank}!`, type: 'success' });
+        refetchRank();
+      } else {
+        setToast({ message: 'You do not qualify for an upgrade yet. Keep growing!', type: 'success' });
+      }
+    } catch {
+      setToast({ message: 'Failed to check rank upgrade', type: 'error' });
+    }
+  };
 
   // API hooks
   const { refetch } = useGetMyProfileQuery();
@@ -366,23 +392,24 @@ export default function SettingsNew() {
         <div className="p-4 sm:p-6">
           {/* Profile Tab */}
           {activeTab === 'profile' && (
+            <>
             <form onSubmit={handleProfileUpdate} className="space-y-6">
               <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                <div className="relative">
-                  {previewImage || profileImageUrl ? (
-                    <img
-                      src={previewImage || profileImageUrl!}
-                      alt="Profile"
-                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-4 border-slate-800"
-                    />
-                  ) : (
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 text-white flex items-center justify-center text-2xl sm:text-3xl font-bold">
-                      {getInitials()}
-                    </div>
-                  )}
-
+                {/* Profile image with rank frame */}
+                <div className="relative flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24">
+                  <ProfileAvatar
+                    src={previewImage || profileImageUrl}
+                    frameSrc={
+                      rankInfo?.currentRankInfo?.frameImage
+                        ? `${IMAGE_BASE}${rankInfo.currentRankInfo.frameImage}`
+                        : null
+                    }
+                    initials={getInitials()}
+                    size="lg"
+                    className="sm:!w-24 sm:!h-24"
+                  />
                   {(isUploading || isDeleting) && (
-                    <div className="absolute inset-0 bg-black/50 rounded-full flex items-center justify-center">
+                    <div className="absolute inset-0 rounded-full bg-black/50 flex items-center justify-center z-30">
                       <Loader2 className="w-8 h-8 text-white animate-spin" />
                     </div>
                   )}
@@ -420,6 +447,129 @@ export default function SettingsNew() {
                   <p className="text-xs text-slate-500">Max 5MB, JPG/PNG</p>
                 </div>
               </div>
+
+              {/* ── Rank Badge Card ─────────────────────────────────────── */}
+              {rankInfo && (
+                <div className="bg-slate-950/60 border border-slate-700 rounded-xl p-4 space-y-4">
+                  <div className="flex items-center justify-between flex-wrap gap-3">
+                    {/* Left: badge + rank info */}
+                    <div className="flex items-center gap-4">
+                      <div className="relative w-14 h-14 flex-shrink-0">
+                        <img
+                          src={`${IMAGE_BASE}${rankInfo.currentRankInfo.badgeImage}`}
+                          alt={`${rankInfo.currentRankInfo.name} badge`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <div>
+                        <p className="text-xs text-slate-400 uppercase tracking-wider">Current Rank</p>
+                        <p className="text-lg font-bold text-white">{rankInfo.currentRankInfo.name}</p>
+                        {rankInfo.currentRankInfo.monthlySalary > 0 && (
+                          <p className="text-xs text-gold-400">
+                            Monthly Salary: <span className="font-semibold">${rankInfo.currentRankInfo.monthlySalary}</span>
+                          </p>
+                        )}
+                        {rankInfo.currentRankInfo.bonus && (
+                          <p className="text-xs text-emerald-400">
+                            Bonus Reward: <span className="font-semibold">{rankInfo.currentRankInfo.bonus}</span>
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Right: check upgrade button */}
+                    <button
+                      type="button"
+                      onClick={handleCheckRankUpgrade}
+                      disabled={isCheckingUpgrade || rankInfo.currentRank >= 7}
+                      className="flex items-center gap-2 bg-gold-500/10 hover:bg-gold-500/20 disabled:opacity-40 text-gold-400 border border-gold-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    >
+                      <Star size={14} />
+                      {rankInfo.currentRank >= 7 ? 'Max Rank' : isCheckingUpgrade ? 'Checking…' : 'Check Upgrade'}
+                    </button>
+                  </div>
+
+                  {/* Progress toward next rank */}
+                  {rankInfo.nextRankInfo && rankInfo.progress && (
+                    <div className="space-y-3 pt-3 border-t border-slate-700">
+                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                        Progress to {rankInfo.nextRankInfo.name}
+                      </p>
+
+                      {/* Business Volume */}
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-slate-400">Business Volume</span>
+                          <span className="text-white">
+                            ${rankInfo.progress.businessVolume.current.toLocaleString()} / ${rankInfo.progress.businessVolume.required.toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-gold-500 rounded-full transition-all"
+                            style={{ width: `${rankInfo.progress.businessVolume.percentage}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Direct Referrals */}
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-slate-400">Direct Referrals</span>
+                          <span className="text-white">
+                            {rankInfo.progress.directReferrals.current} / {rankInfo.progress.directReferrals.required}
+                          </span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-blue-500 rounded-full transition-all"
+                            style={{ width: `${rankInfo.progress.directReferrals.percentage}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Personal Investment */}
+                      <div>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-slate-400">Personal Investment</span>
+                          <span className="text-white">
+                            ${rankInfo.progress.personalInvestment.current.toLocaleString()} / ${rankInfo.progress.personalInvestment.required.toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-emerald-500 rounded-full transition-all"
+                            style={{ width: `${rankInfo.progress.personalInvestment.percentage}%` }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Next rank badge */}
+                      <div className="flex items-center gap-3 mt-2 bg-slate-900/50 rounded-lg p-3">
+                        <img
+                          src={`${IMAGE_BASE}${rankInfo.nextRankInfo.badgeImage}`}
+                          alt={rankInfo.nextRankInfo.name}
+                          className="w-8 h-8 object-contain opacity-60"
+                        />
+                        <div className="text-xs text-slate-400">
+                          Next: <span className="text-white font-semibold">{rankInfo.nextRankInfo.name}</span>
+                          {rankInfo.nextRankInfo.bonus && (
+                            <span className="text-gold-400"> · {rankInfo.nextRankInfo.bonus}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Salary earned so far */}
+                  {rankInfo.totalSalaryEarned > 0 && (
+                    <p className="text-xs text-slate-500 pt-1 border-t border-slate-800">
+                      Total salary earned: <span className="text-white font-medium">${rankInfo.totalSalaryEarned.toLocaleString()}</span>
+                    </p>
+                  )}
+                </div>
+              )}
+              {/* ── End Rank Badge Card ──────────────────────────────────── */}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
@@ -460,6 +610,19 @@ export default function SettingsNew() {
                 {isUpdating ? 'Saving...' : 'Save Changes'}
               </button>
             </form>
+
+            {/* ── Rank Journey ─────────────────────────────────────────── */}
+            {rankDefinitions.length > 0 && rankInfo && (
+              <div className="mt-6">
+                <RankJourney
+                  currentRank={rankInfo.currentRank}
+                  definitions={rankDefinitions}
+                  imageBase={IMAGE_BASE}
+                />
+              </div>
+            )}
+            {/* ── End Rank Journey ─────────────────────────────────────── */}
+            </>
           )}
 
           {/* Security Tab */}

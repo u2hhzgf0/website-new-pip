@@ -29,6 +29,8 @@ import { MenuItem } from '@/types';
 import NotificationsDropdown from './NotificationsDropdown';
 import { useGetMyNotificationsQuery, useGetUnreadCountQuery, useMarkAllAsReadMutation, type Notification } from '@/store/api/notificationApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
+import { useGetMyRankQuery } from '@/store/api/rankApi';
+import { ProfileAvatar } from './ProfileAvatar';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -49,12 +51,15 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const { data: notificationsData } = useGetMyNotificationsQuery();
   const { data: unreadCountData } = useGetUnreadCountQuery();
   const { data: walletData } = useGetWalletQuery();
+  const { data: rankData } = useGetMyRankQuery();
   const [markAllAsRead] = useMarkAllAsReadMutation();
 
   const notifications: Notification[] = notificationsData?.data?.attributes || [];
   const unreadCount = unreadCountData?.data?.attributes?.count || 0;
   const wallet = walletData?.data?.attributes;
   const balance = wallet?.balance || 0;
+  const rankInfo = rankData?.data?.attributes;
+  const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com';
 
   const pathname = usePathname();
 
@@ -352,24 +357,28 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
               </button>
             </div>
 
-            {/* Profile Avatar */}
+            {/* Profile Avatar with Rank Frame */}
             <div className="flex items-center space-x-2 sm:space-x-3 pl-2 sm:pl-4 border-l border-slate-800">
-              {user?.image ? (
-                <img
-                  src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com'}${user.image}`}
-                  alt="Profile"
-                  className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-gold-500"
-                />
-              ) : (
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 border-2 border-gold-500 text-white flex items-center justify-center font-bold text-xs sm:text-sm">
-                  {user?.firstName?.[0]}{user?.lastName?.[0]}
-                </div>
-              )}
+              {/* sm size on mobile, md on desktop */}
+              <ProfileAvatar
+                src={user?.image ? `${IMAGE_BASE}${user.image}` : null}
+                frameSrc={
+                  rankInfo?.currentRankInfo?.frameImage
+                    ? `${IMAGE_BASE}${rankInfo.currentRankInfo.frameImage}`
+                    : null
+                }
+                initials={`${user?.firstName?.[0] ?? ''}${user?.lastName?.[0] ?? ''}`}
+                size="xs"
+                className="sm:!w-10 sm:!h-10"
+              />
+
               <div className="hidden md:block">
                 <p className="text-sm font-medium text-white">
                   {user?.firstName} {user?.lastName}
                 </p>
-                <p className="text-xs text-slate-500">Verified Investor</p>
+                <p className="text-xs text-gold-400 font-medium">
+                  {rankInfo?.currentRankInfo?.name || 'Starter'}
+                </p>
               </div>
             </div>
           </div>
