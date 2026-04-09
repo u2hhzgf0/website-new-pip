@@ -1,7 +1,8 @@
 'use client'
 
 import React, { useState } from 'react';
-import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark } from 'lucide-react';
+import Link from 'next/link';
+import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark, X, TrendingUp } from 'lucide-react';
 import { useGetActiveGatewaysQuery } from '@/store/api/paymentGatewayApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useCreateWithdrawalMutation } from '@/store/api/transactionApi';
@@ -17,11 +18,17 @@ const WithdrawRequest = () => {
   const [selectedSavedAccount, setSelectedSavedAccount] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [showInvestFirstModal, setShowInvestFirstModal] = useState(false);
 
   // Fetch wallet data
   const { data: walletResponse, isLoading: walletLoading } = useGetWalletQuery();
   const wallet = walletResponse?.data?.attributes;
   const balance = wallet?.balance || 0;
+  const totalDeposit = Number(wallet?.totalDeposit ?? 0);
+  /** Withdrawals require at least one deposit / investment on record */
+  const canRequestWithdrawal = totalDeposit > 0;
+
+  const openInvestFirstModal = () => setShowInvestFirstModal(true);
 
   // Fetch active gateways for withdrawal
   const { data: gatewaysResponse, isLoading: gatewaysLoading } = useGetActiveGatewaysQuery({ purpose: 'withdraw' });
@@ -70,6 +77,11 @@ const WithdrawRequest = () => {
     e.preventDefault();
     setError('');
     setSuccess(false);
+
+    if (!canRequestWithdrawal) {
+      openInvestFirstModal();
+      return;
+    }
 
     if (!selectedGateway) {
       setError('Please select a withdrawal method');
@@ -156,7 +168,48 @@ const WithdrawRequest = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      {showInvestFirstModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
+            <button
+              type="button"
+              onClick={() => setShowInvestFirstModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-amber-500/15 p-3 rounded-xl text-amber-400">
+                <TrendingUp size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-white pr-8">Invest first</h3>
+            </div>
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
+              You need to make a deposit or investment before you can request a withdrawal. Your total deposit is currently{' '}
+              <span className="text-white font-semibold">${totalDeposit.toFixed(2)}</span>.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/dashboard/plans/invest"
+                onClick={() => setShowInvestFirstModal(false)}
+                className="flex-1 text-center py-3 rounded-lg bg-gradient-to-r from-gold-500 to-amber-600 text-slate-950 font-bold text-sm hover:opacity-95 transition-opacity"
+              >
+                View investment plans
+              </Link>
+              <button
+                type="button"
+                onClick={() => setShowInvestFirstModal(false)}
+                className="flex-1 py-3 rounded-lg border border-slate-600 text-slate-300 font-medium text-sm hover:bg-slate-800 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 mb-4 sm:mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-white">Withdraw Funds</h2>
         <span className="text-slate-400 text-xs sm:text-sm">Request a secure payout to your wallet</span>
@@ -172,12 +225,32 @@ const WithdrawRequest = () => {
               <div>
                 <p className="text-indigo-200 text-xs sm:text-sm font-medium mb-1">Available for Withdrawal</p>
                 <h3 className="text-xl sm:text-3xl font-bold">${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</h3>
+                <p className="text-indigo-200/90 text-xs mt-1">Total deposit: ${totalDeposit.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
               </div>
               <div className="bg-white/20 p-2 sm:p-3 rounded-full">
                 <Wallet size={24} className="sm:hidden" />
                 <Wallet size={32} className="hidden sm:block" />
               </div>
             </div>
+
+            {!canRequestWithdrawal && (
+              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-6 flex items-start gap-3">
+                <AlertCircle className="text-amber-400 flex-shrink-0 mt-0.5" size={20} />
+                <div>
+                  <p className="text-amber-200 font-medium text-sm">Deposit required</p>
+                  <p className="text-amber-200/80 text-xs mt-1">
+                    You must invest or deposit before withdrawals are enabled.{' '}
+                    <button
+                      type="button"
+                      onClick={openInvestFirstModal}
+                      className="text-gold-400 font-semibold underline hover:text-gold-300"
+                    >
+                      Learn more
+                    </button>
+                  </p>
+                </div>
+              </div>
+            )}
 
             {/* Success Message */}
             {success && (
@@ -425,7 +498,12 @@ const WithdrawRequest = () => {
               <div className="pt-4">
                 <button
                   type="submit"
-                  disabled={submitting || !selectedGateway || !amount || parseFloat(amount) * 1.15 > balance}
+                  disabled={
+                    submitting ||
+                    !selectedGateway ||
+                    !amount ||
+                    parseFloat(amount) * 1.15 > balance
+                  }
                   className="w-full bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-slate-950 font-bold py-4 px-4 rounded-lg shadow-lg shadow-gold-500/20 transform hover:-translate-y-1 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {submitting ? (
