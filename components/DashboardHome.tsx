@@ -327,13 +327,13 @@ const DashboardHome = () => {
 
       {/* Row 3: Recent Transactions */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
-        <div className="p-4 sm:p-6 border-b border-slate-800 flex justify-between items-center">
+        {/* <div className="p-4 sm:p-6 border-b border-slate-800 flex justify-between items-center">
           <h3 className="text-sm sm:text-lg font-bold text-white">Recent Transactions</h3>
           <Link href="/dashboard/transactions" className="text-gold-500 text-xs sm:text-sm hover:underline font-medium">View All</Link>
-        </div>
+        </div> */}
 
         {/* Desktop Table View */}
-        <div className="hidden sm:block overflow-x-auto">
+        {/* <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left">
             <thead className="bg-slate-950 text-slate-400 text-sm uppercase tracking-wider">
               <tr>
@@ -378,10 +378,10 @@ const DashboardHome = () => {
               )}
             </tbody>
           </table>
-        </div>
+        </div> */}
 
         {/* Mobile Card View */}
-        <div className="sm:hidden divide-y divide-slate-800">
+        {/* <div className="sm:hidden divide-y divide-slate-800">
           {transactions.length === 0 ? (
             <div className="px-4 py-10 text-center text-slate-500">
               <DollarSign className="mx-auto mb-2 text-slate-600" size={32} />
@@ -418,7 +418,7 @@ const DashboardHome = () => {
               </div>
             ))
           )}
-        </div>
+        </div> */}
       </div>
 
       {/* Live Binance prices (after recent transactions) */}
