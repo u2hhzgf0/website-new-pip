@@ -7,6 +7,7 @@ import { Wallet, TrendingUp, DollarSign, ArrowUpRight, ArrowDownLeft, Loader2, A
 import Link from 'next/link';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useGetMyTransactionsQuery, useGetTodaysProfitQuery } from '@/store/api/transactionApi';
+import BinanceLivePrices from '@/components/BinanceLivePrices';
 
 // Demo data override — applied only for this specific account
 const DEMO_USER_EMAIL = 'sakhawatsahir1996@gmail.com';
@@ -419,6 +420,9 @@ const DashboardHome = () => {
           )}
         </div>
       </div>
+
+      {/* Live Binance prices (after recent transactions) */}
+      <BinanceLivePrices />
     </div>
   );
 };
