@@ -82,10 +82,12 @@ const BinanceLivePrices = () => {
   const [history, setHistory] = useState<HistoryPoint[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [apiNotice, setApiNotice] = useState('')
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null)
 
   const load = useCallback(async () => {
     setError('')
+    setApiNotice('')
     try {
       const res = await fetch('/api/binance/ticker', { cache: 'no-store' })
       const json = await res.json()
@@ -96,12 +98,14 @@ const BinanceLivePrices = () => {
       setLatest(rows)
       setMarkets24h(Array.isArray(json.markets24h) ? json.markets24h : [])
       setUpdatedAt(new Date())
+      if (typeof json.notice === 'string') setApiNotice(json.notice)
 
       const btc = rows.find((r) => r.symbolShort === 'BTC')?.price ?? 0
       const eth = rows.find((r) => r.symbolShort === 'ETH')?.price ?? 0
       const bnb = rows.find((r) => r.symbolShort === 'BNB')?.price ?? 0
       if (!btc && !eth && !bnb) {
         setLatest([])
+        if (typeof json.warning === 'string') setError(json.warning)
         return
       }
 
@@ -171,6 +175,12 @@ const BinanceLivePrices = () => {
           Refresh
         </button>
       </div>
+
+      {apiNotice && (
+        <div className="px-4 sm:px-5 py-2.5 bg-amber-500/10 border-b border-amber-500/20 text-xs text-amber-200/90">
+          {apiNotice}
+        </div>
+      )}
 
       {error && (
         <div className="px-4 sm:px-5 py-3 bg-rose-500/10 border-b border-rose-500/20 flex items-start gap-2 text-sm text-rose-300">
