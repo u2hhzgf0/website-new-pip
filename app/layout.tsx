@@ -1,19 +1,16 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ReduxProvider } from '../components/ReduxProvider'
-import { SITE_LOGO_URL } from '@/lib/site'
+import { FAVICON_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Pipguardian Premier',
   description: 'PipGuardian is a smart forex platform built for confident growth. We focus on disciplined trading and capital protection.',
-  /**
-   * Browser tab icon. If you also have `app/favicon.ico`, delete or replace that file
-   * — Next.js may prefer it over this URL unless you remove it.
-   */
+  /** Uses Cloudinary + `?fv=` cache bust (see `lib/site.ts`). Do not add `app/favicon.ico` or it overrides this. */
   icons: {
-    icon: [{ url: SITE_LOGO_URL, type: 'image/jpeg' }],
-    shortcut: SITE_LOGO_URL,
-    apple: SITE_LOGO_URL,
+    icon: [{ url: FAVICON_URL, type: 'image/jpeg' }],
+    shortcut: FAVICON_URL,
+    apple: FAVICON_URL,
   },
 }
 
