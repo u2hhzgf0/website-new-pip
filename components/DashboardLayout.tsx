@@ -120,7 +120,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   const menuItems: MenuItem[] = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { label: 'Investing Info', icon: BookOpen, path: '/dashboard/investing-info' },
+    { label: 'Investing Info', icon: BookOpen, path: '/investing-info' },
     {
       label: 'Wallet',
       icon: ArrowDownLeft,
@@ -247,8 +247,8 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         <div className="h-full flex flex-col">
           {/* Logo Area */}
           <div className="h-20 flex items-center px-6 border-b border-slate-800">
-            <span className="text-xl font-serif font-bold tracking-wide">
-              Pip<span className="text-gold-500">guardian</span>
+            <span className="text-xl font-serif font-bold tracking-wide leading-none">
+              Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
             </span>
           </div>
 

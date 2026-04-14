@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-12 mb-8 sm:mb-12">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-3 sm:mb-4">Pip<span className="text-gold-500">guardian</span></h3>
+            <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-3 sm:mb-4 leading-none">Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span></h3>
             <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
               Leading the industry in automated pipguardian generation. Our algorithms work 24/7 so you don&apos;t have to.
             </p>
@@ -53,7 +53,7 @@ const Footer = () => {
             </p>
           </div>
           <div className="text-center text-slate-600 text-sm mt-8">
-            @ 2016 Pipguardian. All rights reserved.
+            @ 2016 Pipguardian<span className="text-green-400 text-xs font-bold">elt</span>. All rights reserved.
           </div>
         </div>
       </div>

@@ -1,26 +1,99 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import { Menu, X, TrendingUp } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, TrendingUp, LayoutDashboard, LogOut, Download } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/store';
+import { clearAuth } from '../store/slices/authSlice';
+import { useLogoutMutation } from '../store/api/authApi';
+import { useGetMyRankQuery } from '../store/api/rankApi';
+
+const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardianelt.com';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [installPrompt, setInstallPrompt] = useState<any>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+  const user = useSelector((state: RootState) => state.auth.user);
+  const [logout] = useLogoutMutation();
+  const { data: rankData } = useGetMyRankQuery(undefined, { skip: !isAuthenticated });
+  const rankName = rankData?.data?.attributes?.currentRankInfo?.name || 'Starter';
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isHome = pathname === '/';
+  // Register service worker
+  useEffect(() => {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    }
+    // Check if already installed
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true);
+    }
+    // Capture install prompt
+    const handler = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e);
+    };
+    window.addEventListener('beforeinstallprompt', handler);
+    window.addEventListener('appinstalled', () => setIsInstalled(true));
+    return () => window.removeEventListener('beforeinstallprompt', handler);
+  }, []);
 
+  const handleInstall = async () => {
+    if (!installPrompt) return;
+    installPrompt.prompt();
+    const { outcome } = await installPrompt.userChoice;
+    if (outcome === 'accepted') setIsInstalled(true);
+    setInstallPrompt(null);
+    setMobileMenuOpen(false);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const isHome = pathname === '/';
   const getLink = (id: string) => isHome ? `#${id}` : `/#${id}`;
+
+  const handleLogout = async () => {
+    setDropdownOpen(false);
+    try {
+      const refreshToken = localStorage.getItem('refreshToken');
+      if (refreshToken) await logout({ refreshToken }).unwrap();
+    } catch {}
+    dispatch(clearAuth());
+    router.push('/');
+  };
+
+  const avatarContent = user?.image
+    ? <img src={`${IMAGE_BASE}${user.image}`} alt="Profile" className="w-9 h-9 rounded-full object-cover border-2 border-gold-500/40" />
+    : (
+      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-sm border-2 border-gold-500/40">
+        {user?.firstName?.[0]}{user?.lastName?.[0]}
+      </div>
+    );
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-slate-950/90 backdrop-blur-md border-b border-slate-800 py-3' : 'bg-transparent py-5'}`}>
@@ -31,30 +104,66 @@ const Navbar = () => {
             <div className="bg-gradient-to-br from-gold-400 to-gold-600 p-2 rounded-lg">
               <TrendingUp className="h-6 w-6 text-slate-950" />
             </div>
-            <span className="text-2xl font-serif font-bold text-white tracking-wide">
-              Pip<span className="text-gold-500">guardian</span>
+            <span className="text-2xl font-serif font-bold text-white tracking-wide leading-none">
+              Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex space-x-8">
-             <a href={isHome ? "#" : "/"} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Home</a>
-             <a href={getLink('about')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">About Us</a>
-             <a href={getLink('plans')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Investment Plans</a>
-             <a href={getLink('calculator')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Calculator</a>
-             <Link href="/investing-info" className={`transition-colors text-sm font-medium uppercase tracking-wider ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
-             <a href={getLink('contact')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Contact</a>
+            <a href={isHome ? "#" : "/"} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Home</a>
+            <a href={getLink('about')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">About Us</a>
+            <a href={getLink('plans')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Investment Plans</a>
+            <a href={getLink('calculator')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Calculator</a>
+            <Link href="/investing-info" className={`transition-colors text-sm font-medium uppercase tracking-wider ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
+            <a href={getLink('contact')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Contact</a>
           </div>
 
-          {/* Buttons */}
+          {/* Desktop Right — auth-aware */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login" className="text-white hover:text-gold-400 font-medium">Login</Link>
-            <Link
-              href="/register"
-              className="bg-gold-500 hover:bg-gold-600 text-slate-950 px-6 py-2.5 rounded-full font-bold transition-transform hover:scale-105 shadow-lg shadow-gold-500/20"
-            >
-              Get Started
-            </Link>
+            {isAuthenticated ? (
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className="flex items-center gap-2.5 focus:outline-none hover:opacity-90 transition-opacity"
+                >
+                  {avatarContent}
+                  <div className="text-left">
+                    <p className="text-sm font-semibold text-white leading-tight">{user?.firstName} {user?.lastName}</p>
+                    <p className="text-xs text-gold-400 font-medium">{rankName}</p>
+                  </div>
+                </button>
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-3 w-44 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden z-50">
+                    <Link
+                      href="/dashboard"
+                      onClick={() => setDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-3 text-sm text-slate-200 hover:bg-slate-800 hover:text-gold-400 transition-colors"
+                    >
+                      <LayoutDashboard size={15} />
+                      Dashboard
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2.5 w-full px-4 py-3 text-sm text-red-400 hover:bg-slate-800 transition-colors"
+                    >
+                      <LogOut size={15} />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link href="/login" className="text-white hover:text-gold-400 font-medium">Login</Link>
+                <Link
+                  href="/register"
+                  className="bg-gold-500 hover:bg-gold-600 text-slate-950 px-6 py-2.5 rounded-full font-bold transition-transform hover:scale-105 shadow-lg shadow-gold-500/20"
+                >
+                  Get Started
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -69,16 +178,55 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-b border-slate-800 p-4 flex flex-col space-y-4 shadow-2xl">
-            <a href={isHome ? "#" : "/"} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Home</a>
-            <a href={getLink('about')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">About Us</a>
-            <a href={getLink('plans')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Investment Plans</a>
-            <a href={getLink('calculator')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Calculator</a>
-            <Link href="/investing-info" onClick={() => setMobileMenuOpen(false)} className={`font-medium block ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
-            <a href={getLink('contact')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Contact</a>
+          <a href={isHome ? "#" : "/"} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Home</a>
+          <a href={getLink('about')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">About Us</a>
+          <a href={getLink('plans')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Investment Plans</a>
+          <a href={getLink('calculator')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Calculator</a>
+          <Link href="/investing-info" onClick={() => setMobileMenuOpen(false)} className={`font-medium block ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
+          <a href={getLink('contact')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Contact</a>
 
-            <div className="h-px bg-slate-800 my-2"></div>
-            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-gold-400 font-medium block">Login</Link>
-            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="bg-gold-500 text-slate-950 px-6 py-3 rounded-lg font-bold text-center block">Get Started</Link>
+          <div className="h-px bg-slate-800 my-2"></div>
+
+          {isAuthenticated ? (
+            <>
+              <div className="flex items-center gap-3 px-1">
+                {avatarContent}
+                <span className="text-white font-medium text-sm">{user?.firstName} {user?.lastName}</span>
+              </div>
+              <Link
+                href="/dashboard"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2 text-slate-300 hover:text-gold-400 font-medium"
+              >
+                <LayoutDashboard size={16} /> Dashboard
+              </Link>
+              <button
+                onClick={() => { setMobileMenuOpen(false); handleLogout(); }}
+                className="flex items-center gap-2 text-red-400 hover:text-red-300 font-medium text-left"
+              >
+                <LogOut size={16} /> Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="text-white hover:text-gold-400 font-medium block">Login</Link>
+              <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="bg-gold-500 text-slate-950 px-6 py-3 rounded-lg font-bold text-center block">Get Started</Link>
+            </>
+          )}
+
+          {/* Install App button — only shown when browser supports PWA install and not yet installed */}
+          {!isInstalled && installPrompt && (
+            <>
+              <div className="h-px bg-slate-800 my-2"></div>
+              <button
+                onClick={handleInstall}
+                className="flex items-center gap-2.5 w-full px-4 py-3 rounded-lg bg-gold-500/10 border border-gold-500/30 text-gold-400 font-semibold text-sm hover:bg-gold-500/20 transition-colors"
+              >
+                <Download size={16} />
+                Add to Home Screen
+              </button>
+            </>
+          )}
         </div>
       )}
     </nav>
