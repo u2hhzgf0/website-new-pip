@@ -15,13 +15,13 @@ export default function manifest(): MetadataRoute.Manifest {
         src: 'https://res.cloudinary.com/dshkbza19/image/upload/v1775996191/WhatsApp_Image_2026-04-09_at_7.37.00_PM_yfqkei.jpg',
         sizes: '192x192',
         type: 'image/jpeg',
-        purpose: 'any maskable',
+        purpose: 'maskable',
       },
       {
         src: 'https://res.cloudinary.com/dshkbza19/image/upload/v1775996191/WhatsApp_Image_2026-04-09_at_7.37.00_PM_yfqkei.jpg',
         sizes: '512x512',
         type: 'image/jpeg',
-        purpose: 'any maskable',
+        purpose: 'maskable',
       },
     ],
   }
