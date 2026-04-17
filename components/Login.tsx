@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '../store/api/authApi';
 import { setUser } from '../store/slices/authSlice';
 import { Toast, ToastType } from './Toast';
-import { TrendingUp, ArrowRight, Lock, Mail, AlertCircle, Loader2 } from 'lucide-react';
+import { TrendingUp, ArrowRight, Lock, Mail, AlertCircle, Loader2, Eye, EyeOff } from 'lucide-react';
 
 const Login = () => {
   const router = useRouter();
@@ -22,6 +22,7 @@ const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -108,8 +109,8 @@ const Login = () => {
             <div className="bg-gradient-to-br from-gold-400 to-gold-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
               <TrendingUp className="h-6 w-6 text-slate-950" />
             </div>
-            <span className="text-2xl font-serif font-bold text-white tracking-wide">
-              Pip<span className="text-gold-500">guardian</span>
+            <span className="text-2xl font-serif font-bold text-white tracking-wide leading-none">
+              Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
             </span>
           </Link>
           <h2 className="text-2xl font-bold text-white">Welcome Back</h2>
@@ -165,14 +166,21 @@ const Login = () => {
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={formData.password}
                   onChange={handleChange}
                   disabled={isLoading}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="••••••••"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 

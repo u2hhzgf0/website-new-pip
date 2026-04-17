@@ -3,7 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TrendingUp, ArrowRight, Lock, Mail, User, Users, Loader2 } from 'lucide-react';
+import { TrendingUp, ArrowRight, Lock, Mail, User, Users, Loader2, Eye, EyeOff } from 'lucide-react';
 import { useRegisterMutation } from '@/store/api/authApi';
 import { Toast, ToastType } from '@/components/Toast';
 
@@ -21,6 +21,8 @@ function RegisterForm() {
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
   const [register, { isLoading }] = useRegisterMutation();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,8 +76,8 @@ function RegisterForm() {
              <div className="bg-gradient-to-br from-gold-400 to-gold-600 p-2 rounded-lg group-hover:scale-110 transition-transform">
               <TrendingUp className="h-6 w-6 text-slate-950" />
             </div>
-            <span className="text-2xl font-serif font-bold text-white tracking-wide">
-              Pip<span className="text-gold-500">guardian</span>
+            <span className="text-2xl font-serif font-bold text-white tracking-wide leading-none">
+              Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
             </span>
           </Link>
           <h2 className="text-2xl font-bold text-white">Join the Elite</h2>
@@ -143,13 +145,20 @@ function RegisterForm() {
                   <Lock size={18} />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
                   placeholder="Create a strong password"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 
@@ -160,13 +169,20 @@ function RegisterForm() {
                   <Lock size={18} />
                 </div>
                 <input
-                  type="password"
+                  type={showConfirmPassword ? 'text' : 'password'}
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
                   placeholder="Confirm your password"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                >
+                  {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
               </div>
             </div>
 
