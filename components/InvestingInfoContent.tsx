@@ -1,4 +1,6 @@
-import React from 'react';
+'use client'
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -14,6 +16,10 @@ import {
   ArrowRight,
   Sparkles,
   User,
+  X,
+  ZoomIn,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 const IMG_HERO =
@@ -22,6 +28,8 @@ const IMG_CERT_GOOD_STANDING =
   'https://res.cloudinary.com/dshkbza19/image/upload/v1775466152/IMG_20260406_120242_hclhno.png';
 const IMG_CERT_INCORPORATION =
   'https://res.cloudinary.com/dshkbza19/image/upload/v1775466166/IMG_20260406_120348_xsrk0r.png';
+const IMG_CERT_EXTRA =
+  'https://res.cloudinary.com/dhah2ypd9/image/upload/v1776789493/WhatsApp_Image_2026-04-20_at_1.31.29_PM_p6dkuk.jpg';
 
 const hubs = [
   {
@@ -116,14 +124,45 @@ function PipWordmark({ className = '' }: { className?: string }) {
       <div className="bg-gradient-to-br from-gold-400 to-gold-600 p-1.5 rounded-md">
         <TrendingUp className="h-5 w-5 text-slate-950" />
       </div>
-      <span className="text-xl font-serif font-bold tracking-wide text-white">
-        Pip<span className="text-gold-500">guardian</span>
+      <span className="text-xl font-serif font-bold tracking-wide text-white leading-none">
+        Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
       </span>
     </div>
   );
 }
 
+const certificates = [
+  {
+    src: IMG_CERT_GOOD_STANDING,
+    alt: 'Certificate of Good Standing',
+    label: 'Good Standing',
+    width: 800,
+    height: 1100,
+  },
+  {
+    src: IMG_CERT_INCORPORATION,
+    alt: 'Certificate of Incorporation',
+    label: 'Incorporation',
+    width: 1100,
+    height: 800,
+  },
+  {
+    src: IMG_CERT_EXTRA,
+    alt: 'Official Registration Document',
+    label: 'Registration',
+    width: 1100,
+    height: 800,
+  },
+];
+
 const InvestingInfoContent = () => {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const openLightbox = (i: number) => setLightboxIndex(i);
+  const closeLightbox = () => setLightboxIndex(null);
+  const prevImage = () => setLightboxIndex(i => (i! - 1 + certificates.length) % certificates.length);
+  const nextImage = () => setLightboxIndex(i => (i! + 1) % certificates.length);
+
   return (
     <div className="relative overflow-hidden bg-[#12151c]">
       {/* —— Hero: trading visual —— */}
@@ -157,41 +196,91 @@ const InvestingInfoContent = () => {
         </div>
       </section>
 
-      {/* —— Certificates —— */}
+      {/* —— Certificates Gallery —— */}
       <section className="relative z-10 border-t border-slate-800/80 bg-[#1b202c] py-14 sm:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-20">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white">Official registration</h2>
-            <p className="text-slate-500 text-sm mt-2">Saint Lucia — PipGuardian</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <PipWordmark className="justify-center mb-4" />
+            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-white">Official Registration</h2>
+            <p className="text-slate-500 text-sm mt-2">Saint Lucia — Click any certificate to view full size</p>
           </div>
 
-          <div className="flex flex-col items-center gap-8 text-center max-w-3xl mx-auto">
-            <PipWordmark className="justify-center" />
-            <div className="relative w-full max-w-md shadow-2xl shadow-black/50 rounded-lg overflow-hidden ring-1 ring-white/10 mx-auto">
-              <Image
-                src={IMG_CERT_GOOD_STANDING}
-                alt="Saint Lucia Certificate of Good Standing — PipGuardian No. 2024-00230"
-                width={800}
-                height={1100}
-                className="w-full h-auto object-contain bg-[#0f1218] mx-auto"
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col items-center gap-8 text-center max-w-4xl mx-auto">
-            <PipWordmark className="justify-center" />
-            <div className="relative w-full max-w-2xl shadow-2xl shadow-black/50 rounded-lg overflow-hidden ring-1 ring-white/10 mx-auto">
-              <Image
-                src={IMG_CERT_INCORPORATION}
-                alt="Saint Lucia Certificate of Incorporation — PipGuardian No. 2024-00230"
-                width={1100}
-                height={800}
-                className="w-full h-auto object-contain bg-[#0f1218] mx-auto"
-              />
-            </div>
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {certificates.map((cert, i) => (
+              <button
+                key={i}
+                onClick={() => openLightbox(i)}
+                className="group relative rounded-xl overflow-hidden ring-1 ring-white/10 shadow-2xl shadow-black/50 bg-[#0f1218] cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-gold-500"
+              >
+                <Image
+                  src={cert.src}
+                  alt={cert.alt}
+                  width={cert.width}
+                  height={cert.height}
+                  className="w-full h-80 sm:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                  <span className="text-white text-sm font-semibold">{cert.label}</span>
+                  <div className="bg-white/20 backdrop-blur-sm rounded-full p-1.5">
+                    <ZoomIn size={16} className="text-white" />
+                  </div>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
       </section>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          {/* Close */}
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+          >
+            <X size={22} />
+          </button>
+
+          {/* Prev */}
+          <button
+            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+            className="absolute left-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+          >
+            <ChevronLeft size={28} />
+          </button>
+
+          {/* Image */}
+          <div
+            className="relative max-w-3xl w-full max-h-[85vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={certificates[lightboxIndex].src}
+              alt={certificates[lightboxIndex].alt}
+              width={certificates[lightboxIndex].width}
+              height={certificates[lightboxIndex].height}
+              className="w-full h-auto max-h-[85vh] object-contain rounded-xl shadow-2xl"
+            />
+            <p className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/60 text-xs bg-black/40 px-3 py-1 rounded-full">
+              {lightboxIndex + 1} / {certificates.length} — {certificates[lightboxIndex].label}
+            </p>
+          </div>
+
+          {/* Next */}
+          <button
+            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+            className="absolute right-4 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-10"
+          >
+            <ChevronRight size={28} />
+          </button>
+        </div>
+      )}
 
       {/* Forex intro */}
       <section className="relative z-10 py-12 sm:py-16 border-t border-slate-800/90 bg-[#12151c]">
