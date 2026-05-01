@@ -5,6 +5,8 @@ interface RegisterRequest {
   password: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
+  cfTurnstileToken: string;
   referralCode?: string;
 }
 

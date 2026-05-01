@@ -3,9 +3,10 @@
 import React, { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { TrendingUp, ArrowRight, Lock, Mail, User, Users, Loader2, Eye, EyeOff } from 'lucide-react';
+import { TrendingUp, ArrowRight, Lock, Mail, User, Users, Phone, Loader2, Eye, EyeOff } from 'lucide-react';
 import { useRegisterMutation } from '@/store/api/authApi';
 import { Toast, ToastType } from '@/components/Toast';
+import { Turnstile } from '@marsidev/react-turnstile';
 
 function RegisterForm() {
   const router = useRouter();
@@ -14,10 +15,12 @@ function RegisterForm() {
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [referralCode, setReferralCode] = useState(refCode);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
 
   const [register, { isLoading }] = useRegisterMutation();
@@ -32,12 +35,19 @@ function RegisterForm() {
       return;
     }
 
+    if (!turnstileToken) {
+      setToast({ message: 'Please complete the security check.', type: 'error' });
+      return;
+    }
+
     try {
       await register({
         firstName,
         lastName,
+        phoneNumber,
         email,
         password,
+        cfTurnstileToken: turnstileToken,
         ...(referralCode ? { referralCode } : {}),
       }).unwrap();
 
@@ -118,6 +128,23 @@ function RegisterForm() {
                     placeholder="Doe"
                   />
                 </div>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-300 mb-2">Phone Number</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                  <Phone size={18} />
+                </div>
+                <input
+                  type="tel"
+                  required
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  placeholder="+1 (555) 000-0000"
+                />
               </div>
             </div>
 
@@ -213,9 +240,19 @@ function RegisterForm() {
               </div>
             </div>
 
+            <div className="flex justify-center">
+              <Turnstile
+                siteKey={process.env.NEXT_PUBLIC_CLOUDFLARE_TURNSTILE_SITE_KEY || '1x00000000000000000000AA'}
+                onSuccess={setTurnstileToken}
+                onExpire={() => setTurnstileToken(null)}
+                onError={() => setTurnstileToken(null)}
+                options={{ theme: 'dark' }}
+              />
+            </div>
+
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={isLoading || !turnstileToken}
               className="w-full bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-slate-950 font-bold py-3 px-4 rounded-lg shadow-lg shadow-gold-500/20 transform hover:-translate-y-0.5 transition-all flex items-center justify-center group mt-4 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
             >
               {isLoading ? (
