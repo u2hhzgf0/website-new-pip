@@ -21,7 +21,8 @@ import {
   ChevronDown,
   ChevronRight,
   TrendingUp,
-  BookOpen
+  BookOpen,
+  Trophy,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -163,6 +164,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         { label: 'My Tickets', path: '/dashboard/support/tickets' }
       ]
     },
+    { label: 'My Rank', icon: Trophy, path: '/dashboard/my-rank' },
     { label: 'Notifications', icon: Bell, path: '/dashboard/notifications' },
     { label: 'Settings', icon: Settings, path: '/dashboard/settings' },
   ];

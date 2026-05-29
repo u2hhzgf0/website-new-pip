@@ -28,3 +28,19 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
+@keyframes ticker-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: ticker-scroll 22s linear infinite;
+}
+
+.ticker-item {
+  white-space: nowrap;
+  padding-right: 120px;
+}

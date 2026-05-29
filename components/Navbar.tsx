@@ -9,6 +9,7 @@ import { RootState } from '../store/store';
 import { clearAuth } from '../store/slices/authSlice';
 import { useLogoutMutation } from '../store/api/authApi';
 import { useGetMyRankQuery } from '../store/api/rankApi';
+import { useGetActiveAnnouncementQuery } from '../store/api/announcementApi';
 
 const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardianelt.com';
 
@@ -28,6 +29,11 @@ const Navbar = () => {
   const [logout] = useLogoutMutation();
   const { data: rankData } = useGetMyRankQuery(undefined, { skip: !isAuthenticated });
   const rankName = rankData?.data?.attributes?.currentRankInfo?.name || 'Starter';
+
+  const { data: announcementData } = useGetActiveAnnouncementQuery(undefined, {
+    pollingInterval: 60000,
+  });
+  const activeAnnouncement = announcementData?.data?.attributes;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -174,6 +180,16 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Announcement Ticker — only shown when an active announcement exists */}
+      {activeAnnouncement && (
+        <div className="w-full bg-slate-900/80 border-t border-slate-800 overflow-hidden py-1.5">
+          <div className="ticker-track">
+            <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+            <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
