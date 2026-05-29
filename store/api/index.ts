@@ -34,3 +34,6 @@ export * from './savedAccountApi';
 
 // Rank API
 export * from './rankApi';
+
+// Announcement API
+export * from './announcementApi';

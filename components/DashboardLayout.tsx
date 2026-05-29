@@ -31,6 +31,7 @@ import NotificationsDropdown from './NotificationsDropdown';
 import { useGetMyNotificationsQuery, useGetUnreadCountQuery, useMarkAllAsReadMutation, type Notification } from '@/store/api/notificationApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useGetMyRankQuery } from '@/store/api/rankApi';
+import { useGetActiveAnnouncementQuery } from '@/store/api/announcementApi';
 import { ProfileAvatar } from './ProfileAvatar';
 
 interface DashboardLayoutProps {
@@ -53,6 +54,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const { data: unreadCountData } = useGetUnreadCountQuery();
   const { data: walletData } = useGetWalletQuery();
   const { data: rankData } = useGetMyRankQuery();
+  const { data: announcementData } = useGetActiveAnnouncementQuery(undefined, { pollingInterval: 60000 });
   const [markAllAsRead] = useMarkAllAsReadMutation();
 
   const notifications: Notification[] = notificationsData?.data?.attributes || [];
@@ -60,6 +62,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   const wallet = walletData?.data?.attributes;
   const balance = wallet?.balance || 0;
   const rankInfo = rankData?.data?.attributes;
+  const activeAnnouncement = announcementData?.data?.attributes;
   const IMAGE_BASE = process.env.NEXT_PUBLIC_IMAGE_BASE_URL || 'https://api.pipguardian.com';
 
   const pathname = usePathname();
@@ -178,7 +181,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen bg-slate-950 text-white overflow-hidden font-sans relative">
+    <div className="flex flex-col h-screen bg-slate-950 text-white overflow-hidden font-sans relative">
       {/* Toast Notification */}
       {toast && (
         <Toast
@@ -187,6 +190,19 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           onClose={() => setToast(null)}
         />
       )}
+
+      {/* Announcement Ticker — very top, full width */}
+      {activeAnnouncement && (
+        <div className="w-full bg-slate-900 border-b border-slate-800 overflow-hidden py-1.5 flex-shrink-0 z-40">
+          <div className="ticker-track">
+            <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+            <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+          </div>
+        </div>
+      )}
+
+      {/* Sidebar + Main row */}
+      <div className="flex flex-1 overflow-hidden relative">
 
       {/* Sidebar Overlay for Mobile */}
       {sidebarOpen && (
@@ -393,6 +409,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           </div>
         </main>
       </div>
+      </div>{/* end Sidebar + Main row */}
     </div>
   );
 };
