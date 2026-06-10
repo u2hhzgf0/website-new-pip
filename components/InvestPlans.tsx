@@ -1,11 +1,44 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Check, Info, TrendingUp, Loader2, AlertCircle, DollarSign, CheckCircle, Eye } from 'lucide-react';
+import { Check, Info, Loader2, AlertCircle, DollarSign, CheckCircle, Eye, X } from 'lucide-react';
 import { useGetActivePlansQuery } from '@/store/api/investmentPlanApi';
 import { useCreateInvestmentMutation } from '@/store/api/investmentApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
+
+const BALLOON_COLORS = ['#FF4B4B', '#FF8C00', '#FFD700', '#4CAF50', '#2196F3', '#9C27B0', '#E91E63', '#00BCD4'];
+
+// Left balloon positions (% from left edge), Right balloon positions (% from right edge)
+const LEFT_BALLOONS  = [2, 8, 15, 22].map((left, i) => ({ id: i,     left,  delay: i * 0.25, color: BALLOON_COLORS[i] }));
+const RIGHT_BALLOONS = [2, 8, 15, 22].map((right, i) => ({ id: i+4, right, delay: i * 0.25, color: BALLOON_COLORS[i+4] }));
+
+// Single CSS balloon shape (oval body + knot + wavy string)
+const Balloon = ({ color, side, delay }: { color: string; side: 'left' | 'right'; delay: number }) => (
+  <div style={{ animation: `balloonFloat 8s ${delay}s cubic-bezier(0.45,0.05,0.55,0.95) forwards`, pointerEvents: 'none' }}>
+    {/* Body */}
+    <div style={{
+      width: 52, height: 65,
+      background: `radial-gradient(circle at 35% 35%, ${color}cc, ${color})`,
+      borderRadius: '50% 50% 48% 48% / 44% 44% 56% 56%',
+      boxShadow: `inset -6px -5px 0 rgba(0,0,0,0.18), inset 6px 5px 0 rgba(255,255,255,0.25)`,
+      position: 'relative',
+    }}>
+      {/* Knot */}
+      <div style={{
+        position: 'absolute', bottom: -7, left: '50%', transform: 'translateX(-50%)',
+        width: 9, height: 9,
+        background: color, filter: 'brightness(0.75)',
+        borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
+      }} />
+    </div>
+    {/* Wavy string */}
+    <svg width="30" height="55" style={{ display: 'block', margin: '0 auto', marginTop: 1 }} viewBox="0 0 30 55">
+      <path d={side === 'left' ? 'M15,0 Q22,14 10,28 Q0,42 15,55' : 'M15,0 Q8,14 20,28 Q30,42 15,55'}
+        stroke="rgba(255,255,255,0.55)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+    </svg>
+  </div>
+);
 
 const InvestPlans = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
@@ -13,8 +46,30 @@ const InvestPlans = () => {
   const [showModal, setShowModal] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationInfo, setCelebrationInfo] = useState({ amount: 0, planName: '' });
 
-  // Fetch data
+  // Fire canvas-confetti bursts from both corners when celebration opens
+  useEffect(() => {
+    if (!showCelebration) return;
+    let cancelled = false;
+    const fire = async () => {
+      const confetti = (await import('canvas-confetti')).default;
+      if (cancelled) return;
+      const shared = { spread: 70, startVelocity: 45, ticks: 200, colors: ['#FFD700','#FF4B4B','#4ECDC4','#DDA0DD','#4CAF50','#2196F3','#FF8C00'] };
+      confetti({ ...shared, particleCount: 90, angle: 55,  origin: { x: 0,   y: 1 } });
+      confetti({ ...shared, particleCount: 90, angle: 125, origin: { x: 1,   y: 1 } });
+      // Second wave after 0.4s
+      setTimeout(() => {
+        if (cancelled) return;
+        confetti({ ...shared, particleCount: 50, angle: 65,  origin: { x: 0.1, y: 0.95 } });
+        confetti({ ...shared, particleCount: 50, angle: 115, origin: { x: 0.9, y: 0.95 } });
+      }, 400);
+    };
+    fire();
+    return () => { cancelled = true; };
+  }, [showCelebration]);
+
   const { data: plansResponse, isLoading: plansLoading } = useGetActivePlansQuery();
   const { data: walletResponse, isLoading: walletLoading } = useGetWalletQuery();
   const [createInvestment, { isLoading: investing }] = useCreateInvestmentMutation();
@@ -66,10 +121,8 @@ const InvestPlans = () => {
 
     const totalReturn = amount + totalProfit;
 
-    // Calculate daily profit
     let daily = 0;
     if (roiType === 'total') {
-      // For total ROI: divide by months, then by ~30 days per month
       const durationInMonths = getDurationInMonths(duration, durationType);
       const monthlyProfit = totalProfit / (durationInMonths || 1);
       const now = new Date();
@@ -122,13 +175,12 @@ const InvestPlans = () => {
         amount: investAmount,
       }).unwrap();
 
-      setSuccess(true);
+      setCelebrationInfo({ amount: investAmount, planName: plan.name });
       setAmount('');
-      setTimeout(() => {
-        setShowModal(false);
-        setSuccess(false);
-        setSelectedPlan(null);
-      }, 2000);
+      setShowModal(false);
+      setSuccess(false);
+      setSelectedPlan(null);
+      setShowCelebration(true);
     } catch (err: any) {
       setError(err?.data?.message || 'Failed to create investment');
     }
@@ -193,7 +245,6 @@ const InvestPlans = () => {
                  <span className="block text-slate-500 text-xs mt-1">for {plan.duration} {plan.durationType}</span>
               </div>
 
-              {/* Breakdown */}
               <div className="mb-4 sm:mb-6 bg-slate-800/30 rounded-lg p-3 sm:p-4 border border-slate-800/50">
                  <div className="flex items-center space-x-2 mb-3">
                     <Info size={16} className="text-slate-400" />
@@ -262,13 +313,11 @@ const InvestPlans = () => {
             </div>
 
             <div className="p-6 space-y-6">
-              {/* Balance Display */}
               <div className="bg-slate-950/50 rounded-lg p-4 border border-slate-800">
                 <p className="text-slate-400 text-xs mb-1">Available Balance</p>
                 <p className="text-2xl font-bold text-white">${balance.toLocaleString()}</p>
               </div>
 
-              {/* Amount Input */}
               <div>
                 <label className="block text-sm font-medium text-slate-300 mb-2">Investment Amount</label>
                 <div className="relative">
@@ -295,7 +344,6 @@ const InvestPlans = () => {
                 </p>
               </div>
 
-              {/* Calculation Preview */}
               {amount && parseFloat(amount) >= selectedPlanData.minDeposit && (
                 <div className="bg-emerald-500/5 border border-emerald-500/30 rounded-lg p-4">
                   <p className="text-emerald-400 text-xs font-medium mb-2">Expected Returns</p>
@@ -323,7 +371,6 @@ const InvestPlans = () => {
                 </div>
               )}
 
-              {/* Error Message */}
               {error && (
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4 flex items-start gap-3">
                   <AlertCircle className="text-rose-500 flex-shrink-0 mt-0.5" size={20} />
@@ -331,7 +378,6 @@ const InvestPlans = () => {
                 </div>
               )}
 
-              {/* Success Message */}
               {success && (
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 flex items-start gap-3">
                   <CheckCircle className="text-emerald-500 flex-shrink-0 mt-0.5" size={20} />
@@ -342,7 +388,6 @@ const InvestPlans = () => {
                 </div>
               )}
 
-              {/* Action Buttons */}
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowModal(false)}
@@ -368,6 +413,74 @@ const InvestPlans = () => {
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Celebration Popup */}
+      {showCelebration && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-sm overflow-hidden">
+
+          {/* Left balloons */}
+          {LEFT_BALLOONS.map((b) => (
+            <div key={b.id} style={{ position: 'absolute', left: `${b.left}%`, bottom: 0, pointerEvents: 'none' }}>
+              <Balloon color={b.color} side="left" delay={b.delay} />
+            </div>
+          ))}
+
+          {/* Right balloons */}
+          {RIGHT_BALLOONS.map((b) => (
+            <div key={b.id} style={{ position: 'absolute', right: `${b.right}%`, bottom: 0, pointerEvents: 'none' }}>
+              <Balloon color={b.color} side="right" delay={b.delay} />
+            </div>
+          ))}
+
+          {/* Celebration card */}
+          <div className="relative z-10 bg-slate-900 border border-gold-500/40 rounded-2xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl shadow-gold-500/20">
+            <button
+              onClick={() => setShowCelebration(false)}
+              className="absolute top-4 right-4 p-1 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-slate-800"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+
+            <div className="text-5xl mb-4">🎉</div>
+            <h2 className="text-2xl font-bold text-white mb-2">Investment Confirmed!</h2>
+            <p className="text-slate-400 text-sm mb-1">
+              You invested{' '}
+              <span className="text-gold-400 font-bold">${celebrationInfo.amount.toLocaleString()}</span>
+            </p>
+            <p className="text-slate-400 text-sm mb-5">
+              in <span className="text-gold-400 font-bold">{celebrationInfo.planName}</span>
+            </p>
+
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-6 flex items-center gap-3">
+              <CheckCircle className="text-emerald-400 shrink-0" size={22} />
+              <p className="text-emerald-400 text-sm font-medium text-left">
+                Your investment is now active and earning returns!
+              </p>
+            </div>
+
+            <button
+              onClick={() => setShowCelebration(false)}
+              className="w-full py-3 bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold rounded-xl transition-colors text-base"
+            >
+              Awesome!
+            </button>
+          </div>
+
+          <style>{`
+            @keyframes balloonFloat {
+              0%   { transform: translateY(0)      scale(0);    opacity: 0; }
+              6%   { transform: translateY(-6vh)   scale(1.12); opacity: 1; }
+              10%  { transform: translateY(-10vh)  scale(1);    opacity: 1; }
+              30%  { transform: translateY(-35vh)  scale(1) translateX(16px);  opacity: 1; }
+              55%  { transform: translateY(-60vh)  scale(1) translateX(-12px); opacity: 1; }
+              78%  { transform: translateY(-85vh)  scale(1) translateX(14px);  opacity: 1; }
+              92%  { opacity: 0.8; }
+              100% { transform: translateY(-115vh) scale(1) translateX(-8px);  opacity: 0; }
+            }
+          `}</style>
         </div>
       )}
     </div>

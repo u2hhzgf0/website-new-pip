@@ -191,15 +191,6 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
         />
       )}
 
-      {/* Announcement Ticker — very top, full width */}
-      {activeAnnouncement && (
-        <div className="w-full bg-slate-900 border-b border-slate-800 overflow-hidden py-1.5 flex-shrink-0 z-40">
-          <div className="ticker-track">
-            <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
-            <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
-          </div>
-        </div>
-      )}
 
       {/* Sidebar + Main row */}
       <div className="flex flex-1 overflow-hidden relative">
@@ -401,6 +392,16 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             </div>
           </div>
         </header>
+
+        {/* Announcement Banner — below navbar, above content */}
+        {activeAnnouncement && (
+          <div className="w-full bg-gold-500/10 border-b border-gold-500/30 overflow-hidden py-2 flex-shrink-0">
+            <div className="ticker-track">
+              <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+              <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+            </div>
+          </div>
+        )}
 
         {/* Scrollable Content Area */}
         <main className="flex-1 overflow-y-auto p-3 sm:p-6 lg:p-8">
