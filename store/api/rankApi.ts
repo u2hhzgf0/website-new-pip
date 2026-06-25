@@ -17,6 +17,13 @@ export interface RankProgress {
   businessVolume: { current: number; required: number; percentage: number };
   directReferrals: { current: number; required: number; percentage: number };
   personalInvestment: { current: number; required: number; percentage: number };
+  leadershipChain?: {
+    current: number;
+    required: number;
+    requiredRankLevel: number;
+    requiredRankName: string;
+    percentage: number;
+  };
 }
 
 export interface UserRankInfo {

@@ -21,7 +21,15 @@ function getRankState(defLevel: number, currentRank: number): RankState {
 }
 
 // ── Tooltip card shown on hover ───────────────────────────────────────────────
-const RankTooltip = ({ def, imageBase }: { def: RankDefinition; imageBase: string }) => (
+const RankTooltip = ({
+  def,
+  imageBase,
+  prevRankName,
+}: {
+  def: RankDefinition;
+  imageBase: string;
+  prevRankName?: string;
+}) => (
   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 w-52 pointer-events-none">
     <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-3 text-left">
       <div className="flex items-center gap-2 mb-2">
@@ -75,6 +83,13 @@ const RankTooltip = ({ def, imageBase }: { def: RankDefinition; imageBase: strin
           </div>
         )}
       </div>
+      {def.level >= 3 && prevRankName && (
+        <div className="mt-2 pt-2 border-t border-slate-700/60">
+          <p className="text-[10px] text-amber-400 leading-snug">
+            Requires at least 1 direct referral who has reached <span className="font-semibold">{prevRankName}</span> rank
+          </p>
+        </div>
+      )}
     </div>
     {/* Tooltip arrow */}
     <div className="w-3 h-3 bg-slate-800 border-r border-b border-slate-700 rotate-45 mx-auto -mt-1.5" />
@@ -87,11 +102,13 @@ const RankNode = ({
   state,
   imageBase,
   compact,
+  prevRankName,
 }: {
   def: RankDefinition;
   state: RankState;
   imageBase: string;
   compact: boolean;
+  prevRankName?: string;
 }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -125,7 +142,7 @@ const RankNode = ({
       onMouseLeave={() => setHovered(false)}
     >
       {/* Tooltip */}
-      {hovered && <RankTooltip def={def} imageBase={imageBase} />}
+      {hovered && <RankTooltip def={def} imageBase={imageBase} prevRankName={prevRankName} />}
 
       {/* Badge circle */}
       <div
@@ -265,10 +282,11 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
           const state = getRankState(def.level, currentRank);
           const nextDef = sorted[idx + 1];
           const nextState = nextDef ? getRankState(nextDef.level, currentRank) : null;
+          const prevRankName = idx > 0 ? sorted[idx - 1].name : undefined;
 
           return (
             <React.Fragment key={def.level}>
-              <RankNode def={def} state={state} imageBase={imageBase} compact={compact} />
+              <RankNode def={def} state={state} imageBase={imageBase} compact={compact} prevRankName={prevRankName} />
               {nextState !== null && (
                 <Connector left={state} right={nextState} />
               )}
@@ -283,6 +301,7 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
           const state = getRankState(def.level, currentRank);
           const nextDef = sorted[idx + 1];
           const nextState = nextDef ? getRankState(nextDef.level, currentRank) : null;
+          const prevRankName = idx > 0 ? sorted[idx - 1].name : undefined;
 
           return (
             <React.Fragment key={def.level}>
@@ -336,6 +355,11 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
                         <span className="text-[10px] text-emerald-500/70">{def.bonus}</span>
                       )}
                     </div>
+                    {def.level >= 3 && prevRankName && (
+                      <p className="text-[10px] text-amber-400 mt-1 leading-snug">
+                        Requires 1 referral at <span className="font-semibold">{prevRankName}</span> rank
+                      </p>
+                    )}
                   </div>
                   {state === 'active' && (
                     <span className="text-[10px] font-bold text-gold-500 bg-gold-500/10 border border-gold-500/20 px-2 py-0.5 rounded-full flex-shrink-0">
