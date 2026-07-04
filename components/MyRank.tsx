@@ -158,6 +158,17 @@ export default function MyRank() {
                 )}
               </div>
             </div>
+
+            {/* Leadership chain notice */}
+            <div className="flex items-start gap-2.5 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2.5 mt-1">
+              <span className="text-amber-400 text-sm mt-0.5 flex-shrink-0">⚠</span>
+              <p className="text-xs text-amber-300 leading-relaxed">
+                {rankInfo.nextRankInfo.level >= 3
+                  ? <>To reach <span className="font-semibold text-amber-200">{rankInfo.nextRankInfo.name}</span>, at least one of your direct referrals must already be at <span className="font-semibold text-amber-200">{rankInfo.currentRankInfo.name}</span> rank.</>
+                  : <>From <span className="font-semibold text-amber-200">Sr. Executive</span> rank onwards, at least one of your direct referrals must hold the same rank as you before you can advance further.</>
+                }
+              </p>
+            </div>
           </div>
         )}
 
