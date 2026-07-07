@@ -118,7 +118,7 @@ const Navbar = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex space-x-8">
             <a href={isHome ? "#" : "/"} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Home</a>
-            <a href={getLink('about')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">About Us</a>
+            <Link href="/about" className={`transition-colors text-sm font-medium uppercase tracking-wider ${pathname === '/about' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>About Us</Link>
             <a href={getLink('plans')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Investment Plans</a>
             <a href={getLink('calculator')} className="text-slate-300 hover:text-gold-400 transition-colors text-sm font-medium uppercase tracking-wider">Calculator</a>
             <Link href="/investing-info" className={`transition-colors text-sm font-medium uppercase tracking-wider ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
@@ -195,7 +195,7 @@ const Navbar = () => {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-b border-slate-800 p-4 flex flex-col space-y-4 shadow-2xl">
           <a href={isHome ? "#" : "/"} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Home</a>
-          <a href={getLink('about')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">About Us</a>
+          <Link href="/about" onClick={() => setMobileMenuOpen(false)} className={`font-medium block ${pathname === '/about' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>About Us</Link>
           <a href={getLink('plans')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Investment Plans</a>
           <a href={getLink('calculator')} onClick={() => setMobileMenuOpen(false)} className="text-slate-300 hover:text-gold-400 font-medium block">Calculator</a>
           <Link href="/investing-info" onClick={() => setMobileMenuOpen(false)} className={`font-medium block ${pathname === '/investing-info' ? 'text-gold-400' : 'text-slate-300 hover:text-gold-400'}`}>Investing Info</Link>
