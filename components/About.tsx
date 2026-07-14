@@ -64,7 +64,7 @@ const About = () => {
               <div className="flex items-center justify-between mb-4 sm:mb-6">
                 <div>
                   <p className="text-slate-400 text-xs sm:text-sm">Total Assets Managed</p>
-                  <p className="text-2xl sm:text-3xl font-bold text-white">$150M+</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-white">$1.85B+</p>
                 </div>
                 <div className="bg-green-500/10 p-2 rounded-lg">
                   <TrendingUpIcon />
@@ -73,7 +73,7 @@ const About = () => {
               <div className="space-y-4">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-slate-400">Active Investors</span>
-                  <span className="text-white font-bold">12,500+</span>
+                  <span className="text-white font-bold">25M+</span>
                 </div>
                 <div className="w-full bg-slate-800 h-1.5 rounded-full">
                   <div className="bg-gold-500 h-1.5 rounded-full w-[85%]"></div>

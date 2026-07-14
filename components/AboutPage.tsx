@@ -49,8 +49,8 @@ const TEAM = [
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 const STATS = [
-  { label: 'Active Investors', value: '12,500+', icon: Users },
-  { label: 'Assets Managed', value: '$150M+', icon: BarChart2 },
+  { label: 'Active Investors', value: '25M+', icon: Users },
+  { label: 'Assets Managed', value: '$1.85B+', icon: BarChart2 },
   { label: 'Avg. Annual Return', value: '18.4%', icon: TrendingUp },
   { label: 'Years of Experience', value: '10+', icon: Award },
 ];
