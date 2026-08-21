@@ -154,7 +154,7 @@ export default function ReferralNetwork() {
       'border-purple-500/30',
       'border-rose-500/30',
       'border-orange-500/30',
-      'border-slate-500/30',
+      'border-slate-300/30 dark:border-slate-500/30',
     ]
     return colors[level - 1]
   }
@@ -192,50 +192,50 @@ export default function ReferralNetwork() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-xl sm:text-2xl font-bold text-white">7-Level Referral Network</h1>
-        <p className="text-slate-400 text-xs sm:text-sm mt-1">View your complete referral structure and commission earnings</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">7-Level Referral Network</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">View your complete referral structure and commission earnings</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-400 text-sm">Total Referrals</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Referrals</p>
             <Users className="text-gold-500" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-white">{totalStats.totalReferrals.toLocaleString()}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{totalStats.totalReferrals.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Across all 7 levels</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-400 text-sm">Total Commission</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Commission</p>
             <DollarSign className="text-emerald-500" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-white">${totalStats.totalCommission.toFixed(2)}</p>
-          <p className="text-xs text-slate-400 mt-2">All-time earnings</p>
+          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${totalStats.totalCommission.toFixed(2)}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">All-time earnings</p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-400 text-sm">Active Referrals</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">Active Referrals</p>
             <Activity className="text-blue-500" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-white">{totalStats.activeReferrals.toLocaleString()}</p>
-          <p className="text-xs text-slate-400 mt-2">
+          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{totalStats.activeReferrals.toLocaleString()}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
             {totalStats.totalReferrals > 0
               ? `${((totalStats.activeReferrals / totalStats.totalReferrals) * 100).toFixed(1)}% active rate`
               : 'No referrals yet'}
           </p>
         </div>
 
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-400 text-sm">This Month</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">This Month</p>
             <TrendingUp className="text-rose-500" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-white">${totalStats.thisMonthCommission.toFixed(2)}</p>
-          <p className="text-xs text-slate-400 mt-2">Monthly commission</p>
+          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${totalStats.thisMonthCommission.toFixed(2)}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Monthly commission</p>
         </div>
       </div>
 
@@ -244,13 +244,13 @@ export default function ReferralNetwork() {
         <div className="flex items-start gap-3">
           <Award className="text-gold-500 flex-shrink-0 mt-1" size={24} />
           <div>
-            <h3 className="text-white font-semibold mb-2">7-Level Commission Structure</h3>
-            <p className="text-slate-300 text-sm mb-3">
+            <h3 className="text-slate-900 dark:text-white font-semibold mb-2">7-Level Commission Structure</h3>
+            <p className="text-slate-600 dark:text-slate-300 text-sm mb-3">
               Earn commissions from 7 levels deep in your network. The more people you refer, the more you earn!
             </p>
             <div className="flex flex-wrap gap-2">
               {levelData.map((level) => (
-                <span key={level.level} className="text-xs bg-slate-900/50 border border-slate-700 px-3 py-1 rounded-full text-slate-300">
+                <span key={level.level} className="text-xs bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 px-3 py-1 rounded-full text-slate-600 dark:text-slate-300">
                   Level {level.level}: <span className="text-gold-500 font-bold">{level.commission}%</span>
                 </span>
               ))}
@@ -261,13 +261,13 @@ export default function ReferralNetwork() {
 
       {/* Level Cards Grid */}
       <div>
-        <h2 className="text-lg font-semibold text-white mb-4">Network Breakdown by Level</h2>
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">Network Breakdown by Level</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {levelData.map((level) => (
             <button
               key={level.level}
               onClick={() => setSelectedLevel(level.level)}
-              className={`bg-slate-900/50 border ${getLevelBorderColor(level.level)} rounded-xl p-4 sm:p-6 text-left hover:bg-slate-800/50 transition-all group relative overflow-hidden`}
+              className={`bg-white dark:bg-slate-900/50 border ${getLevelBorderColor(level.level)} rounded-xl p-4 sm:p-6 text-left hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all group relative overflow-hidden`}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${getLevelColor(level.level)} opacity-5 group-hover:opacity-10 transition-opacity`} />
@@ -275,28 +275,28 @@ export default function ReferralNetwork() {
               {/* Content */}
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-3">
-                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getLevelColor(level.level)} flex items-center justify-center text-white font-bold text-lg shadow-lg`}>
+                  <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getLevelColor(level.level)} flex items-center justify-center text-slate-900 dark:text-white font-bold text-lg shadow-lg`}>
                     L{level.level}
                   </div>
                   <ChevronRight className="text-slate-600 group-hover:text-gold-500 transition-colors" size={20} />
                 </div>
 
-                <h3 className="text-white font-semibold mb-1">Level {level.level}</h3>
-                <p className="text-slate-400 text-sm mb-4">{level.commission}% Commission</p>
+                <h3 className="text-slate-900 dark:text-white font-semibold mb-1">Level {level.level}</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm mb-4">{level.commission}% Commission</p>
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">Referrals</span>
-                    <span className="text-sm font-bold text-white">{level.count}</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-500">Referrals</span>
+                    <span className="text-sm font-bold text-slate-900 dark:text-white">{level.count}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">Total Earned</span>
+                    <span className="text-xs text-slate-600 dark:text-slate-500">Total Earned</span>
                     <span className="text-sm font-bold text-emerald-400">${level.totalCommission.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {level.count > 0 && (
-                  <div className="mt-4 pt-4 border-t border-slate-700">
+                  <div className="mt-4 pt-4 border-t border-slate-300 dark:border-slate-700">
                     <span className="text-xs text-gold-500 font-medium flex items-center gap-1">
                       Click to view {level.count} users
                       <ChevronRight size={14} />
@@ -311,42 +311,42 @@ export default function ReferralNetwork() {
 
       {/* Level Detail Modal */}
       {selectedLevel !== null && selectedLevelData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-5xl w-full max-h-[90vh] flex flex-col">
             {/* Modal Header */}
-            <div className="p-4 sm:p-6 border-b border-slate-800">
+            <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                  <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${getLevelColor(selectedLevel)} flex items-center justify-center text-white font-bold text-base sm:text-xl shadow-lg flex-shrink-0`}>
+                  <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${getLevelColor(selectedLevel)} flex items-center justify-center text-slate-900 dark:text-white font-bold text-base sm:text-xl shadow-lg flex-shrink-0`}>
                     L{selectedLevel}
                   </div>
                   <div className="min-w-0">
-                    <h2 className="text-base sm:text-xl font-bold text-white">Level {selectedLevel} Referrals</h2>
-                    <p className="text-slate-400 text-sm mt-1">
+                    <h2 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">Level {selectedLevel} Referrals</h2>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
                       {selectedLevelData.count} users • {selectedLevelData.commission}% commission rate
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => { setSelectedLevel(null); setSearchQuery(''); setFilterStatus('all'); }}
-                  className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+                  className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
                 >
-                  <X className="text-slate-400" size={24} />
+                  <X className="text-slate-500 dark:text-slate-400" size={24} />
                 </button>
               </div>
 
               {/* Level Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4 sm:mt-6">
-                <div className="bg-slate-800/50 rounded-lg p-3 sm:p-4">
-                  <p className="text-slate-400 text-[10px] sm:text-xs mb-1">Total Users</p>
-                  <p className="text-lg sm:text-2xl font-bold text-white">{selectedLevelData.count}</p>
+                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 sm:p-4">
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1">Total Users</p>
+                  <p className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white">{selectedLevelData.count}</p>
                 </div>
-                <div className="bg-slate-800/50 rounded-lg p-3 sm:p-4">
-                  <p className="text-slate-400 text-[10px] sm:text-xs mb-1">Commission</p>
+                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 sm:p-4">
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1">Commission</p>
                   <p className="text-lg sm:text-2xl font-bold text-gold-500">{selectedLevelData.commission}%</p>
                 </div>
-                <div className="bg-slate-800/50 rounded-lg p-3 sm:p-4">
-                  <p className="text-slate-400 text-[10px] sm:text-xs mb-1">Earned</p>
+                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 sm:p-4">
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1">Earned</p>
                   <p className="text-lg sm:text-2xl font-bold text-emerald-400">${selectedLevelData.totalCommission.toFixed(2)}</p>
                 </div>
               </div>
@@ -359,12 +359,12 @@ export default function ReferralNetwork() {
                     placeholder="Search by name or email..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50"
+                    className="flex-1 bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50"
                   />
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value as any)}
-                    className="bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-gold-500/50"
+                    className="bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/50"
                   >
                     <option value="all">All Status</option>
                     <option value="active">Active Only</option>
@@ -379,35 +379,35 @@ export default function ReferralNetwork() {
               {isLoadingNetwork ? (
                 <div className="text-center py-12">
                   <Loader2 className="mx-auto text-gold-500 mb-4 animate-spin" size={36} />
-                  <p className="text-slate-400">Loading network data...</p>
+                  <p className="text-slate-500 dark:text-slate-400">Loading network data...</p>
                 </div>
               ) : selectedLevelData.users.length === 0 ? (
                 <div className="text-center py-12">
                   <Users className="mx-auto text-slate-600 mb-4" size={48} />
-                  <p className="text-slate-400">No user data available for this level yet</p>
-                  <p className="text-slate-500 text-sm mt-1">Users will appear here as they join</p>
+                  <p className="text-slate-500 dark:text-slate-400">No user data available for this level yet</p>
+                  <p className="text-slate-600 dark:text-slate-500 text-sm mt-1">Users will appear here as they join</p>
                 </div>
               ) : (
                 <div className="space-y-3">
                   {getFilteredUsers(selectedLevelData.users).map((user) => (
                     <div
                       key={user.id}
-                      className="bg-slate-800/30 border border-slate-700 rounded-lg p-4 hover:bg-slate-800/50 transition-colors"
+                      className="bg-slate-100/30 dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700 rounded-lg p-4 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors"
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 flex items-center justify-center text-white font-bold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 flex items-center justify-center text-slate-900 dark:text-white font-bold text-sm">
                             {user.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                           </div>
                           <div>
-                            <h4 className="text-white font-medium">{user.name}</h4>
-                            <p className="text-slate-400 text-sm">{user.email}</p>
+                            <h4 className="text-slate-900 dark:text-white font-medium">{user.name}</h4>
+                            <p className="text-slate-500 dark:text-slate-400 text-sm">{user.email}</p>
                           </div>
                         </div>
                         <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                           user.status === 'active'
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30'
-                            : 'bg-slate-500/10 text-slate-400 border border-slate-500/30'
+                            : 'bg-slate-300/10 dark:bg-slate-500/10 text-slate-500 dark:text-slate-400 border border-slate-300/30 dark:border-slate-500/30'
                         }`}>
                           {user.status}
                         </span>
@@ -415,20 +415,20 @@ export default function ReferralNetwork() {
 
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
-                          <p className="text-xs text-slate-500 mb-1">Joined</p>
-                          <p className="text-sm text-slate-300">{formatDate(user.joinDate || user.joinedDate || '')}</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-500 mb-1">Joined</p>
+                          <p className="text-sm text-slate-600 dark:text-slate-300">{formatDate(user.joinDate || user.joinedDate || '')}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-slate-500 mb-1">Your Commission</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-500 mb-1">Your Commission</p>
                           <p className="text-sm text-gold-500 font-bold">${user.commissionEarned.toFixed(2)}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-slate-500 mb-1">Their Referrals</p>
-                          <p className="text-sm text-slate-300">{user.directReferrals} users</p>
+                          <p className="text-xs text-slate-600 dark:text-slate-500 mb-1">Their Referrals</p>
+                          <p className="text-sm text-slate-600 dark:text-slate-300">{user.directReferrals} users</p>
                         </div>
                         <div>
-                          <p className="text-xs text-slate-500 mb-1">Status</p>
-                          <p className={`text-sm font-medium ${user.status === 'active' ? 'text-emerald-400' : 'text-slate-400'}`}>
+                          <p className="text-xs text-slate-600 dark:text-slate-500 mb-1">Status</p>
+                          <p className={`text-sm font-medium ${user.status === 'active' ? 'text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}>
                             {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
                           </p>
                         </div>
@@ -438,7 +438,7 @@ export default function ReferralNetwork() {
 
                   {getFilteredUsers(selectedLevelData.users).length === 0 && (
                     <div className="text-center py-8">
-                      <p className="text-slate-400">No users match your filters</p>
+                      <p className="text-slate-500 dark:text-slate-400">No users match your filters</p>
                     </div>
                   )}
                 </div>
@@ -446,14 +446,14 @@ export default function ReferralNetwork() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 sm:p-6 border-t border-slate-800">
+            <div className="p-4 sm:p-6 border-t border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between">
-                <p className="text-slate-400 text-sm">
+                <p className="text-slate-500 dark:text-slate-400 text-sm">
                   Showing {getFilteredUsers(selectedLevelData.users).length} of {selectedLevelData.users.length} users
                 </p>
                 <button
                   onClick={() => { setSelectedLevel(null); setSearchQuery(''); setFilterStatus('all'); }}
-                  className="px-6 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors font-medium"
+                  className="px-6 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white rounded-lg transition-colors font-medium"
                 >
                   Close
                 </button>

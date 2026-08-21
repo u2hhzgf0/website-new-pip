@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { ReduxProvider } from '../components/ReduxProvider'
+import { ThemeProvider } from '../components/ThemeProvider'
 import { FAVICON_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
@@ -20,9 +21,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className="bg-slate-950 text-white antialiased">
-        <ReduxProvider>{children}</ReduxProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark');}}catch(e){}})();`,
+          }}
+        />
+      </head>
+      <body className="bg-white dark:bg-slate-950 text-slate-900 dark:text-white antialiased transition-colors duration-200">
+        <ThemeProvider>
+          <ReduxProvider>{children}</ReduxProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

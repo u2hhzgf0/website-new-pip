@@ -56,10 +56,10 @@ export const Toast: React.FC<ToastProps> = ({ message, type, onClose, duration =
       `}
     >
       <div className="flex-shrink-0">{getIcon()}</div>
-      <div className="flex-1 text-sm font-medium text-white">{message}</div>
+      <div className="flex-1 text-sm font-medium text-slate-900 dark:text-white">{message}</div>
       <button
         type="button"
-        className="flex-shrink-0 rounded-lg p-1.5 hover:bg-white/10 transition-colors text-slate-400 hover:text-white"
+        className="flex-shrink-0 rounded-lg p-1.5 hover:bg-white/10 transition-colors text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
         onClick={onClose}
       >
         <X className="w-4 h-4" />

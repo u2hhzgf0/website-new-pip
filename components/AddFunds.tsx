@@ -114,13 +114,13 @@ const AddFunds = () => {
 
   if (success) {
     return (
-      <div className="flex flex-col items-center justify-center py-10 sm:py-16 bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-800 text-center px-4">
+      <div className="flex flex-col items-center justify-center py-10 sm:py-16 bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 text-center px-4">
         <div className="w-16 h-16 sm:w-20 sm:h-20 bg-green-500/10 rounded-full flex items-center justify-center text-green-500 mb-4 sm:mb-6">
           <CheckCircle2 size={32} className="sm:hidden" />
           <CheckCircle2 size={40} className="hidden sm:block" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">Deposit Submitted!</h2>
-        <p className="text-slate-400 max-w-md mb-6 sm:mb-8 text-sm sm:text-base">
+        <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-2">Deposit Submitted!</h2>
+        <p className="text-slate-500 dark:text-slate-400 max-w-md mb-6 sm:mb-8 text-sm sm:text-base">
           Your payment proof has been submitted successfully. Our team will verify your transaction shortly.
         </p>
         <button
@@ -137,15 +137,15 @@ const AddFunds = () => {
     <div className="space-y-4 sm:space-y-6">
       <div className="flex justify-between items-start sm:items-center mb-4 sm:mb-6">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white">Add Funds</h2>
-          <span className="text-slate-400 text-xs sm:text-sm">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Add Funds</h2>
+          <span className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
             {step === 1 ? 'Select a payment method to proceed' : 'Complete your payment'}
           </span>
         </div>
         {step === 2 && (
           <button
             onClick={() => setStep(1)}
-            className="text-slate-400 hover:text-white flex items-center text-sm font-medium transition-colors"
+            className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center text-sm font-medium transition-colors"
           >
             <ArrowLeft size={16} className="mr-1" /> Back
           </button>
@@ -164,8 +164,8 @@ const AddFunds = () => {
                   <Loader2 className="animate-spin text-gold-500" size={32} />
                 </div>
               ) : gateways.length === 0 ? (
-                <div className="text-center py-12 bg-slate-900 rounded-xl border border-slate-800">
-                  <p className="text-slate-400">No payment gateways available at the moment</p>
+                <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <p className="text-slate-500 dark:text-slate-400">No payment gateways available at the moment</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -184,8 +184,8 @@ const AddFunds = () => {
                         onClick={() => handleGatewaySelect(gateway.id)}
                         className={`relative p-4 sm:p-6 rounded-xl border flex flex-col items-start transition-all duration-200 ${
                           selectedGateway === gateway.id
-                            ? 'bg-slate-800 border-gold-500 shadow-[0_0_15px_rgba(234,179,8,0.1)]'
-                            : 'bg-slate-900 border-slate-800 hover:border-slate-700'
+                            ? 'bg-slate-100 dark:bg-slate-800 border-gold-500 shadow-[0_0_15px_rgba(234,179,8,0.1)]'
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                         }`}
                       >
                         {selectedGateway === gateway.id && (
@@ -193,11 +193,11 @@ const AddFunds = () => {
                             <CheckCircle2 size={18} />
                           </div>
                         )}
-                        <div className={`p-2 sm:p-3 rounded-lg mb-3 sm:mb-4 ${selectedGateway === gateway.id ? 'bg-gold-500 text-slate-900' : 'bg-slate-800 text-slate-400'}`}>
+                        <div className={`p-2 sm:p-3 rounded-lg mb-3 sm:mb-4 ${selectedGateway === gateway.id ? 'bg-gold-500 text-slate-900' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}`}>
                           {icon}
                         </div>
-                        <h3 className="text-white font-bold text-sm sm:text-lg">{gateway.name}</h3>
-                        <p className="text-[10px] sm:text-xs text-slate-500 mt-1">
+                        <h3 className="text-slate-900 dark:text-white font-bold text-sm sm:text-lg">{gateway.name}</h3>
+                        <p className="text-[10px] sm:text-xs text-slate-600 dark:text-slate-500 mt-1">
                           Min: ${gateway.minDeposit || 0} • Max: ${(gateway.maxDeposit || 0).toLocaleString()}
                         </p>
                         {gateway.depositFee && gateway.depositFee > 0 && (
@@ -211,10 +211,10 @@ const AddFunds = () => {
                 </div>
               )}
 
-              <div className="bg-slate-900 rounded-xl p-4 sm:p-6 border border-slate-800">
-                <label className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">Enter Amount (USD)</label>
+              <div className="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800">
+                <label className="block text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Enter Amount (USD)</label>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">$</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500 font-bold">$</span>
                   <input
                     type="number"
                     value={amount}
@@ -222,11 +222,11 @@ const AddFunds = () => {
                     placeholder="0.00"
                     min={selectedGatewayData?.minDeposit || 0}
                     max={selectedGatewayData?.maxDeposit || 0}
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-8 pr-4 py-4 text-white text-lg focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-4 py-4 text-slate-900 dark:text-white text-lg focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
                   />
                 </div>
                 {selectedGateway && selectedGatewayData && (
-                   <p className="text-xs text-slate-500 mt-2 text-right">
+                   <p className="text-xs text-slate-600 dark:text-slate-500 mt-2 text-right">
                      Transaction limit: ${selectedGatewayData.minDeposit || 0} - ${(selectedGatewayData.maxDeposit || 0).toLocaleString()}
                    </p>
                 )}
@@ -236,29 +236,29 @@ const AddFunds = () => {
             /* STEP 2: Payment Details & Verification */
             <div className="space-y-6">
               {/* Payment Details Box */}
-              <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
                 <div className="flex items-start mb-4">
                   <div className="bg-blue-500/10 p-2 rounded-lg text-blue-500 mr-3">
                     <AlertCircle size={24} />
                   </div>
                   <div>
-                    <h3 className="text-white font-bold mb-1">Payment Instructions</h3>
-                    <p className="text-sm text-slate-400">
+                    <h3 className="text-slate-900 dark:text-white font-bold mb-1">Payment Instructions</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400">
                       Please send exactly <span className="text-gold-500 font-bold">${calculateTotal().toFixed(2)}</span> to the address below.
                     </p>
                   </div>
                 </div>
 
-                <div className="bg-slate-950 rounded-lg p-4 border border-slate-800 relative group">
-                  <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider">
+                <div className="bg-slate-50 dark:bg-slate-950 rounded-lg p-4 border border-slate-200 dark:border-slate-800 relative group">
+                  <p className="text-xs text-slate-600 dark:text-slate-500 mb-1 uppercase tracking-wider">
                     {selectedGatewayData?.type === 'bank' ? 'Bank Details' : 'Wallet Address'}
                   </p>
-                  <pre className="text-white font-mono text-sm whitespace-pre-wrap break-all">
+                  <pre className="text-slate-900 dark:text-white font-mono text-sm whitespace-pre-wrap break-all">
                     {getAccountDetails()}
                   </pre>
                   <button
                     onClick={() => navigator.clipboard.writeText(getAccountDetails())}
-                    className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors p-1"
+                    className="absolute top-4 right-4 text-slate-600 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors p-1"
                   >
                     <Copy size={18} />
                   </button>
@@ -269,39 +269,39 @@ const AddFunds = () => {
                     <img
                       src={`${IMAGE_BASE_URL}${selectedGatewayData.qrCode}`}
                       alt="QR Code"
-                      className="w-48 h-48 border-2 border-slate-700 rounded-lg"
+                      className="w-48 h-48 border-2 border-slate-300 dark:border-slate-700 rounded-lg"
                     />
                   </div>
                 )}
 
                 {selectedGatewayData?.instructions && (
                   <div className="mt-4 p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg">
-                    <p className="text-sm text-slate-300">{selectedGatewayData.instructions}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-300">{selectedGatewayData.instructions}</p>
                   </div>
                 )}
               </div>
 
               {/* Verification Form */}
-              <form onSubmit={handleSubmit} className="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
-                <h3 className="text-lg font-bold text-white">Confirm Payment</h3>
+              <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 space-y-6">
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">Confirm Payment</h3>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Transaction ID / Hash</label>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Transaction ID / Hash</label>
                   <input
                     type="text"
                     required
                     value={transactionId}
                     onChange={(e) => setTransactionId(e.target.value)}
                     placeholder="Enter the transaction ID from your payment provider"
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-300 mb-2">Upload Screenshot</label>
+                  <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Upload Screenshot</label>
                   <div
                     className={`border-2 border-dashed rounded-xl p-5 sm:p-8 text-center transition-colors cursor-pointer ${
-                      screenshot ? 'border-gold-500/50 bg-gold-500/5' : 'border-slate-700 hover:border-slate-600 bg-slate-950'
+                      screenshot ? 'border-gold-500/50 bg-gold-500/5' : 'border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-slate-50 dark:bg-slate-950'
                     }`}
                     onClick={() => fileInputRef.current?.click()}
                     onDragOver={(e) => e.preventDefault()}
@@ -325,18 +325,18 @@ const AddFunds = () => {
                             e.stopPropagation();
                             setScreenshot(null);
                           }}
-                          className="p-1 hover:bg-slate-800 rounded-full"
+                          className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full"
                         >
                           <X size={16} />
                         </button>
                       </div>
                     ) : (
                       <div className="space-y-2">
-                        <div className="mx-auto w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center text-slate-400">
+                        <div className="mx-auto w-12 h-12 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400">
                           <Upload size={24} />
                         </div>
-                        <p className="text-sm text-slate-300 font-medium">Click to upload or drag and drop</p>
-                        <p className="text-xs text-slate-500">SVG, PNG, JPG or GIF (max. 5MB)</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">Click to upload or drag and drop</p>
+                        <p className="text-xs text-slate-600 dark:text-slate-500">SVG, PNG, JPG or GIF (max. 5MB)</p>
                       </div>
                     )}
                   </div>
@@ -347,7 +347,7 @@ const AddFunds = () => {
                   disabled={isSubmitting || !transactionId || !screenshot}
                   className={`w-full py-4 rounded-lg font-bold flex items-center justify-center transition-all ${
                     isSubmitting || !transactionId || !screenshot
-                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
+                      ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-500 cursor-not-allowed'
                       : 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg shadow-gold-500/20 transform hover:-translate-y-1'
                   }`}
                 >
@@ -370,29 +370,29 @@ const AddFunds = () => {
 
         {/* Right Column: Summary */}
         <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl p-4 sm:p-6 border border-slate-700 sticky top-6">
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Payment Summary</h3>
+          <div className="bg-gradient-to-br from-slate-100 to-white dark:from-slate-900 dark:to-slate-800 rounded-xl p-4 sm:p-6 border border-slate-300 dark:border-slate-700 sticky top-6">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">Payment Summary</h3>
 
             <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Payment Method</span>
-                <span className="text-white font-medium">{selectedGatewayData?.name || '-'}</span>
+                <span className="text-slate-500 dark:text-slate-400">Payment Method</span>
+                <span className="text-slate-900 dark:text-white font-medium">{selectedGatewayData?.name || '-'}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Amount</span>
-                <span className="text-white font-medium">${amount ? parseFloat(amount).toFixed(2) : '0.00'}</span>
+                <span className="text-slate-500 dark:text-slate-400">Amount</span>
+                <span className="text-slate-900 dark:text-white font-medium">${amount ? parseFloat(amount).toFixed(2) : '0.00'}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-slate-400">Fee</span>
+                <span className="text-slate-500 dark:text-slate-400">Fee</span>
                 <span className="text-red-400 font-medium">
                   {selectedGateway && amount
                     ? `+$${getFeeAmount().toFixed(2)}`
                     : '$0.00'}
                 </span>
               </div>
-              <div className="border-t border-slate-700 my-2"></div>
+              <div className="border-t border-slate-300 dark:border-slate-700 my-2"></div>
               <div className="flex justify-between text-lg font-bold">
-                <span className="text-white">Payable Total</span>
+                <span className="text-slate-900 dark:text-white">Payable Total</span>
                 <span className="text-gold-500">
                    ${calculateTotal().toFixed(2)}
                 </span>
@@ -425,13 +425,13 @@ const AddFunds = () => {
                   className={`w-full py-4 rounded-lg font-bold flex items-center justify-center transition-all ${
                     selectedGateway && amount
                       ? 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg shadow-gold-500/20 transform hover:-translate-y-1'
-                      : 'bg-slate-700 text-slate-500 cursor-not-allowed'
+                      : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-500 cursor-not-allowed'
                   }`}
                 >
                   Proceed to Payment
                   <ArrowRight size={18} className="ml-2" />
                 </button>
-                <p className="text-xs text-center text-slate-500 mt-4">
+                <p className="text-xs text-center text-slate-600 dark:text-slate-500 mt-4">
                   Secure 256-bit encrypted transaction
                 </p>
               </>

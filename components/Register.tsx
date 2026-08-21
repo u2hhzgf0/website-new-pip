@@ -63,7 +63,7 @@ function RegisterForm() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-slate-950 py-12">
+    <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-950 py-12">
       {/* Toast */}
       {toast && (
         <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
@@ -95,13 +95,13 @@ function RegisterForm() {
         </div>
 
         {/* Register Card */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-5 sm:p-8 rounded-2xl shadow-2xl">
+        <div className="bg-white dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 rounded-2xl shadow-2xl">
           <form onSubmit={handleRegister} className="space-y-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">First Name</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">First Name</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                     <User size={18} />
                   </div>
                   <input
@@ -109,22 +109,22 @@ function RegisterForm() {
                     required
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
-                    className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                    className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                     placeholder="John"
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Last Name</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Last Name</label>
                 <div className="relative">
-                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                     <User size={18} />
                   </div>
                   <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
-                    className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                    className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                     placeholder="Doe"
                   />
                 </div>
@@ -132,9 +132,9 @@ function RegisterForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Phone Number</label>
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Phone Number</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Phone size={18} />
                 </div>
                 <input
@@ -142,16 +142,16 @@ function RegisterForm() {
                   required
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                   placeholder="+1 (555) 000-0000"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Email Address</label>
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Email Address</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Mail size={18} />
                 </div>
                 <input
@@ -159,16 +159,16 @@ function RegisterForm() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                   placeholder="name@example.com"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Password</label>
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Lock size={18} />
                 </div>
                 <input
@@ -176,13 +176,13 @@ function RegisterForm() {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-10 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                   placeholder="Create a strong password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -190,9 +190,9 @@ function RegisterForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">Confirm Password</label>
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Confirm Password</label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Lock size={18} />
                 </div>
                 <input
@@ -200,13 +200,13 @@ function RegisterForm() {
                   required
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-10 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                   placeholder="Confirm your password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
                 >
                   {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -214,18 +214,18 @@ function RegisterForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-2">
-                Referral Code <span className="text-slate-500">(optional)</span>
+              <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
+                Referral Code <span className="text-slate-600 dark:text-slate-500">(optional)</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Users size={18} />
                 </div>
                 <input
                   type="text"
                   value={referralCode}
                   onChange={(e) => setReferralCode(e.target.value)}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                   placeholder="Enter referral code"
                 />
               </div>
@@ -233,10 +233,10 @@ function RegisterForm() {
 
             <div className="flex items-start mt-2">
               <div className="flex items-center h-5">
-                <input id="terms" type="checkbox" required className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-gold-500 focus:ring-gold-500/50" />
+                <input id="terms" type="checkbox" required className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-gold-500 focus:ring-gold-500/50" />
               </div>
               <div className="ml-3 text-sm">
-                <label htmlFor="terms" className="text-slate-400">I agree to the <a href="#" className="text-gold-500 hover:underline">Terms of Service</a> and <a href="#" className="text-gold-500 hover:underline">Privacy Policy</a></label>
+                <label htmlFor="terms" className="text-slate-500 dark:text-slate-400">I agree to the <a href="#" className="text-gold-500 hover:underline">Terms of Service</a> and <a href="#" className="text-gold-500 hover:underline">Privacy Policy</a></label>
               </div>
             </div>
 
@@ -271,16 +271,16 @@ function RegisterForm() {
 
           {/* Divider */}
           <div className="mt-6 flex items-center gap-3">
-            <div className="flex-1 h-px bg-slate-800" />
-            <span className="text-xs text-slate-500 shrink-0">or sign up with</span>
-            <div className="flex-1 h-px bg-slate-800" />
+            <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800" />
+            <span className="text-xs text-slate-600 dark:text-slate-500 shrink-0">or sign up with</span>
+            <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800" />
           </div>
 
           {/* Google Register */}
           <button
             type="button"
             onClick={() => { window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`; }}
-            className="mt-4 w-full flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-white font-medium py-3 px-4 rounded-lg transition-all"
+            className="mt-4 w-full flex items-center justify-center gap-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-900 dark:text-white font-medium py-3 px-4 rounded-lg transition-all"
           >
             <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -293,7 +293,7 @@ function RegisterForm() {
           </button>
 
           <div className="mt-6 text-center">
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               Already have an account?{' '}
               <Link href="/login" className="text-gold-500 font-semibold hover:text-gold-400 hover:underline">
                 Sign In
@@ -309,7 +309,7 @@ function RegisterForm() {
 const Register = () => {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <Loader2 className="text-gold-500 animate-spin" size={32} />
       </div>
     }>

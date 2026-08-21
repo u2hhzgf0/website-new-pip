@@ -89,14 +89,14 @@ const StatAmount = ({ value, className = '' }: { value: number; className?: stri
           onClick={() => setShowModal(false)}
         >
           <div
-            className="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-2xl text-center min-w-[240px] mx-4"
+            className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-2xl p-6 shadow-2xl text-center min-w-[240px] mx-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-widest mb-3">Full Amount</p>
-            <p className="text-white text-3xl font-bold break-all">{full}</p>
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-widest mb-3">Full Amount</p>
+            <p className="text-slate-900 dark:text-white text-3xl font-bold break-all">{full}</p>
             <button
               onClick={() => setShowModal(false)}
-              className="mt-5 text-xs text-slate-400 hover:text-white transition-colors px-5 py-2 rounded-lg hover:bg-slate-700 border border-slate-600"
+              className="mt-5 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors px-5 py-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-600"
             >
               Close
             </button>
@@ -167,7 +167,7 @@ const DashboardHome = () => {
       case 'bonus':
         return 'text-amber-400';
       default:
-        return 'text-slate-400';
+        return 'text-slate-500 dark:text-slate-400';
     }
   };
 
@@ -183,7 +183,7 @@ const DashboardHome = () => {
       case 'cancelled':
         return 'bg-rose-500/10 text-rose-500 border border-rose-500/20';
       default:
-        return 'bg-slate-500/10 text-slate-500 border border-slate-500/20';
+        return 'bg-slate-300/10 dark:bg-slate-500/10 text-slate-600 dark:text-slate-500 border border-slate-300/20 dark:border-slate-500/20';
     }
   };
 
@@ -192,7 +192,7 @@ const DashboardHome = () => {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={48} />
-          <p className="text-slate-400">Loading dashboard...</p>
+          <p className="text-slate-500 dark:text-slate-400">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -204,7 +204,7 @@ const DashboardHome = () => {
         <div className="text-center">
           <AlertCircle className="text-rose-500 mx-auto mb-4" size={48} />
           <p className="text-rose-400 font-medium mb-2">Failed to load dashboard data</p>
-          <p className="text-slate-500 text-sm">Please try refreshing the page</p>
+          <p className="text-slate-600 dark:text-slate-500 text-sm">Please try refreshing the page</p>
         </div>
       </div>
     );
@@ -239,31 +239,31 @@ const DashboardHome = () => {
         </Link>
 
         {/* Total Deposit */}
-        <Link href="/dashboard/deposit" className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-lg relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
+        <Link href="/dashboard/deposit" className="bg-gradient-to-br from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-slate-900 dark:text-white shadow-lg relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10">
             <ArrowDownLeft size={40} className="text-emerald-500 sm:hidden" />
             <ArrowDownLeft size={64} className="text-emerald-500 hidden sm:block" />
           </div>
-          <p className="text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Deposit</p>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Deposit</p>
           <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-emerald-400">
             <StatAmount value={displayTotalDeposit} />
           </h3>
-          <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
+          <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-full mt-1 sm:mt-2">
             <div className="h-1 bg-emerald-500 rounded-full" style={{ width: `${Math.min((displayTotalDeposit / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
         </Link>
 
         {/* Total Withdraw */}
-        <Link href="/dashboard/withdraw" className="bg-gradient-to-br from-slate-800 to-slate-900 border border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-white shadow-lg relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
+        <Link href="/dashboard/withdraw" className="bg-gradient-to-br from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl sm:rounded-2xl p-3 sm:p-6 text-slate-900 dark:text-white shadow-lg relative overflow-hidden group hover:shadow-2xl hover:scale-[1.02] transition-all">
           <div className="absolute top-0 right-0 p-2 sm:p-4 opacity-10">
              <ArrowUpRight size={40} className="text-rose-500 sm:hidden" />
              <ArrowUpRight size={64} className="text-rose-500 hidden sm:block" />
           </div>
-          <p className="text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Withdraw</p>
+          <p className="text-slate-500 dark:text-slate-400 font-medium mb-1 text-[11px] sm:text-sm">Total Withdraw</p>
           <h3 className="text-base sm:text-2xl font-bold mb-2 sm:mb-3 text-rose-400">
             <StatAmount value={displayTotalWithdraw} />
           </h3>
-          <div className="h-1 w-full bg-slate-700 rounded-full mt-1 sm:mt-2">
+          <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-full mt-1 sm:mt-2">
             <div className="h-1 bg-rose-500 rounded-full" style={{ width: `${Math.min((displayTotalWithdraw / (displayTotalDeposit + displayTotalWithdraw + 1)) * 100, 100)}%` }}></div>
           </div>
         </Link>
@@ -326,16 +326,16 @@ const DashboardHome = () => {
       </div>
 
       {/* Row 3: Recent Transactions */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
-        {/* <div className="p-4 sm:p-6 border-b border-slate-800 flex justify-between items-center">
-          <h3 className="text-sm sm:text-lg font-bold text-white">Recent Transactions</h3>
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+        {/* <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+          <h3 className="text-sm sm:text-lg font-bold text-slate-900 dark:text-white">Recent Transactions</h3>
           <Link href="/dashboard/transactions" className="text-gold-500 text-xs sm:text-sm hover:underline font-medium">View All</Link>
         </div> */}
 
         {/* Desktop Table View */}
         {/* <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-slate-950 text-slate-400 text-sm uppercase tracking-wider">
+            <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 text-sm uppercase tracking-wider">
               <tr>
                 <th className="px-6 py-4 font-medium">Transaction ID</th>
                 <th className="px-6 py-4 font-medium">Type</th>
@@ -344,10 +344,10 @@ const DashboardHome = () => {
                 <th className="px-6 py-4 font-medium">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800 text-sm text-slate-300">
+            <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-sm text-slate-600 dark:text-slate-300">
               {transactions.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
+                  <td colSpan={5} className="px-6 py-12 text-center text-slate-600 dark:text-slate-500">
                     <DollarSign className="mx-auto mb-2 text-slate-600" size={40} />
                     <p>No transactions yet</p>
                     <p className="text-xs mt-1">Your transaction history will appear here</p>
@@ -355,8 +355,8 @@ const DashboardHome = () => {
                 </tr>
               ) : (
                 transactions.map((tx: any) => (
-                  <tr key={tx.id} className="hover:bg-slate-800/50 transition-colors">
-                    <td className="px-6 py-4 font-mono text-slate-500">{tx.transactionId}</td>
+                  <tr key={tx.id} className="hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-500">{tx.transactionId}</td>
                     <td className="px-6 py-4">
                       <span className={`flex items-center font-medium capitalize ${getTypeColor(tx.type)}`}>
                         {tx.type}
@@ -364,7 +364,7 @@ const DashboardHome = () => {
                     </td>
                     <td className="px-6 py-4">{formatDate(tx.createdAt)}</td>
                     <td className={`px-6 py-4 font-bold ${
-                       tx.type === 'withdraw' ? 'text-rose-400' : 'text-white'
+                       tx.type === 'withdraw' ? 'text-rose-400' : 'text-slate-900 dark:text-white'
                     }`}>
                       {tx.type === 'withdraw' ? '-' : '+'}${tx.netAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
@@ -381,9 +381,9 @@ const DashboardHome = () => {
         </div> */}
 
         {/* Mobile Card View */}
-        {/* <div className="sm:hidden divide-y divide-slate-800">
+        {/* <div className="sm:hidden divide-y divide-slate-200 dark:divide-slate-800">
           {transactions.length === 0 ? (
-            <div className="px-4 py-10 text-center text-slate-500">
+            <div className="px-4 py-10 text-center text-slate-600 dark:text-slate-500">
               <DollarSign className="mx-auto mb-2 text-slate-600" size={32} />
               <p className="text-sm">No transactions yet</p>
               <p className="text-xs mt-1">Your transaction history will appear here</p>
@@ -403,12 +403,12 @@ const DashboardHome = () => {
                      <DollarSign size={14} />}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-medium text-white capitalize">{tx.type}</p>
-                    <p className="text-[10px] text-slate-500">{formatDate(tx.createdAt)}</p>
+                    <p className="text-xs font-medium text-slate-900 dark:text-white capitalize">{tx.type}</p>
+                    <p className="text-[10px] text-slate-600 dark:text-slate-500">{formatDate(tx.createdAt)}</p>
                   </div>
                 </div>
                 <div className="text-right flex-shrink-0 ml-2">
-                  <p className={`text-sm font-bold ${tx.type === 'withdraw' ? 'text-rose-400' : 'text-white'}`}>
+                  <p className={`text-sm font-bold ${tx.type === 'withdraw' ? 'text-rose-400' : 'text-slate-900 dark:text-white'}`}>
                     {tx.type === 'withdraw' ? '-' : '+'}${tx.netAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </p>
                   <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-bold capitalize ${getStatusColor(tx.status)}`}>

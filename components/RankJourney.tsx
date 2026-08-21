@@ -31,7 +31,7 @@ const RankTooltip = ({
   prevRankName?: string;
 }) => (
   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 z-50 w-52 pointer-events-none">
-    <div className="bg-slate-800 border border-slate-700 rounded-xl shadow-2xl p-3 text-left">
+    <div className="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-xl shadow-2xl p-3 text-left">
       <div className="flex items-center gap-2 mb-2">
         <img
           src={`${imageBase}${def.badgeImage}`}
@@ -39,44 +39,44 @@ const RankTooltip = ({
           className="w-8 h-8 object-contain flex-shrink-0"
         />
         <div>
-          <p className="text-xs font-bold text-white">{def.name}</p>
-          <p className="text-[10px] text-slate-400">Level {def.level}</p>
+          <p className="text-xs font-bold text-slate-900 dark:text-white">{def.name}</p>
+          <p className="text-[10px] text-slate-500 dark:text-slate-400">Level {def.level}</p>
         </div>
       </div>
       <div className="space-y-1 text-[11px]">
         {def.target > 0 && (
           <div className="flex justify-between">
-            <span className="text-slate-400">Target</span>
-            <span className="text-white font-medium">${def.target.toLocaleString()}</span>
+            <span className="text-slate-500 dark:text-slate-400">Target</span>
+            <span className="text-slate-900 dark:text-white font-medium">${def.target.toLocaleString()}</span>
           </div>
         )}
         {def.directReferrals > 0 && (
           <div className="flex justify-between">
-            <span className="text-slate-400">Direct refs</span>
-            <span className="text-white font-medium">{def.directReferrals} users</span>
+            <span className="text-slate-500 dark:text-slate-400">Direct refs</span>
+            <span className="text-slate-900 dark:text-white font-medium">{def.directReferrals} users</span>
           </div>
         )}
         {def.personalInvestment > 0 && (
           <div className="flex justify-between">
-            <span className="text-slate-400">Personal invest</span>
-            <span className="text-white font-medium">${def.personalInvestment.toLocaleString()}</span>
+            <span className="text-slate-500 dark:text-slate-400">Personal invest</span>
+            <span className="text-slate-900 dark:text-white font-medium">${def.personalInvestment.toLocaleString()}</span>
           </div>
         )}
         {def.monthlySalary > 0 && (
           <div className="flex justify-between">
-            <span className="text-slate-400">Monthly salary</span>
+            <span className="text-slate-500 dark:text-slate-400">Monthly salary</span>
             <span className="text-gold-400 font-semibold">${def.monthlySalary}</span>
           </div>
         )}
         {def.bonus && (
           <div className="flex justify-between">
-            <span className="text-slate-400">Bonus</span>
+            <span className="text-slate-500 dark:text-slate-400">Bonus</span>
             <span className="text-emerald-400 font-semibold">{def.bonus}</span>
           </div>
         )}
         {def.commissionRange && (
           <div className="flex justify-between">
-            <span className="text-slate-400">Commission</span>
+            <span className="text-slate-500 dark:text-slate-400">Commission</span>
             <span className="text-blue-400 font-semibold">
               {def.commissionRange.min}–{def.commissionRange.max}%
             </span>
@@ -84,7 +84,7 @@ const RankTooltip = ({
         )}
       </div>
       {def.level >= 3 && prevRankName && (
-        <div className="mt-2 pt-2 border-t border-slate-700/60">
+        <div className="mt-2 pt-2 border-t border-slate-300/60 dark:border-slate-700/60">
           <p className="text-[10px] text-amber-400 leading-snug">
             Requires at least 1 direct referral who has reached <span className="font-semibold">{prevRankName}</span> rank
           </p>
@@ -92,7 +92,7 @@ const RankTooltip = ({
       )}
     </div>
     {/* Tooltip arrow */}
-    <div className="w-3 h-3 bg-slate-800 border-r border-b border-slate-700 rotate-45 mx-auto -mt-1.5" />
+    <div className="w-3 h-3 bg-slate-100 dark:bg-slate-800 border-r border-b border-slate-300 dark:border-slate-700 rotate-45 mx-auto -mt-1.5" />
   </div>
 );
 
@@ -121,14 +121,14 @@ const RankNode = ({
     ? 'ring-2 ring-gold-500 ring-offset-2 ring-offset-slate-950'
     : isCompleted
     ? 'ring-1 ring-emerald-500/50 ring-offset-1 ring-offset-slate-950'
-    : 'ring-1 ring-slate-700 ring-offset-1 ring-offset-slate-950';
+    : 'ring-1 ring-slate-300 dark:ring-slate-700 ring-offset-1 ring-offset-slate-950';
 
   // Container bg
   const containerBg = isActive
     ? 'bg-gradient-to-br from-gold-500/20 to-amber-600/10 border-gold-500/40'
     : isCompleted
     ? 'bg-emerald-500/5 border-emerald-500/20'
-    : 'bg-slate-900/60 border-slate-800';
+    : 'bg-white dark:bg-slate-900/60 border-slate-200 dark:border-slate-800';
 
   // Glow for active
   const glowClass = isActive ? 'shadow-lg shadow-gold-500/25' : '';
@@ -165,17 +165,17 @@ const RankNode = ({
         {/* Status overlay icon */}
         {isCompleted && (
           <div className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center shadow-md shadow-emerald-500/40 ring-2 ring-slate-950">
-            <Check size={10} strokeWidth={3} className="text-white" />
+            <Check size={10} strokeWidth={3} className="text-slate-900 dark:text-white" />
           </div>
         )}
         {isActive && (
           <div className="absolute -top-1 -right-1 w-5 h-5 bg-gold-500 rounded-full flex items-center justify-center shadow-md shadow-gold-500/50 ring-2 ring-slate-950">
-            <Star size={10} className="text-white fill-white" />
+            <Star size={10} className="text-slate-900 dark:text-white fill-white" />
           </div>
         )}
         {isLocked && (
-          <div className="absolute -top-1 -right-1 w-5 h-5 bg-slate-700 rounded-full flex items-center justify-center ring-2 ring-slate-950">
-            <Lock size={9} className="text-slate-400" />
+          <div className="absolute -top-1 -right-1 w-5 h-5 bg-slate-200 dark:bg-slate-700 rounded-full flex items-center justify-center ring-2 ring-slate-950">
+            <Lock size={9} className="text-slate-500 dark:text-slate-400" />
           </div>
         )}
 
@@ -195,7 +195,7 @@ const RankNode = ({
               ? 'text-gold-400'
               : isCompleted
               ? 'text-emerald-400'
-              : 'text-slate-500'
+              : 'text-slate-600 dark:text-slate-500'
           }`}
         >
           {def.name}
@@ -217,13 +217,13 @@ const Connector = ({ left, right }: { left: RankState; right: RankState }) => {
   return (
     <div className="flex items-center flex-1 min-w-[12px] mt-[-20px]">
       {/* Left dot */}
-      <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isDone ? 'bg-gold-500' : 'bg-slate-700'}`} />
+      <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${isDone ? 'bg-gold-500' : 'bg-slate-200 dark:bg-slate-700'}`} />
       {/* Line */}
-      <div className={`flex-1 h-px ${isDone ? 'bg-gradient-to-r from-gold-500 to-gold-500/60' : 'bg-slate-800'}`} />
+      <div className={`flex-1 h-px ${isDone ? 'bg-gradient-to-r from-gold-500 to-gold-500/60' : 'bg-slate-100 dark:bg-slate-800'}`} />
       {/* Arrow head */}
       <ChevronRight
         size={10}
-        className={`flex-shrink-0 ${isDone ? 'text-gold-500' : 'text-slate-700'}`}
+        className={`flex-shrink-0 ${isDone ? 'text-gold-500' : 'text-slate-300 dark:text-slate-700'}`}
       />
     </div>
   );
@@ -235,7 +235,7 @@ const VerticalConnector = ({ left, right }: { left: RankState; right: RankState 
                  (left === 'completed' && right === 'active');
   return (
     <div className="flex flex-col items-center w-6 flex-shrink-0 py-1">
-      <div className={`flex-1 w-px ${isDone ? 'bg-gradient-to-b from-gold-500 to-gold-500/40' : 'bg-slate-800'}`}
+      <div className={`flex-1 w-px ${isDone ? 'bg-gradient-to-b from-gold-500 to-gold-500/40' : 'bg-slate-100 dark:bg-slate-800'}`}
         style={{ minHeight: 24 }}
       />
     </div>
@@ -252,17 +252,17 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
   const sorted = [...definitions].sort((a, b) => a.level - b.level);
 
   return (
-    <div className={`bg-slate-950/60 border border-slate-800 rounded-xl ${compact ? 'p-3' : 'p-4 sm:p-6'}`}>
+    <div className={`bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800 rounded-xl ${compact ? 'p-3' : 'p-4 sm:p-6'}`}>
       {/* Header */}
       {!compact && (
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h3 className="text-sm font-semibold text-white">Rank Journey</h3>
-            <p className="text-xs text-slate-500 mt-0.5">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Rank Journey</h3>
+            <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">
               Your path from Starter to Ambassador — hover any rank to see details
             </p>
           </div>
-          <div className="flex items-center gap-3 text-[10px] text-slate-500">
+          <div className="flex items-center gap-3 text-[10px] text-slate-600 dark:text-slate-500">
             <span className="flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" /> Completed
             </span>
@@ -270,7 +270,7 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
               <span className="w-2 h-2 rounded-full bg-gold-500 inline-block" /> Current
             </span>
             <span className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-slate-700 inline-block" /> Locked
+              <span className="w-2 h-2 rounded-full bg-slate-200 dark:bg-slate-700 inline-block" /> Locked
             </span>
           </div>
         </div>
@@ -316,7 +316,7 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
                         ? 'bg-gold-500/20 border-gold-500/50 shadow-md shadow-gold-500/20'
                         : state === 'completed'
                         ? 'bg-emerald-500/10 border-emerald-500/30'
-                        : 'bg-slate-900 border-slate-800'
+                        : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800'
                     } ${state === 'locked' ? 'opacity-40' : ''}`}
                   >
                     {state === 'completed' && <Check size={12} className="text-emerald-400" strokeWidth={3} />}
@@ -340,13 +340,13 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
                   />
                   <div className="flex-1 min-w-0">
                     <p className={`text-sm font-semibold ${
-                      state === 'active' ? 'text-gold-400' : state === 'completed' ? 'text-emerald-400' : 'text-slate-500'
+                      state === 'active' ? 'text-gold-400' : state === 'completed' ? 'text-emerald-400' : 'text-slate-600 dark:text-slate-500'
                     }`}>
                       {def.name}
                     </p>
                     <div className="flex flex-wrap gap-x-3 mt-0.5">
                       {def.target > 0 && (
-                        <span className="text-[10px] text-slate-500">Target: ${def.target.toLocaleString()}</span>
+                        <span className="text-[10px] text-slate-600 dark:text-slate-500">Target: ${def.target.toLocaleString()}</span>
                       )}
                       {def.monthlySalary > 0 && (
                         <span className="text-[10px] text-gold-500/70">${def.monthlySalary}/mo</span>
@@ -383,8 +383,8 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
 
       {/* Current rank callout (desktop) */}
       {!compact && (
-        <div className="hidden sm:flex items-center justify-center mt-5 pt-4 border-t border-slate-800">
-          <p className="text-xs text-slate-500">
+        <div className="hidden sm:flex items-center justify-center mt-5 pt-4 border-t border-slate-200 dark:border-slate-800">
+          <p className="text-xs text-slate-600 dark:text-slate-500">
             You are currently{' '}
             <span className="text-gold-400 font-semibold">
               {definitions.find((d) => d.level === currentRank)?.name || 'Starter'}
@@ -392,7 +392,7 @@ export const RankJourney: React.FC<RankJourneyProps> = ({
             {currentRank < 7 && (
               <>
                 {' '}— next goal is{' '}
-                <span className="text-white font-semibold">
+                <span className="text-slate-900 dark:text-white font-semibold">
                   {definitions.find((d) => d.level === currentRank + 1)?.name}
                 </span>
               </>

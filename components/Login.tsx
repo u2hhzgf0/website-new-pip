@@ -82,7 +82,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-slate-950">
+    <div className="min-h-screen relative flex items-center justify-center overflow-hidden bg-slate-50 dark:bg-slate-950">
       {/* Toast Notification */}
       {toast && (
         <Toast
@@ -118,7 +118,7 @@ const Login = () => {
         </div>
 
         {/* Login Card */}
-        <div className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-5 sm:p-8 rounded-2xl shadow-2xl">
+        <div className="bg-white dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-slate-800 p-5 sm:p-8 rounded-2xl shadow-2xl">
           <form onSubmit={handleLogin} className="space-y-6">
             {/* Error Message */}
             {errorMessage && (
@@ -129,11 +129,11 @@ const Login = () => {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
                 Email Address
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Mail size={18} />
                 </div>
                 <input
@@ -144,7 +144,7 @@ const Login = () => {
                   value={formData.email}
                   onChange={handleChange}
                   disabled={isLoading}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="name@example.com"
                 />
               </div>
@@ -152,7 +152,7 @@ const Login = () => {
 
             <div>
               <div className="flex justify-between items-center mb-2">
-                <label htmlFor="password" className="block text-sm font-medium text-slate-300">
+                <label htmlFor="password" className="block text-sm font-medium text-slate-600 dark:text-slate-300">
                   Password
                 </label>
                 <Link href="/forgot-password" className="text-xs text-gold-500 hover:text-gold-400">
@@ -160,7 +160,7 @@ const Login = () => {
                 </Link>
               </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-600 dark:text-slate-500">
                   <Lock size={18} />
                 </div>
                 <input
@@ -171,13 +171,13 @@ const Login = () => {
                   value={formData.password}
                   onChange={handleChange}
                   disabled={isLoading}
-                  className="w-full bg-slate-950/50 border border-slate-700 rounded-lg pl-10 pr-10 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-10 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="••••••••"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-600 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -192,9 +192,9 @@ const Login = () => {
                 checked={formData.rememberMe}
                 onChange={handleChange}
                 disabled={isLoading}
-                className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-gold-500 focus:ring-gold-500/50"
+                className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-gold-500 focus:ring-gold-500/50"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-400">
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-slate-500 dark:text-slate-400">
                 Remember me for 30 days
               </label>
             </div>
@@ -220,16 +220,16 @@ const Login = () => {
 
           {/* Divider */}
           <div className="mt-6 flex items-center gap-3">
-            <div className="flex-1 h-px bg-slate-800" />
-            <span className="text-xs text-slate-500 shrink-0">or continue with</span>
-            <div className="flex-1 h-px bg-slate-800" />
+            <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800" />
+            <span className="text-xs text-slate-600 dark:text-slate-500 shrink-0">or continue with</span>
+            <div className="flex-1 h-px bg-slate-100 dark:bg-slate-800" />
           </div>
 
           {/* Google Login */}
           <button
             type="button"
             onClick={() => { window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/google`; }}
-            className="mt-4 w-full flex items-center justify-center gap-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 hover:border-slate-600 text-white font-medium py-3 px-4 rounded-lg transition-all"
+            className="mt-4 w-full flex items-center justify-center gap-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-900 dark:text-white font-medium py-3 px-4 rounded-lg transition-all"
           >
             <svg width="20" height="20" viewBox="0 0 48 48" fill="none">
               <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
@@ -242,7 +242,7 @@ const Login = () => {
           </button>
 
           <div className="mt-6 text-center">
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
               Don&apos;t have an account?{' '}
               <Link href="/register" className="text-gold-500 font-semibold hover:text-gold-400 hover:underline">
                 Create Account
@@ -252,10 +252,10 @@ const Login = () => {
         </div>
 
         {/* Footer Links */}
-        <div className="mt-8 flex justify-center space-x-4 sm:space-x-6 text-xs text-slate-500">
-          <a href="#" className="hover:text-slate-300">Privacy Policy</a>
-          <a href="#" className="hover:text-slate-300">Terms of Service</a>
-          <a href="#" className="hover:text-slate-300">Help Center</a>
+        <div className="mt-8 flex justify-center space-x-4 sm:space-x-6 text-xs text-slate-600 dark:text-slate-500">
+          <a href="#" className="hover:text-slate-600 dark:hover:text-slate-300">Privacy Policy</a>
+          <a href="#" className="hover:text-slate-600 dark:hover:text-slate-300">Terms of Service</a>
+          <a href="#" className="hover:text-slate-600 dark:hover:text-slate-300">Help Center</a>
         </div>
       </div>
     </div>

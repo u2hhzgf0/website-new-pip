@@ -200,8 +200,8 @@ const InvestPlans = () => {
     <div className="space-y-4 sm:space-y-8">
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white">Invest & Earn</h2>
-          <p className="text-slate-400 text-xs sm:text-sm">Select a plan to start growing your portfolio today.</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Invest & Earn</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Select a plan to start growing your portfolio today.</p>
         </div>
         <div className="flex items-center space-x-2 text-gold-500 bg-gold-500/10 px-3 sm:px-4 py-2 rounded-lg w-fit">
           <DollarSign size={18} />
@@ -216,10 +216,10 @@ const InvestPlans = () => {
           return (
             <div
               key={plan.id}
-              className={`relative bg-slate-900 rounded-xl sm:rounded-2xl p-4 sm:p-6 border flex flex-col h-full transition-all duration-300 ${
+              className={`relative bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl p-4 sm:p-6 border flex flex-col h-full transition-all duration-300 ${
                 plan.isPopular
                   ? 'border-gold-500 shadow-xl shadow-gold-500/10'
-                  : 'border-slate-800 hover:border-slate-700'
+                  : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
               }`}
             >
               {plan.isPopular && (
@@ -228,39 +228,39 @@ const InvestPlans = () => {
                 </div>
               )}
 
-              <h3 className={`text-lg sm:text-xl font-bold mb-3 sm:mb-4 ${plan.isPopular ? 'text-white' : 'text-slate-300'}`}>{plan.name}</h3>
+              <h3 className={`text-lg sm:text-xl font-bold mb-3 sm:mb-4 ${plan.isPopular ? 'text-slate-900 dark:text-white' : 'text-slate-600 dark:text-slate-300'}`}>{plan.name}</h3>
 
-              <div className="mb-4 sm:mb-6 text-center bg-slate-950/50 rounded-xl p-3 sm:p-4 border border-slate-800">
+              <div className="mb-4 sm:mb-6 text-center bg-slate-50 dark:bg-slate-950/50 rounded-xl p-3 sm:p-4 border border-slate-200 dark:border-slate-800">
                  {plan.approximateRoi ? (
                    <>
-                     <span className="block text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">Approximate Return</span>
+                     <span className="block text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">Approximate Return</span>
                      <span className="text-xl sm:text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
                    </>
                  ) : (
                    <>
-                     <span className="block text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
+                     <span className="block text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
                      <span className="text-3xl sm:text-4xl font-bold text-gold-500">{plan.roi}%</span>
                    </>
                  )}
-                 <span className="block text-slate-500 text-xs mt-1">for {plan.duration} {plan.durationType}</span>
+                 <span className="block text-slate-600 dark:text-slate-500 text-xs mt-1">for {plan.duration} {plan.durationType}</span>
               </div>
 
-              <div className="mb-4 sm:mb-6 bg-slate-800/30 rounded-lg p-3 sm:p-4 border border-slate-800/50">
+              <div className="mb-4 sm:mb-6 bg-slate-100/30 dark:bg-slate-800/30 rounded-lg p-3 sm:p-4 border border-slate-200/50 dark:border-slate-800/50">
                  <div className="flex items-center space-x-2 mb-3">
-                    <Info size={16} className="text-slate-400" />
-                    <span className="text-sm font-semibold text-slate-200">Profit Calculator</span>
+                    <Info size={16} className="text-slate-500 dark:text-slate-400" />
+                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">Profit Calculator</span>
                  </div>
                  <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Min. Invest</span>
-                      <span className="text-white font-medium">${plan.minDeposit}</span>
+                      <span className="text-slate-500 dark:text-slate-400">Min. Invest</span>
+                      <span className="text-slate-900 dark:text-white font-medium">${plan.minDeposit}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-400">Profit</span>
+                      <span className="text-slate-500 dark:text-slate-400">Profit</span>
                       <span className="text-green-400 font-medium">+${profit.toLocaleString()}</span>
                     </div>
-                     <div className="flex justify-between border-t border-slate-700/50 pt-2 mt-2">
-                      <span className="text-slate-300">Total Return</span>
+                     <div className="flex justify-between border-t border-slate-300/50 dark:border-slate-700/50 pt-2 mt-2">
+                      <span className="text-slate-600 dark:text-slate-300">Total Return</span>
                       <span className="text-gold-500 font-bold">${totalReturn.toLocaleString()}</span>
                     </div>
                  </div>
@@ -269,7 +269,7 @@ const InvestPlans = () => {
               {plan.features && plan.features.length > 0 && (
                 <div className="space-y-3 mb-8 flex-1">
                   {plan.features.map((feat, i) => (
-                    <div key={i} className="flex items-center text-sm text-slate-400">
+                    <div key={i} className="flex items-center text-sm text-slate-500 dark:text-slate-400">
                       <Check className="w-4 h-4 text-green-500 mr-3 shrink-0" />
                       {feat}
                     </div>
@@ -278,7 +278,7 @@ const InvestPlans = () => {
               )}
 
               <div className="mt-auto">
-                 <div className="text-xs text-center text-slate-500 mb-3">
+                 <div className="text-xs text-center text-slate-600 dark:text-slate-500 mb-3">
                     Deposit Range: ${plan.minDeposit} - ${plan.maxDeposit.toLocaleString()}
                  </div>
                  <button
@@ -286,14 +286,14 @@ const InvestPlans = () => {
                    className={`w-full py-3.5 rounded-lg font-bold transition-all ${
                      plan.isPopular
                        ? 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg shadow-gold-500/20'
-                       : 'bg-slate-800 hover:bg-slate-700 text-white'
+                       : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white'
                    }`}
                  >
                    Choose This Plan
                  </button>
                  <Link
                    href={`/dashboard/plans/${plan.id}`}
-                   className="w-full mt-2 py-2.5 rounded-lg border border-slate-700 text-slate-400 hover:text-white hover:border-slate-600 transition-all text-sm font-medium flex items-center justify-center gap-2"
+                   className="w-full mt-2 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 transition-all text-sm font-medium flex items-center justify-center gap-2"
                  >
                    <Eye size={14} /> View Details
                  </Link>
@@ -305,41 +305,41 @@ const InvestPlans = () => {
 
       {/* Investment Modal */}
       {showModal && selectedPlanData && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-sm p-4" onClick={() => !investing && setShowModal(false)}>
-          <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
-            <div className="p-6 border-b border-slate-800">
-              <h3 className="text-white font-bold text-xl">Invest in {selectedPlanData.name}</h3>
-              <p className="text-slate-400 text-sm mt-1">{selectedPlanData.approximateRoi || `${selectedPlanData.roi}% ${selectedPlanData.roiType} ROI`}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-slate-950/90 backdrop-blur-sm p-4" onClick={() => !investing && setShowModal(false)}>
+          <div className="max-w-md w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden" onClick={(e) => e.stopPropagation()}>
+            <div className="p-6 border-b border-slate-200 dark:border-slate-800">
+              <h3 className="text-slate-900 dark:text-white font-bold text-xl">Invest in {selectedPlanData.name}</h3>
+              <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{selectedPlanData.approximateRoi || `${selectedPlanData.roi}% ${selectedPlanData.roiType} ROI`}</p>
             </div>
 
             <div className="p-6 space-y-6">
-              <div className="bg-slate-950/50 rounded-lg p-4 border border-slate-800">
-                <p className="text-slate-400 text-xs mb-1">Available Balance</p>
-                <p className="text-2xl font-bold text-white">${balance.toLocaleString()}</p>
+              <div className="bg-slate-50 dark:bg-slate-950/50 rounded-lg p-4 border border-slate-200 dark:border-slate-800">
+                <p className="text-slate-500 dark:text-slate-400 text-xs mb-1">Available Balance</p>
+                <p className="text-2xl font-bold text-slate-900 dark:text-white">${balance.toLocaleString()}</p>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Investment Amount</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Investment Amount</label>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold">$</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500 font-bold">$</span>
                   <input
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.00"
-                    className="w-full bg-slate-950 border border-slate-700 rounded-lg pl-8 pr-20 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-20 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500"
                     disabled={investing}
                   />
                   <button
                     type="button"
                     onClick={() => setAmount(Math.min(balance, selectedPlanData.maxDeposit).toString())}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs bg-slate-800 text-gold-500 px-2 py-1 rounded hover:bg-slate-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs bg-slate-100 dark:bg-slate-800 text-gold-500 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700"
                     disabled={investing}
                   >
                     MAX
                   </button>
                 </div>
-                <p className="text-xs text-slate-400 mt-2">
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
                   Min: ${selectedPlanData.minDeposit} | Max: ${selectedPlanData.maxDeposit.toLocaleString()}
                 </p>
               </div>
@@ -353,15 +353,15 @@ const InvestPlans = () => {
                       return (
                         <>
                           <div className="flex justify-between">
-                            <span className="text-slate-400">Total Profit:</span>
+                            <span className="text-slate-500 dark:text-slate-400">Total Profit:</span>
                             <span className="text-emerald-400 font-bold">+${calc.profit.toFixed(2)}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-slate-400">Daily Profit:</span>
-                            <span className="text-slate-300">~${calc.daily.toFixed(2)}</span>
+                            <span className="text-slate-500 dark:text-slate-400">Daily Profit:</span>
+                            <span className="text-slate-600 dark:text-slate-300">~${calc.daily.toFixed(2)}</span>
                           </div>
                           <div className="flex justify-between border-t border-emerald-500/20 pt-2 mt-2">
-                            <span className="text-white font-medium">Total Return:</span>
+                            <span className="text-slate-900 dark:text-white font-medium">Total Return:</span>
                             <span className="text-gold-500 font-bold">${calc.totalReturn.toFixed(2)}</span>
                           </div>
                         </>
@@ -391,7 +391,7 @@ const InvestPlans = () => {
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowModal(false)}
-                  className="flex-1 py-3 rounded-lg border border-slate-700 text-white hover:bg-slate-800 transition-colors"
+                  className="flex-1 py-3 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                   disabled={investing}
                 >
                   Cancel
@@ -418,7 +418,7 @@ const InvestPlans = () => {
 
       {/* Celebration Popup */}
       {showCelebration && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/75 backdrop-blur-sm overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-slate-950/75 backdrop-blur-sm overflow-hidden">
 
           {/* Left balloons */}
           {LEFT_BALLOONS.map((b) => (
@@ -435,22 +435,22 @@ const InvestPlans = () => {
           ))}
 
           {/* Celebration card */}
-          <div className="relative z-10 bg-slate-900 border border-gold-500/40 rounded-2xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl shadow-gold-500/20">
+          <div className="relative z-10 bg-white dark:bg-slate-900 border border-gold-500/40 rounded-2xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl shadow-gold-500/20">
             <button
               onClick={() => setShowCelebration(false)}
-              className="absolute top-4 right-4 p-1 text-slate-400 hover:text-white transition-colors rounded-full hover:bg-slate-800"
+              className="absolute top-4 right-4 p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
               aria-label="Close"
             >
               <X size={20} />
             </button>
 
             <div className="text-5xl mb-4">🎉</div>
-            <h2 className="text-2xl font-bold text-white mb-2">Investment Confirmed!</h2>
-            <p className="text-slate-400 text-sm mb-1">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Investment Confirmed!</h2>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-1">
               You invested{' '}
               <span className="text-gold-400 font-bold">${celebrationInfo.amount.toLocaleString()}</span>
             </p>
-            <p className="text-slate-400 text-sm mb-5">
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-5">
               in <span className="text-gold-400 font-bold">{celebrationInfo.planName}</span>
             </p>
 

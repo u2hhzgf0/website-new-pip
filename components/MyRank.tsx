@@ -47,12 +47,12 @@ export default function MyRank() {
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
 
       <div>
-        <h1 className="text-xl sm:text-2xl font-bold text-white">My Rank</h1>
-        <p className="text-slate-400 text-xs sm:text-sm mt-1">Your current rank, progress, and full rank journey</p>
+        <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">My Rank</h1>
+        <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Your current rank, progress, and full rank journey</p>
       </div>
 
       {/* Current Rank Card */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-5 space-y-4">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4">
         {/* Rank header */}
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-4">
@@ -64,8 +64,8 @@ export default function MyRank() {
               />
             </div>
             <div>
-              <p className="text-xs text-slate-400 uppercase tracking-wider">Current Rank</p>
-              <p className="text-2xl font-bold text-white">{rankInfo.currentRankInfo.name}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">Current Rank</p>
+              <p className="text-2xl font-bold text-slate-900 dark:text-white">{rankInfo.currentRankInfo.name}</p>
               {rankInfo.currentRankInfo.monthlySalary > 0 && (
                 <p className="text-xs text-gold-400 mt-0.5">
                   Monthly Salary: <span className="font-semibold">${rankInfo.currentRankInfo.monthlySalary}</span>
@@ -91,20 +91,20 @@ export default function MyRank() {
 
         {/* Progress toward next rank */}
         {rankInfo.nextRankInfo && rankInfo.progress && (
-          <div className="space-y-3 pt-4 border-t border-slate-800">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+          <div className="space-y-3 pt-4 border-t border-slate-200 dark:border-slate-800">
+            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
               Progress to {rankInfo.nextRankInfo.name}
             </p>
 
             {/* Business Volume */}
             <div>
               <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-400">Business Volume</span>
-                <span className="text-white">
+                <span className="text-slate-500 dark:text-slate-400">Business Volume</span>
+                <span className="text-slate-900 dark:text-white">
                   ${rankInfo.progress.businessVolume.current.toLocaleString()} / ${rankInfo.progress.businessVolume.required.toLocaleString()}
                 </span>
               </div>
-              <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-gold-500 rounded-full transition-all"
                   style={{ width: `${Math.min(rankInfo.progress.businessVolume.percentage, 100)}%` }}
@@ -115,12 +115,12 @@ export default function MyRank() {
             {/* Direct Referrals */}
             <div>
               <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-400">Direct Referrals</span>
-                <span className="text-white">
+                <span className="text-slate-500 dark:text-slate-400">Direct Referrals</span>
+                <span className="text-slate-900 dark:text-white">
                   {rankInfo.progress.directReferrals.current} / {rankInfo.progress.directReferrals.required}
                 </span>
               </div>
-              <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-blue-500 rounded-full transition-all"
                   style={{ width: `${Math.min(rankInfo.progress.directReferrals.percentage, 100)}%` }}
@@ -131,12 +131,12 @@ export default function MyRank() {
             {/* Personal Investment */}
             <div>
               <div className="flex justify-between text-xs mb-1">
-                <span className="text-slate-400">Personal Investment</span>
-                <span className="text-white">
+                <span className="text-slate-500 dark:text-slate-400">Personal Investment</span>
+                <span className="text-slate-900 dark:text-white">
                   ${rankInfo.progress.personalInvestment.current.toLocaleString()} / ${rankInfo.progress.personalInvestment.required.toLocaleString()}
                 </span>
               </div>
-              <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
                   className="h-full bg-emerald-500 rounded-full transition-all"
                   style={{ width: `${Math.min(rankInfo.progress.personalInvestment.percentage, 100)}%` }}
@@ -145,14 +145,14 @@ export default function MyRank() {
             </div>
 
             {/* Next rank badge */}
-            <div className="flex items-center gap-3 mt-2 bg-slate-900/60 rounded-lg p-3">
+            <div className="flex items-center gap-3 mt-2 bg-white dark:bg-slate-900/60 rounded-lg p-3">
               <img
                 src={`${IMAGE_BASE}${rankInfo.nextRankInfo.badgeImage}`}
                 alt={rankInfo.nextRankInfo.name}
                 className="w-9 h-9 object-contain opacity-60"
               />
-              <div className="text-xs text-slate-400">
-                Next: <span className="text-white font-semibold">{rankInfo.nextRankInfo.name}</span>
+              <div className="text-xs text-slate-500 dark:text-slate-400">
+                Next: <span className="text-slate-900 dark:text-white font-semibold">{rankInfo.nextRankInfo.name}</span>
                 {rankInfo.nextRankInfo.bonus && (
                   <span className="text-gold-400"> · {rankInfo.nextRankInfo.bonus}</span>
                 )}
@@ -173,8 +173,8 @@ export default function MyRank() {
         )}
 
         {rankInfo.totalSalaryEarned > 0 && (
-          <p className="text-xs text-slate-500 pt-1 border-t border-slate-800">
-            Total salary earned: <span className="text-white font-medium">${rankInfo.totalSalaryEarned.toLocaleString()}</span>
+          <p className="text-xs text-slate-600 dark:text-slate-500 pt-1 border-t border-slate-200 dark:border-slate-800">
+            Total salary earned: <span className="text-slate-900 dark:text-white font-medium">${rankInfo.totalSalaryEarned.toLocaleString()}</span>
           </p>
         )}
       </div>

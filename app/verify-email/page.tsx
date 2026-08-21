@@ -108,29 +108,29 @@ function VerifyEmailContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center p-4">
       {/* Toast Notification */}
       {toast && (
         <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />
       )}
 
-      <div className="max-w-md w-full bg-slate-900/50 backdrop-blur-lg border border-slate-800 rounded-2xl p-5 sm:p-8">
+      <div className="max-w-md w-full bg-white dark:bg-slate-900/50 backdrop-blur-lg border border-slate-200 dark:border-slate-800 rounded-2xl p-5 sm:p-8">
 
         {status === 'success' ? (
           <div className="text-center">
             <div className="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="text-emerald-500" size={32} />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-3">Email Verified!</h2>
-            <p className="text-slate-400 mb-6">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Email Verified!</h2>
+            <p className="text-slate-500 dark:text-slate-400 mb-6">
               Your email has been successfully verified. You can now log in to your account.
             </p>
-            <div className="bg-slate-800/50 border border-slate-700 rounded-lg p-4 mb-6">
-              <p className="text-sm text-slate-300">Redirecting to login page...</p>
+            <div className="bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg p-4 mb-6">
+              <p className="text-sm text-slate-600 dark:text-slate-300">Redirecting to login page...</p>
             </div>
             <Link
               href="/login"
-              className="inline-block bg-gradient-to-r from-gold-500 to-amber-600 text-white font-bold px-8 py-3 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20"
+              className="inline-block bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white font-bold px-8 py-3 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20"
             >
               Go to Login
             </Link>
@@ -142,8 +142,8 @@ function VerifyEmailContent() {
               <div className="w-16 h-16 bg-gold-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Mail className="text-gold-500" size={32} />
               </div>
-              <h2 className="text-2xl font-bold text-white mb-3">Verify Your Email</h2>
-              <p className="text-slate-400 text-sm">
+              <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Verify Your Email</h2>
+              <p className="text-slate-500 dark:text-slate-400 text-sm">
                 We&apos;ve sent a 6-digit verification code to
               </p>
               {email && (
@@ -164,10 +164,10 @@ function VerifyEmailContent() {
                     value={digit}
                     onChange={(e) => handleOtpChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
-                    className={`w-10 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-lg border bg-slate-950/50 text-white focus:outline-none focus:ring-2 transition-all ${
+                    className={`w-10 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-bold rounded-lg border bg-slate-50 dark:bg-slate-950/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 transition-all ${
                       status === 'error'
                         ? 'border-rose-500/50 focus:ring-rose-500/50 focus:border-rose-500'
-                        : 'border-slate-700 focus:ring-gold-500/50 focus:border-gold-500'
+                        : 'border-slate-300 dark:border-slate-700 focus:ring-gold-500/50 focus:border-gold-500'
                     }`}
                   />
                 ))}
@@ -199,7 +199,7 @@ function VerifyEmailContent() {
 
             {/* Resend & Back */}
             <div className="mt-6 text-center space-y-4">
-              <p className="text-slate-500 text-sm">
+              <p className="text-slate-600 dark:text-slate-500 text-sm">
                 Didn&apos;t receive the code?{' '}
                 <button
                   onClick={handleResendEmail}
@@ -211,7 +211,7 @@ function VerifyEmailContent() {
               </p>
               <Link
                 href="/register"
-                className="inline-flex items-center gap-1.5 text-slate-500 text-sm hover:text-slate-300 transition-colors"
+                className="inline-flex items-center gap-1.5 text-slate-600 dark:text-slate-500 text-sm hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
               >
                 <ArrowLeft size={14} />
                 Back to Register
@@ -227,7 +227,7 @@ function VerifyEmailContent() {
 export default function VerifyEmail() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
         <div className="w-16 h-16 bg-gold-500/10 rounded-full flex items-center justify-center animate-pulse">
           <Loader2 className="text-gold-500 animate-spin" size={32} />
         </div>

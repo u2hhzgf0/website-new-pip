@@ -13,7 +13,7 @@ export default function About() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen bg-slate-950">
+      <main className="min-h-screen bg-slate-50 dark:bg-slate-950">
         <AboutPage />
       </main>
       <Footer />

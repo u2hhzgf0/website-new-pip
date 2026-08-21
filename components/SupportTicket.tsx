@@ -57,7 +57,7 @@ const SupportTicket = () => {
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={48} />
-          <p className="text-slate-400">Loading...</p>
+          <p className="text-slate-500 dark:text-slate-400">Loading...</p>
         </div>
       </div>
     );
@@ -67,18 +67,18 @@ const SupportTicket = () => {
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white">Support Center</h2>
-          <p className="text-slate-400 text-xs sm:text-sm">Get expert assistance from our dedicated team.</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Support Center</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Get expert assistance from our dedicated team.</p>
         </div>
 
         {/* Balance Display for Context */}
-        <div className="flex items-center space-x-3 bg-slate-900 border border-slate-800 px-4 py-2 rounded-lg">
+        <div className="flex items-center space-x-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-lg">
           <div className="bg-gold-500/10 p-2 rounded-full text-gold-500">
             <Wallet size={18} />
           </div>
           <div>
-            <p className="text-xs text-slate-500 uppercase font-bold">Your Balance</p>
-            <p className="text-white font-mono font-bold">${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+            <p className="text-xs text-slate-600 dark:text-slate-500 uppercase font-bold">Your Balance</p>
+            <p className="text-slate-900 dark:text-white font-mono font-bold">${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ const SupportTicket = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         {/* Left Column: Ticket Form */}
         <div className="lg:col-span-2">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-8 relative overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-8 relative overflow-hidden">
              {/* Fee Badge */}
             <div className="absolute top-0 right-0 bg-gold-500 text-slate-950 text-xs font-bold px-4 py-1.5 rounded-bl-xl z-10">
               Fee: ${TICKET_COST.toFixed(2)} / Ticket
@@ -118,11 +118,11 @@ const SupportTicket = () => {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Category</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Category</label>
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
                 >
                   <option value="deposit">Deposit Issues</option>
                   <option value="withdrawal">Withdrawal Issues</option>
@@ -134,7 +134,7 @@ const SupportTicket = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Priority Level</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Priority Level</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                   {[
                     { label: 'Low', value: 'low' },
@@ -149,7 +149,7 @@ const SupportTicket = () => {
                       className={`py-2 rounded-lg text-sm font-medium border transition-all ${
                         priority === level.value
                           ? 'bg-gold-500 text-slate-950 border-gold-500'
-                          : 'bg-slate-950 text-slate-400 border-slate-700 hover:border-slate-600'
+                          : 'bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                       }`}
                     >
                       {level.label}
@@ -159,31 +159,31 @@ const SupportTicket = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Subject</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Subject</label>
                 <input 
                   type="text" 
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                   required
                   placeholder="Brief summary of your issue"
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-300 mb-2">Message Description</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Message Description</label>
                 <textarea 
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
                   rows={6}
                   placeholder="Please describe your issue in detail..."
-                  className="w-full bg-slate-950 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-600 resize-none"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600 resize-none"
                 ></textarea>
               </div>
 
               <div className="pt-2">
-                <p className="text-xs text-slate-500 mb-4 flex items-center">
+                <p className="text-xs text-slate-600 dark:text-slate-500 mb-4 flex items-center">
                   <AlertCircle size={14} className="mr-1.5" />
                   By submitting this ticket, you agree to the deduction of ${TICKET_COST.toFixed(2)} from your main wallet balance.
                 </p>
@@ -202,33 +202,33 @@ const SupportTicket = () => {
 
         {/* Right Column: Info & FAQs */}
         <div className="lg:col-span-1 space-y-4 sm:space-y-6">
-          <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 sm:p-6">
-            <div className="flex items-center space-x-2 text-white font-bold mb-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+            <div className="flex items-center space-x-2 text-slate-900 dark:text-white font-bold mb-4">
                <HelpCircle size={20} className="text-gold-500" />
                <h3>Quick Help</h3>
             </div>
             <div className="space-y-4">
                <div className="text-sm">
-                 <p className="text-slate-300 font-medium mb-1">What is the response time?</p>
-                 <p className="text-slate-500">Premium members receive responses within 2 hours. Standard response time is 24 hours.</p>
+                 <p className="text-slate-600 dark:text-slate-300 font-medium mb-1">What is the response time?</p>
+                 <p className="text-slate-600 dark:text-slate-500">Premium members receive responses within 2 hours. Standard response time is 24 hours.</p>
                </div>
-               <div className="border-t border-slate-800"></div>
+               <div className="border-t border-slate-200 dark:border-slate-800"></div>
                <div className="text-sm">
-                 <p className="text-slate-300 font-medium mb-1">Why is there a fee?</p>
-                 <p className="text-slate-500">The small fee ensures our support team can focus on high-priority requests and provide quality service.</p>
+                 <p className="text-slate-600 dark:text-slate-300 font-medium mb-1">Why is there a fee?</p>
+                 <p className="text-slate-600 dark:text-slate-500">The small fee ensures our support team can focus on high-priority requests and provide quality service.</p>
                </div>
-               <div className="border-t border-slate-800"></div>
+               <div className="border-t border-slate-200 dark:border-slate-800"></div>
                <div className="text-sm">
-                 <p className="text-slate-300 font-medium mb-1">Are refunds available?</p>
-                 <p className="text-slate-500">If the issue is found to be a platform error, the ticket fee will be refunded to your wallet.</p>
+                 <p className="text-slate-600 dark:text-slate-300 font-medium mb-1">Are refunds available?</p>
+                 <p className="text-slate-600 dark:text-slate-500">If the issue is found to be a platform error, the ticket fee will be refunded to your wallet.</p>
                </div>
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-indigo-900/50 to-slate-900 border border-indigo-500/20 rounded-xl p-4 sm:p-6 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-900/50 dark:to-slate-900 border border-indigo-200 dark:border-indigo-500/20 rounded-xl p-4 sm:p-6 relative overflow-hidden">
              <div className="relative z-10">
-               <h4 className="text-white font-bold mb-2">Live Chat</h4>
-               <p className="text-sm text-indigo-200 mb-4">Need urgent help? Connect with an agent instantly.</p>
+               <h4 className="text-slate-900 dark:text-white font-bold mb-2">Live Chat</h4>
+               <p className="text-sm text-indigo-700 dark:text-indigo-200 mb-4">Need urgent help? Connect with an agent instantly.</p>
                <button className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition-colors">
                  Start Chat
                </button>

@@ -30,7 +30,7 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
       case 'profit': return 'bg-green-500/10 text-green-500 border-green-500/20';
       case 'investment': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
       case 'support': return 'bg-purple-500/10 text-purple-500 border-purple-500/20';
-      default: return 'bg-slate-500/10 text-slate-500 border-slate-500/20';
+      default: return 'bg-slate-300/10 dark:bg-slate-500/10 text-slate-600 dark:text-slate-500 border-slate-300/20 dark:border-slate-500/20';
     }
   };
 
@@ -54,12 +54,12 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
 
   return (
     <div className="fixed left-3 right-3 top-[64px] sm:left-auto sm:right-4 sm:w-96 z-[60]">
-      <div className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl shadow-black/50 overflow-hidden flex flex-col max-h-[80vh] animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-950/80 backdrop-blur-md">
+        <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md">
           <div>
-             <h3 className="font-bold text-white">Notifications</h3>
-             <p className="text-xs text-slate-400">
+             <h3 className="font-bold text-slate-900 dark:text-white">Notifications</h3>
+             <p className="text-xs text-slate-500 dark:text-slate-400">
                {unreadCount > 0 ? `${unreadCount} unread messages` : 'No new notifications'}
              </p>
           </div>
@@ -74,7 +74,7 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
             )}
             <button 
               onClick={onClose} 
-              className="p-1.5 hover:bg-slate-800 rounded-full text-slate-400 hover:text-white transition-colors"
+              className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
               aria-label="Close notifications"
             >
               <X size={18} />
@@ -85,19 +85,19 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
         {/* Notification List */}
         <div className="overflow-y-auto flex-1 custom-scrollbar max-h-[400px]">
           {displayNotifications.length === 0 ? (
-            <div className="p-12 text-center text-slate-500 flex flex-col items-center">
-              <div className="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center mb-4">
+            <div className="p-12 text-center text-slate-600 dark:text-slate-500 flex flex-col items-center">
+              <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-4">
                 <CheckCircle2 size={32} className="opacity-50" />
               </div>
-              <p className="font-medium text-slate-300">All caught up!</p>
+              <p className="font-medium text-slate-600 dark:text-slate-300">All caught up!</p>
               <p className="text-sm">You have no notifications.</p>
             </div>
           ) : (
-            <div className="divide-y divide-slate-800">
+            <div className="divide-y divide-slate-200 dark:divide-slate-800">
               {displayNotifications.map((notif) => (
                 <div
                   key={notif.id}
-                  className={`p-4 hover:bg-slate-800/50 transition-colors flex gap-4 cursor-pointer ${notif.status === 'unread' ? 'bg-slate-800/30' : ''}`}
+                  className={`p-4 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors flex gap-4 cursor-pointer ${notif.status === 'unread' ? 'bg-slate-100/30 dark:bg-slate-800/30' : ''}`}
                   onClick={onClose}
                 >
                   <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 border ${getColors(notif.type)}`}>
@@ -105,12 +105,12 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
                   </div>
                   <div className="flex-1 space-y-1 min-w-0">
                     <div className="flex justify-between items-start">
-                      <h4 className={`text-sm font-bold truncate pr-2 ${notif.status === 'unread' ? 'text-white' : 'text-slate-400'}`}>
+                      <h4 className={`text-sm font-bold truncate pr-2 ${notif.status === 'unread' ? 'text-slate-900 dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}>
                         {notif.title}
                       </h4>
-                      <span className="text-[10px] text-slate-500 whitespace-nowrap ml-1 shrink-0">{formatTime(notif.createdAt)}</span>
+                      <span className="text-[10px] text-slate-600 dark:text-slate-500 whitespace-nowrap ml-1 shrink-0">{formatTime(notif.createdAt)}</span>
                     </div>
-                    <p className={`text-xs leading-relaxed line-clamp-2 ${notif.status === 'unread' ? 'text-slate-300' : 'text-slate-500'}`}>
+                    <p className={`text-xs leading-relaxed line-clamp-2 ${notif.status === 'unread' ? 'text-slate-600 dark:text-slate-300' : 'text-slate-600 dark:text-slate-500'}`}>
                       {notif.content}
                     </p>
                   </div>
@@ -126,11 +126,11 @@ const NotificationsDropdown: React.FC<NotificationsDropdownProps> = ({ notificat
         </div>
         
         {/* Footer */}
-        <div className="p-3 bg-slate-950/80 backdrop-blur-md border-t border-slate-800 text-center">
+        <div className="p-3 bg-slate-50 dark:bg-slate-950/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 text-center">
            <Link
              href="/dashboard/notifications"
              onClick={onClose}
-             className="text-xs text-slate-400 hover:text-white transition-colors font-medium block"
+             className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors font-medium block"
            >
              View All Notifications
            </Link>

@@ -161,19 +161,19 @@ export default function TicketDetail() {
       in_progress: 'text-amber-500 bg-amber-500/10 border-amber-500/30',
       waiting_reply: 'text-purple-500 bg-purple-500/10 border-purple-500/30',
       resolved: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/30',
-      closed: 'text-slate-500 bg-slate-500/10 border-slate-500/30',
+      closed: 'text-slate-600 dark:text-slate-500 bg-slate-300/10 dark:bg-slate-500/10 border-slate-300/30 dark:border-slate-500/30',
     }
-    return colors[status] || 'text-slate-500 bg-slate-500/10 border-slate-500/30'
+    return colors[status] || 'text-slate-600 dark:text-slate-500 bg-slate-300/10 dark:bg-slate-500/10 border-slate-300/30 dark:border-slate-500/30'
   }
 
   const getPriorityColor = (priority: string) => {
     const colors: Record<string, string> = {
-      low: 'text-slate-400 bg-slate-500/10',
+      low: 'text-slate-500 dark:text-slate-400 bg-slate-300/10 dark:bg-slate-500/10',
       normal: 'text-blue-400 bg-blue-500/10',
       high: 'text-rose-400 bg-rose-500/10',
       urgent: 'text-rose-400 bg-rose-500/10',
     }
-    return colors[priority] || 'text-slate-400 bg-slate-500/10'
+    return colors[priority] || 'text-slate-500 dark:text-slate-400 bg-slate-300/10 dark:bg-slate-500/10'
   }
 
   if (isLoading) {
@@ -182,17 +182,17 @@ export default function TicketDetail() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/support/tickets"
-            className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
-            <ArrowLeft className="text-slate-400" size={20} />
+            <ArrowLeft className="text-slate-500 dark:text-slate-400" size={20} />
           </Link>
           <div className="flex-1">
-            <h1 className="text-xl font-bold text-white">Loading...</h1>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">Loading...</h1>
           </div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-12 text-center">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-12 text-center">
           <Loader2 className="mx-auto text-gold-500 mb-4 animate-spin" size={48} />
-          <p className="text-slate-400">Loading ticket details...</p>
+          <p className="text-slate-500 dark:text-slate-400">Loading ticket details...</p>
         </div>
       </div>
     )
@@ -206,21 +206,21 @@ export default function TicketDetail() {
         <div className="flex items-center gap-4">
           <Link
             href="/dashboard/support/tickets"
-            className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+            className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
           >
-            <ArrowLeft className="text-slate-400" size={20} />
+            <ArrowLeft className="text-slate-500 dark:text-slate-400" size={20} />
           </Link>
           <div className="flex-1">
-            <h1 className="text-xl font-bold text-white">Error</h1>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">Error</h1>
           </div>
         </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-12 text-center">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-12 text-center">
           <AlertCircle className="mx-auto text-rose-500 mb-4" size={48} />
           <p className="text-rose-400 font-medium mb-2">Failed to Load Ticket</p>
-          <p className="text-slate-400 text-sm">{errorMessage}</p>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">{errorMessage}</p>
           <button
             onClick={() => router.back()}
-            className="mt-4 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-colors"
+            className="mt-4 px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
           >
             Go Back
           </button>
@@ -241,13 +241,13 @@ export default function TicketDetail() {
       <div className="flex items-center gap-4">
         <Link
           href="/dashboard/support/tickets"
-          className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+          className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
         >
-          <ArrowLeft className="text-slate-400" size={20} />
+          <ArrowLeft className="text-slate-500 dark:text-slate-400" size={20} />
         </Link>
         <div className="flex-1">
           <div className="flex items-center gap-2 sm:gap-3 mb-1 flex-wrap">
-            <h1 className="text-base sm:text-xl font-bold text-white">{ticket.subject}</h1>
+            <h1 className="text-base sm:text-xl font-bold text-slate-900 dark:text-white">{ticket.subject}</h1>
             <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(ticket.status)}`}>
               {ticket.status.replace('_', ' ')}
             </span>
@@ -255,46 +255,46 @@ export default function TicketDetail() {
               {ticket.priority} priority
             </span>
           </div>
-          <p className="text-slate-400 text-xs sm:text-sm">
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
             #{ticket.ticketId || (ticket.id || ticket._id || '').substring(0, 8).toUpperCase()} • {ticket.category} • Created {formatTime(ticket.createdAt)}
           </p>
         </div>
       </div>
 
       {/* Ticket Info Card */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <div>
-            <p className="text-slate-400 text-sm mb-1">Status</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-1">Status</p>
             <div className="flex items-center gap-2">
               {ticket.status === 'resolved' || ticket.status === 'closed' ? (
                 <CheckCircle className="text-emerald-500" size={16} />
               ) : (
                 <Clock className="text-amber-500" size={16} />
               )}
-              <p className="text-white font-medium capitalize">{ticket.status.replace('_', ' ')}</p>
+              <p className="text-slate-900 dark:text-white font-medium capitalize">{ticket.status.replace('_', ' ')}</p>
             </div>
           </div>
           <div>
-            <p className="text-slate-400 text-sm mb-1">Priority</p>
-            <p className="text-white font-medium capitalize">{ticket.priority}</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-1">Priority</p>
+            <p className="text-slate-900 dark:text-white font-medium capitalize">{ticket.priority}</p>
           </div>
           <div>
-            <p className="text-slate-400 text-sm mb-1">Category</p>
-            <p className="text-white font-medium">{ticket.category}</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-1">Category</p>
+            <p className="text-slate-900 dark:text-white font-medium">{ticket.category}</p>
           </div>
         </div>
 
         {(ticket.status === 'resolved' || ticket.status === 'closed') && !ticket.rating && (
-          <div className="mt-6 pt-6 border-t border-slate-800">
+          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h3 className="text-white font-medium mb-1">Rate your support experience</h3>
-                <p className="text-slate-400 text-sm">Help us improve our service by rating this ticket</p>
+                <h3 className="text-slate-900 dark:text-white font-medium mb-1">Rate your support experience</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-sm">Help us improve our service by rating this ticket</p>
               </div>
               <button
                 onClick={() => setShowRatingForm(true)}
-                className="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-white rounded-lg font-medium transition-colors"
+                className="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
               >
                 Rate Ticket
               </button>
@@ -303,8 +303,8 @@ export default function TicketDetail() {
         )}
 
         {ticket.rating && (
-          <div className="mt-6 pt-6 border-t border-slate-800">
-            <p className="text-slate-400 text-sm mb-2">Your Rating</p>
+          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-2">Your Rating</p>
             <div className="flex items-center gap-1 mb-2">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
@@ -315,22 +315,22 @@ export default function TicketDetail() {
               ))}
             </div>
             {ticket.feedback && (
-              <p className="text-slate-300 text-sm mt-2">{ticket.feedback}</p>
+              <p className="text-slate-600 dark:text-slate-300 text-sm mt-2">{ticket.feedback}</p>
             )}
           </div>
         )}
       </div>
 
       {/* Conversation Thread */}
-      <div className="bg-slate-900/50 border border-slate-800 rounded-xl overflow-hidden">
-        <div className="p-4 sm:p-6 border-b border-slate-800">
-          <h2 className="text-white font-semibold">Conversation</h2>
-          <p className="text-slate-500 text-sm mt-0.5">{(ticket.messages || []).length} message{(ticket.messages || []).length !== 1 ? 's' : ''}</p>
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+        <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800">
+          <h2 className="text-slate-900 dark:text-white font-semibold">Conversation</h2>
+          <p className="text-slate-600 dark:text-slate-500 text-sm mt-0.5">{(ticket.messages || []).length} message{(ticket.messages || []).length !== 1 ? 's' : ''}</p>
         </div>
         <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-h-[600px] overflow-y-auto">
           {(!ticket.messages || ticket.messages.length === 0) ? (
             <div className="text-center py-8">
-              <p className="text-slate-400">No messages yet. Send a reply to start the conversation.</p>
+              <p className="text-slate-500 dark:text-slate-400">No messages yet. Send a reply to start the conversation.</p>
             </div>
           ) : (
             <>
@@ -361,14 +361,14 @@ export default function TicketDetail() {
                         {isAdmin && (
                           <span className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400 font-semibold uppercase">Admin</span>
                         )}
-                        <span className="text-xs text-slate-500">{formatTime(msg.createdAt)}</span>
+                        <span className="text-xs text-slate-600 dark:text-slate-500">{formatTime(msg.createdAt)}</span>
                       </div>
                       <div className={`p-4 rounded-lg ${
                         isUser
                           ? 'bg-gold-500/10 border border-gold-500/30 rounded-tr-sm'
-                          : 'bg-slate-800/50 border border-slate-700 rounded-tl-sm'
+                          : 'bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-tl-sm'
                       }`}>
-                        <p className="text-slate-200 text-sm whitespace-pre-wrap">{msg.message}</p>
+                        <p className="text-slate-700 dark:text-slate-200 text-sm whitespace-pre-wrap">{msg.message}</p>
                       </div>
                     </div>
                   </div>
@@ -382,25 +382,25 @@ export default function TicketDetail() {
 
       {/* Reply Form */}
       {ticket.status !== 'closed' ? (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
           <form onSubmit={handleSendReply}>
-            <label className="block text-white font-medium mb-3">Reply to Ticket</label>
+            <label className="block text-slate-900 dark:text-white font-medium mb-3">Reply to Ticket</label>
             <textarea
               value={replyMessage}
               onChange={(e) => setReplyMessage(e.target.value)}
               rows={4}
-              className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 resize-none"
+              className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 resize-none"
               placeholder="Type your message here..."
               disabled={isReplying}
             />
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mt-4">
-              <p className="text-slate-500 text-sm">
+              <p className="text-slate-600 dark:text-slate-500 text-sm">
                 Average response time: 2-4 hours
               </p>
               <button
                 type="submit"
                 disabled={isReplying || !replyMessage.trim()}
-                className="flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 text-white px-6 py-2.5 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                className="flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white px-6 py-2.5 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
                 {isReplying ? (
                   <>
@@ -418,8 +418,8 @@ export default function TicketDetail() {
           </form>
         </div>
       ) : (
-        <div className="bg-slate-900/50 border border-slate-800 rounded-xl p-6">
-          <div className="flex items-center gap-3 text-slate-400">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+          <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400">
             <XCircle size={20} />
             <p>This ticket is closed and cannot receive new replies.</p>
           </div>
@@ -428,18 +428,18 @@ export default function TicketDetail() {
 
       {/* Rating Modal */}
       {showRatingForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-8">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-8">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-xl font-bold text-white">Rate Your Experience</h3>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Rate Your Experience</h3>
               <button
                 onClick={() => setShowRatingForm(false)}
-                className="p-1 hover:bg-slate-800 rounded-lg transition-colors"
+                className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
               >
-                <X className="text-slate-400" size={20} />
+                <X className="text-slate-500 dark:text-slate-400" size={20} />
               </button>
             </div>
-            <p className="text-slate-400 text-sm mb-6">How satisfied were you with the support provided?</p>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">How satisfied were you with the support provided?</p>
 
             <div className="flex items-center justify-center gap-2 mb-6">
               {[1, 2, 3, 4, 5].map((star) => (
@@ -451,21 +451,21 @@ export default function TicketDetail() {
                 >
                   <Star
                     size={32}
-                    className={star <= rating ? 'text-gold-500 fill-gold-500' : 'text-slate-600 hover:text-slate-500'}
+                    className={star <= rating ? 'text-gold-500 fill-gold-500' : 'text-slate-600 hover:text-slate-600 dark:hover:text-slate-500'}
                   />
                 </button>
               ))}
             </div>
 
             <div className="mb-6">
-              <label className="block text-slate-300 text-sm font-medium mb-2">
+              <label className="block text-slate-600 dark:text-slate-300 text-sm font-medium mb-2">
                 Additional Feedback (Optional)
               </label>
               <textarea
                 value={ratingFeedback}
                 onChange={(e) => setRatingFeedback(e.target.value)}
                 rows={3}
-                className="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 resize-none"
+                className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 resize-none"
                 placeholder="Tell us more about your experience..."
               />
             </div>
@@ -474,14 +474,14 @@ export default function TicketDetail() {
               <button
                 onClick={() => setShowRatingForm(false)}
                 disabled={isRating}
-                className="flex-1 py-2.5 border border-slate-700 text-slate-300 rounded-lg hover:bg-slate-800/50 transition-colors font-medium disabled:opacity-50"
+                className="flex-1 py-2.5 border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors font-medium disabled:opacity-50"
               >
                 Cancel
               </button>
               <button
                 onClick={handleRateTicket}
                 disabled={isRating || rating === 0}
-                className="flex-1 py-2.5 bg-gradient-to-r from-gold-500 to-amber-600 text-white rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 py-2.5 bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isRating ? (
                   <>

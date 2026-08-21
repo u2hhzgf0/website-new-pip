@@ -62,8 +62,8 @@ const WithdrawHistory = () => {
     <div className="space-y-4 sm:space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white">Withdrawal History</h2>
-          <p className="text-slate-400 text-xs sm:text-sm">View your payout records and status</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Withdrawal History</h2>
+          <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">View your payout records and status</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <div className="relative w-full sm:w-auto">
@@ -72,9 +72,9 @@ const WithdrawHistory = () => {
               placeholder="Search ID..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full sm:w-auto bg-slate-900 border border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-white focus:outline-none focus:border-gold-500"
+              className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
             />
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500" />
           </div>
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {[
@@ -93,7 +93,7 @@ const WithdrawHistory = () => {
                 className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-medium transition-colors border ${
                   statusFilter === status.value
                     ? 'bg-gold-500 text-slate-900 border-gold-500'
-                    : 'bg-slate-900 text-slate-400 border-slate-800 hover:border-slate-700'
+                    : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 {status.label}
@@ -103,7 +103,7 @@ const WithdrawHistory = () => {
         </div>
       </div>
 
-      <div className="bg-slate-900 border border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
             <Loader2 className="animate-spin text-gold-500" size={32} />
@@ -111,14 +111,14 @@ const WithdrawHistory = () => {
         ) : error ? (
           <div className="p-8 text-center">
             <p className="text-rose-500 font-medium">Failed to load withdrawal history</p>
-            <p className="text-slate-500 text-sm mt-2">Please try again later</p>
+            <p className="text-slate-600 dark:text-slate-500 text-sm mt-2">Please try again later</p>
           </div>
         ) : (
           <>
             {/* Desktop Table */}
             <div className="hidden sm:block overflow-x-auto">
               <table className="w-full text-left">
-                <thead className="bg-slate-950 text-slate-400 text-sm uppercase tracking-wider">
+                <thead className="bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 text-sm uppercase tracking-wider">
                   <tr>
                     <th className="px-6 py-4 font-medium">Transaction ID</th>
                     <th className="px-6 py-4 font-medium">Method</th>
@@ -128,10 +128,10 @@ const WithdrawHistory = () => {
                     <th className="px-6 py-4 font-medium">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800 text-sm text-slate-300">
+                <tbody className="divide-y divide-slate-200 dark:divide-slate-800 text-sm text-slate-600 dark:text-slate-300">
                   {withdrawals.map((tx) => (
-                    <tr key={tx.id} className="hover:bg-slate-800/50 transition-colors">
-                      <td className="px-6 py-4 font-mono text-slate-500">
+                    <tr key={tx.id} className="hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors">
+                      <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-500">
                         <Link href={`/dashboard/transactions/${tx.id}`} className="flex items-center hover:text-gold-500 transition-colors">
                           <div className="bg-red-500/10 p-1.5 rounded-full mr-3 text-red-500">
                             <ArrowUpRight size={14} />
@@ -139,13 +139,13 @@ const WithdrawHistory = () => {
                           {tx.transactionId || tx.id}
                         </Link>
                       </td>
-                      <td className="px-6 py-4 font-medium text-white">
+                      <td className="px-6 py-4 font-medium text-slate-900 dark:text-white">
                         {tx.paymentGateway?.name || tx.paymentMethod || 'N/A'}
                       </td>
-                      <td className="px-6 py-4 text-slate-400 font-mono text-xs">
+                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400 font-mono text-xs">
                         {tx.walletAddress ? truncateAddress(tx.walletAddress) : '-'}
                       </td>
-                      <td className="px-6 py-4 text-slate-400">{formatDate(tx.createdAt)}</td>
+                      <td className="px-6 py-4 text-slate-500 dark:text-slate-400">{formatDate(tx.createdAt)}</td>
                       <td className="px-6 py-4 font-bold text-red-400">
                         -${tx.netAmount.toLocaleString()}
                       </td>
@@ -160,31 +160,31 @@ const WithdrawHistory = () => {
               </table>
 
               {withdrawals.length === 0 && (
-                <div className="p-8 text-center text-slate-500">
+                <div className="p-8 text-center text-slate-600 dark:text-slate-500">
                   No withdrawal records found.
                 </div>
               )}
             </div>
 
             {/* Mobile Card View */}
-            <div className="sm:hidden divide-y divide-slate-800">
+            <div className="sm:hidden divide-y divide-slate-200 dark:divide-slate-800">
               {withdrawals.length === 0 ? (
-                <div className="p-8 text-center text-slate-500 text-sm">
+                <div className="p-8 text-center text-slate-600 dark:text-slate-500 text-sm">
                   No withdrawal records found.
                 </div>
               ) : (
                 withdrawals.map((tx) => (
-                  <Link key={tx.id} href={`/dashboard/transactions/${tx.id}`} className="block p-3 hover:bg-slate-800/50 transition-colors">
+                  <Link key={tx.id} href={`/dashboard/transactions/${tx.id}`} className="block p-3 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3 min-w-0">
                         <div className="bg-red-500/10 w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-red-500">
                           <ArrowUpRight size={14} />
                         </div>
                         <div className="min-w-0">
-                          <p className="text-xs font-medium text-white">
+                          <p className="text-xs font-medium text-slate-900 dark:text-white">
                             {tx.paymentGateway?.name || tx.paymentMethod || 'Withdrawal'}
                           </p>
-                          <p className="text-[10px] text-slate-500">{formatDate(tx.createdAt)}</p>
+                          <p className="text-[10px] text-slate-600 dark:text-slate-500">{formatDate(tx.createdAt)}</p>
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0 ml-2">
@@ -202,7 +202,7 @@ const WithdrawHistory = () => {
             </div>
 
             {/* Pagination */}
-            <div className="p-3 sm:p-4 border-t border-slate-800 flex justify-between items-center text-xs sm:text-sm text-slate-500">
+            <div className="p-3 sm:p-4 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center text-xs sm:text-sm text-slate-600 dark:text-slate-500">
               <span>
                 {withdrawals.length} of {totalResults}
                 {totalPages > 1 && <span className="hidden sm:inline"> (Page {page} of {totalPages})</span>}
@@ -211,14 +211,14 @@ const WithdrawHistory = () => {
                 <button
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                   disabled={page === 1}
-                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Prev
                 </button>
                 <button
                   onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
-                  className="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white text-xs disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next
                 </button>

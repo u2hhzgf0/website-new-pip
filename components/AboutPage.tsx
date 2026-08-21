@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import { ShieldCheck, Globe, TrendingUp, Users, Award, Target, BarChart2, Linkedin, Twitter } from 'lucide-react';
+import { Linkedin, Twitter } from 'lucide-react';
 
 // ── Team members ──────────────────────────────────────────────────────────────
 const TEAM = [
@@ -49,31 +49,31 @@ const TEAM = [
 
 // ── Stats ─────────────────────────────────────────────────────────────────────
 const STATS = [
-  { label: 'Active Investors', value: '25M+', icon: Users },
-  { label: 'Assets Managed', value: '$1.85B+', icon: BarChart2 },
-  { label: 'Avg. Annual Return', value: '18.4%', icon: TrendingUp },
-  { label: 'Years of Experience', value: '10+', icon: Award },
+  { label: 'Active Investors', value: '25M+', img: '/images/handshake.ChU5aiGk.webp' },
+  { label: 'Assets Managed', value: '$1.85B+', img: '/images/coins-graphic.BtzN30qG.gif' },
+  { label: 'Avg. Annual Return', value: '18.4%', img: '/images/pamm.DBgK9W6G.webp' },
+  { label: 'Years of Experience', value: '10+', img: '/images/Built for Ambitious Traders.webp' },
 ];
 
 // ── Values ────────────────────────────────────────────────────────────────────
 const VALUES = [
   {
-    icon: ShieldCheck,
+    img: '/images/client-zone.D-yjmLMI.webp',
     title: 'Bank-Grade Security',
     desc: '256-bit encryption and fully segregated client accounts ensure your funds are always protected.',
   },
   {
-    icon: Globe,
+    img: '/images/regional.BUIxpM4n.webp',
     title: 'Global Access',
     desc: 'Invest from anywhere in the world, 24/7, with instant account access across all devices.',
   },
   {
-    icon: Target,
+    img: '/images/communication.BJaEDjmN.webp',
     title: 'Transparent Goals',
     desc: 'No hidden fees, no surprises. Every return target and risk level is clearly disclosed upfront.',
   },
   {
-    icon: Award,
+    img: '/images/free-signals.CQSoIKKu.webp',
     title: 'Performance Rewarded',
     desc: 'Our rank-based reward system ensures that your growth and commitment are always recognised.',
   },
@@ -83,39 +83,37 @@ const VALUES = [
 
 export default function AboutPage() {
   return (
-    <div className="bg-slate-950 text-white">
+    <div className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white">
 
       {/* ── Hero Banner ─────────────────────────────────────────────────── */}
       <section className="relative pt-32 pb-20 sm:pt-40 sm:pb-28 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-gold-500/8 rounded-full blur-[120px]" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-500/8 rounded-full blur-[120px]" />
           <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl" />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-full px-4 py-1.5 mb-6">
-            <span className="w-2 h-2 rounded-full bg-gold-500 animate-pulse" />
-            <span className="text-gold-500 text-sm font-bold uppercase tracking-wider">About Pipguardianelt</span>
+          <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-6">
+            <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
+            <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">About Pipguardianelt</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold leading-tight mb-6">
-            We Are Building the <span className="text-gold-500">Future of Forex</span> Investing
+            We Are Building the <span className="text-brand-500">Future of Forex</span> Investing
           </h1>
-          <p className="text-slate-400 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="text-slate-500 dark:text-slate-400 text-lg sm:text-xl leading-relaxed max-w-2xl mx-auto">
             Pipguardianelt is a professional forex investment platform dedicated to making disciplined, structured, and transparent trading accessible to everyone — regardless of experience level.
           </p>
         </div>
       </section>
 
       {/* ── Stats Row ───────────────────────────────────────────────────── */}
-      <section className="border-y border-slate-800/60 bg-slate-900/40">
+      <section className="border-y border-slate-200/60 dark:border-slate-800/60 bg-white dark:bg-slate-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {STATS.map(({ label, value, icon: Icon }) => (
+            {STATS.map(({ label, value, img }) => (
               <div key={label} className="flex flex-col items-center text-center gap-2">
-                <div className="w-11 h-11 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center mb-1">
-                  <Icon size={20} className="text-gold-400" />
-                </div>
-                <p className="text-2xl sm:text-3xl font-bold text-white">{value}</p>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium">{label}</p>
+                <img src={img} alt="" className="w-14 h-14 sm:w-16 sm:h-16 object-contain mb-1" />
+                <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{value}</p>
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-500 font-medium">{label}</p>
               </div>
             ))}
           </div>
@@ -123,33 +121,33 @@ export default function AboutPage() {
       </section>
 
       {/* ── Our Story ───────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-24">
+      <section id="story" className="py-16 sm:py-24 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             {/* Image */}
             <div className="relative order-2 lg:order-1">
-              <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-transparent rounded-3xl transform rotate-2" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/20 to-transparent rounded-3xl transform rotate-2" />
               <img
                 src="https://res.cloudinary.com/dshkbza19/image/upload/v1775410956/WhatsApp_Image_2026-04-05_at_6.04.47_PM_uz3rva.jpg"
                 alt="Pipguardianelt trading team"
-                className="relative z-10 w-full h-[320px] sm:h-[460px] object-cover object-top rounded-2xl border border-slate-800 shadow-2xl"
+                className="relative z-10 w-full h-[320px] sm:h-[460px] object-cover object-top rounded-2xl border border-slate-200 dark:border-slate-800 shadow-2xl"
               />
             </div>
             {/* Text */}
             <div className="order-1 lg:order-2">
-              <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-full px-4 py-1.5 mb-5">
-                <span className="text-gold-500 text-sm font-bold uppercase tracking-wider">Our Story</span>
+              <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-5">
+                <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Our Story</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-5 leading-tight">
-                From a Vision to a <span className="text-gold-500">Global Platform</span>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-5 leading-tight">
+                From a Vision to a <span className="text-brand-500">Global Platform</span>
               </h2>
-              <p className="text-slate-400 leading-relaxed mb-4">
+              <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
                 Pipguardianelt was founded with one clear goal — to bridge the gap between professional forex expertise and everyday investors. We saw a world where high-quality trading strategies were locked behind expensive brokerages and inaccessible to regular people.
               </p>
-              <p className="text-slate-400 leading-relaxed mb-4">
+              <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-4">
                 Our team of experienced traders, analysts, and risk managers came together to create a platform built on discipline, transparency, and performance. Every trade we make is guided by a structured strategy — not speculation.
               </p>
-              <p className="text-slate-400 leading-relaxed">
+              <p className="text-slate-500 dark:text-slate-400 leading-relaxed">
                 Today, Pipguardianelt serves thousands of investors across the globe, providing consistent returns and a career pathway through our unique rank-based reward system.
               </p>
             </div>
@@ -158,24 +156,22 @@ export default function AboutPage() {
       </section>
 
       {/* ── Our Values ──────────────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 bg-slate-900/30 border-y border-slate-800/60">
+      <section id="values" className="py-16 sm:py-20 bg-white dark:bg-slate-900/30 border-y border-slate-200/60 dark:border-slate-800/60 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-full px-4 py-1.5 mb-4">
-              <span className="text-gold-500 text-sm font-bold uppercase tracking-wider">Our Values</span>
+            <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-4">
+              <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Our Values</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white">
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white">
               What We Stand For
             </h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {VALUES.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-slate-900/60 border border-slate-800 rounded-2xl p-6 hover:border-gold-500/30 transition-colors">
-                <div className="w-11 h-11 rounded-xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center mb-4">
-                  <Icon size={20} className="text-gold-400" />
-                </div>
-                <h3 className="text-white font-bold mb-2">{title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{desc}</p>
+            {VALUES.map(({ img, title, desc }) => (
+              <div key={title} className="bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:border-brand-500/30 transition-colors">
+                <img src={img} alt="" className="w-14 h-14 object-contain mb-4" />
+                <h3 className="text-slate-900 dark:text-white font-bold mb-2">{title}</h3>
+                <p className="text-slate-600 dark:text-slate-500 text-sm leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -186,13 +182,13 @@ export default function AboutPage() {
       <section className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <div className="inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-full px-4 py-1.5 mb-4">
-              <span className="text-gold-500 text-sm font-bold uppercase tracking-wider">The Team</span>
+            <div className="inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-4">
+              <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">The Team</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-3">
-              The People Behind <span className="text-gold-500">Pipguardianelt</span>
+            <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-3">
+              The People Behind <span className="text-brand-500">Pipguardianelt</span>
             </h2>
-            <p className="text-slate-400 text-base sm:text-lg max-w-xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg max-w-xl mx-auto">
               Our team of professionals brings decades of combined trading experience, risk management expertise, and a shared commitment to your financial growth.
             </p>
           </div>
@@ -201,7 +197,7 @@ export default function AboutPage() {
             {TEAM.map((member) => (
               <div
                 key={member.name}
-                className="group bg-slate-900/60 border border-slate-800 rounded-2xl overflow-hidden hover:border-gold-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-gold-500/5"
+                className="group bg-white dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden hover:border-brand-500/40 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-brand-500/5"
               >
                 {/* Photo */}
                 <div className="relative h-52 overflow-hidden">
@@ -215,9 +211,9 @@ export default function AboutPage() {
 
                 {/* Info */}
                 <div className="p-4">
-                  <h3 className="text-white font-bold text-base leading-tight mb-0.5">{member.name}</h3>
-                  <p className="text-gold-400 text-[10px] font-semibold uppercase tracking-wider mb-2">{member.role}</p>
-                  <p className="text-slate-400 text-xs leading-relaxed mb-3">{member.bio}</p>
+                  <h3 className="text-slate-900 dark:text-white font-bold text-base leading-tight mb-0.5">{member.name}</h3>
+                  <p className="text-brand-400 text-[10px] font-semibold uppercase tracking-wider mb-2">{member.role}</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs leading-relaxed mb-3">{member.bio}</p>
 
                   {/* Social links */}
                   <div className="flex gap-2">
@@ -225,7 +221,7 @@ export default function AboutPage() {
                       href={member.linkedin}
                       target={member.linkedin !== '#' ? '_blank' : undefined}
                       rel="noopener noreferrer"
-                      className="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-gold-400 hover:border-gold-500/40 transition-colors"
+                      className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-brand-400 hover:border-brand-500/40 transition-colors"
                       aria-label={`${member.name} LinkedIn`}
                     >
                       <Linkedin size={12} />
@@ -234,7 +230,7 @@ export default function AboutPage() {
                       href={member.twitter}
                       target={member.twitter !== '#' ? '_blank' : undefined}
                       rel="noopener noreferrer"
-                      className="w-7 h-7 rounded-lg bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-gold-400 hover:border-gold-500/40 transition-colors"
+                      className="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-400 hover:text-brand-400 hover:border-brand-500/40 transition-colors"
                       aria-label={`${member.name} Twitter / X`}
                     >
                       <Twitter size={12} />
@@ -248,24 +244,24 @@ export default function AboutPage() {
       </section>
 
       {/* ── Mission closing CTA ──────────────────────────────────────────── */}
-      <section className="py-16 sm:py-20 border-t border-slate-800/60">
+      <section className="py-16 sm:py-20 border-t border-slate-200/60 dark:border-slate-800/60">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white mb-5">
-            Ready to Grow with <span className="text-gold-500">Pipguardianelt?</span>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-5">
+            Ready to Grow with <span className="text-brand-500">Pipguardianelt?</span>
           </h2>
-          <p className="text-slate-400 text-lg mb-8">
+          <p className="text-slate-500 dark:text-slate-400 text-lg mb-8">
             Join thousands of investors already building wealth through disciplined forex trading. Your journey to financial freedom starts here.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="/register"
-              className="px-8 py-3 bg-gold-500 hover:bg-gold-400 text-slate-950 font-bold rounded-xl transition-colors text-sm uppercase tracking-wider"
+              className="px-8 py-3 bg-brand-500 hover:bg-brand-400 text-slate-950 font-bold rounded-xl transition-colors text-sm uppercase tracking-wider"
             >
               Get Started
             </a>
             <a
               href="/#contact"
-              className="px-8 py-3 bg-transparent border border-slate-700 hover:border-gold-500/50 text-white font-medium rounded-xl transition-colors text-sm"
+              className="px-8 py-3 bg-transparent border border-slate-300 dark:border-slate-700 hover:border-brand-500/50 text-slate-900 dark:text-white font-medium rounded-xl transition-colors text-sm"
             >
               Contact Us
             </a>
