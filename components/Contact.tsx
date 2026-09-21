@@ -1,19 +1,22 @@
+'use client'
+
 import React from 'react';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { FaTelegramPlane, FaLinkedinIn, FaFacebookF, FaInstagram } from "react-icons/fa";
+import Reveal from '@/components/Reveal';
 
 const Contact = () => {
   return (
     <section id="contact" className="py-12 sm:py-24 bg-slate-50 dark:bg-slate-950 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-16">
+        <Reveal className="text-center mb-8 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">Get in Touch</h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">
             Have questions about our investment plans or need technical assistance? Our dedicated support team is available 24/7.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 lg:gap-12 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <Reveal delay={0.1} className="grid grid-cols-1 lg:grid-cols-5 gap-0 lg:gap-12 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
           {/* Contact Info Sidebar */}
           <div className="lg:col-span-2 bg-gradient-to-br from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 p-6 sm:p-10 flex flex-col justify-between relative overflow-hidden">
              {/* Decorative circles */}
@@ -140,7 +143,7 @@ const Contact = () => {
               </button>
             </form>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

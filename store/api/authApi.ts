@@ -6,7 +6,8 @@ interface RegisterRequest {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  cfTurnstileToken: string;
+  // Optional while Cloudflare Turnstile is disabled for local development.
+  cfTurnstileToken?: string;
   referralCode?: string;
 }
 

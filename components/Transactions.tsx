@@ -36,7 +36,7 @@ const Transactions = () => {
       case 'deposit': return <ArrowDownLeft size={14} className="text-green-500" />;
       case 'withdraw': return <ArrowUpRight size={14} className="text-red-500" />;
       case 'investment': return <TrendingUp size={14} className="text-blue-500" />;
-      case 'profit': return <DollarSign size={14} className="text-gold-500" />;
+      case 'profit': return <DollarSign size={14} className="text-emerald-500" />;
       case 'referral': return <Gift size={14} className="text-amber-500" />;
       case 'bonus': return <Gift size={14} className="text-purple-500" />;
       default: return <DollarSign size={14} className="text-slate-600 dark:text-slate-500" />;
@@ -48,7 +48,7 @@ const Transactions = () => {
       case 'deposit': return 'bg-green-500/10';
       case 'withdraw': return 'bg-red-500/10';
       case 'investment': return 'bg-blue-500/10';
-      case 'profit': return 'bg-gold-500/10';
+      case 'profit': return 'bg-emerald-500/10';
       case 'referral': return 'bg-amber-500/10';
       case 'bonus': return 'bg-purple-500/10';
       default: return 'bg-slate-100 dark:bg-slate-800';
@@ -91,7 +91,7 @@ const Transactions = () => {
                placeholder="Search ID..."
                value={search}
                onChange={(e) => setSearch(e.target.value)}
-               className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+               className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
              />
              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500" />
            </div>
@@ -113,7 +113,7 @@ const Transactions = () => {
                   }}
                   className={`px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-medium transition-colors border ${
                     filter === type.value
-                    ? 'bg-gold-500 text-slate-900 border-gold-500'
+                    ? 'bg-emerald-500 text-white border-emerald-500'
                     : 'bg-white dark:bg-slate-900 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
@@ -124,10 +124,10 @@ const Transactions = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg card-lift">
         {isLoading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="animate-spin text-gold-500" size={32} />
+            <Loader2 className="animate-spin text-emerald-500" size={32} />
           </div>
         ) : error ? (
           <div className="p-8 text-center">
@@ -153,7 +153,7 @@ const Transactions = () => {
                   {transactions.map((tx) => (
                     <tr key={tx.id} className="hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-colors">
                       <td className="px-6 py-4 font-mono text-slate-600 dark:text-slate-500">
-                        <Link href={`/dashboard/transactions/${tx.id}`} className="flex items-center hover:text-gold-500 transition-colors">
+                        <Link href={`/dashboard/transactions/${tx.id}`} className="flex items-center hover:text-emerald-500 transition-colors">
                           <div className={`${getIconBg(tx.type)} p-1.5 rounded-full mr-3`}>
                             {getIcon(tx.type)}
                           </div>

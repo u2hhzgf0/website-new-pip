@@ -126,7 +126,7 @@ function ResetPasswordForm() {
           </div>
           <Link
             href="/login"
-            className="inline-block bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white font-bold px-8 py-3 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20"
+            className="inline-block bg-gradient-to-r from-brand-500 to-brand-700 hover:from-brand-400 hover:to-brand-600 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg shadow-brand-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all"
           >
             Go to Login Now
           </Link>
@@ -151,7 +151,7 @@ function ResetPasswordForm() {
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-bold">
               <span className="text-slate-900 dark:text-white">Pip</span>
-              <span className="text-gold-500">guardian</span>
+              <span className="text-brand-500">guardian</span>
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Reset Password</h2>
@@ -167,7 +167,7 @@ function ResetPasswordForm() {
                   <p className="text-rose-400 text-sm mb-2">Invalid or missing reset token. Please request a new password reset link.</p>
                   <Link
                     href="/forgot-password"
-                    className="text-gold-500 hover:text-gold-400 text-sm font-medium"
+                    className="text-brand-500 hover:text-brand-400 text-sm font-medium"
                   >
                     Request new reset link →
                   </Link>
@@ -189,7 +189,7 @@ function ResetPasswordForm() {
                     value={formData.password}
                     onChange={handleChange}
                     disabled={isLoading}
-                    className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-12 pr-12 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-xl pl-12 pr-12 py-4 text-base text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Enter new password"
                   />
                   <button
@@ -233,7 +233,7 @@ function ResetPasswordForm() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     disabled={isLoading}
-                    className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-12 pr-12 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-xl pl-12 pr-12 py-4 text-base text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="Confirm new password"
                   />
                   <button
@@ -255,7 +255,7 @@ function ResetPasswordForm() {
               <button
                 type="submit"
                 disabled={isLoading || validationErrors.length > 0 || formData.password !== formData.confirmPassword}
-                className="w-full bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white font-bold py-3 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-r from-brand-500 to-brand-700 hover:from-brand-400 hover:to-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-2"
               >
                 {isLoading ? (
                   <>
@@ -272,7 +272,7 @@ function ResetPasswordForm() {
           <div className="mt-6 text-center">
             <Link
               href="/login"
-              className="text-slate-500 dark:text-slate-400 hover:text-gold-500 transition-colors text-sm"
+              className="text-slate-500 dark:text-slate-400 hover:text-brand-500 transition-colors text-sm"
             >
               Back to Login
             </Link>
@@ -287,8 +287,8 @@ export default function ResetPassword() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex items-center justify-center">
-        <div className="w-16 h-16 bg-gold-500/10 rounded-full flex items-center justify-center animate-pulse">
-          <Loader2 className="text-gold-500 animate-spin" size={32} />
+        <div className="w-16 h-16 bg-brand-500/10 rounded-full flex items-center justify-center animate-pulse">
+          <Loader2 className="text-brand-500 animate-spin" size={32} />
         </div>
       </div>
     }>

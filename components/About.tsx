@@ -5,7 +5,7 @@ const About = () => {
   return (
     <section id="about" className="py-12 sm:py-24 bg-slate-50 dark:bg-slate-950 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-brand-500/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 bg-blue-500/5 rounded-full blur-3xl"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -13,11 +13,11 @@ const About = () => {
           {/* Left Column: Content */}
           <div>
             <div className="inline-flex items-center space-x-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-6">
-              <span className="text-gold-500 text-sm font-bold uppercase tracking-wider">Our Mission</span>
+              <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Our Mission</span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-4 sm:mb-6 leading-tight">
-              Redefining Pipguardian Management for the <span className="text-gold-500">Digital Age</span>
+              Redefining Pipguardian Management for the <span className="text-brand-500">Digital Age</span>
             </h2>
 
             <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-lg mb-4 sm:mb-6 leading-relaxed">
@@ -30,7 +30,7 @@ const About = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="flex items-start space-x-4">
-                <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-gold-500">
+                <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-brand-500">
                   <ShieldCheck size={24} />
                 </div>
                 <div>
@@ -39,7 +39,7 @@ const About = () => {
                 </div>
               </div>
               <div className="flex items-start space-x-4">
-                <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-gold-500">
+                <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-brand-500">
                   <Globe size={24} />
                 </div>
                 <div>
@@ -52,7 +52,7 @@ const About = () => {
 
           {/* Right Column: Visuals & Stats */}
           <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-tr from-gold-500/20 to-transparent rounded-3xl transform rotate-3"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-brand-500/20 to-transparent rounded-3xl transform rotate-3"></div>
             <img
               src="https://res.cloudinary.com/dshkbza19/image/upload/v1775410956/WhatsApp_Image_2026-04-05_at_6.04.47_PM_uz3rva.jpg"
               alt="Pipguardian — Trade Forex, Crypto and Commodities"
@@ -76,7 +76,7 @@ const About = () => {
                   <span className="text-slate-900 dark:text-white font-bold">25M+</span>
                 </div>
                 <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full">
-                  <div className="bg-gold-500 h-1.5 rounded-full w-[85%]"></div>
+                  <div className="bg-brand-500 h-1.5 rounded-full w-[85%]"></div>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-slate-500 dark:text-slate-400">Avg. Annual Return</span>

@@ -78,7 +78,7 @@ export default function InvestmentProfitHistory() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Total Expected Profit</p>
             <TrendingUp className="text-blue-500" size={20} />
@@ -87,7 +87,7 @@ export default function InvestmentProfitHistory() {
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Complete investment profit</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Profit Received</p>
             <CheckCircle className="text-emerald-500" size={20} />
@@ -96,7 +96,7 @@ export default function InvestmentProfitHistory() {
           <p className="text-xs text-emerald-400 mt-2">{((profitData.paidProfit / profitData.totalProfit) * 100).toFixed(1)}% distributed</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Pending Profit</p>
             <Clock className="text-amber-500" size={20} />
@@ -107,7 +107,7 @@ export default function InvestmentProfitHistory() {
       </div>
 
       {/* Profit Chart */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
         <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Cumulative Profit Over Time</h3>
         <div className="h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
@@ -142,7 +142,7 @@ export default function InvestmentProfitHistory() {
       </div>
 
       {/* Distribution Records */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800">
           <h3 className="text-slate-900 dark:text-white font-semibold text-base sm:text-lg">Distribution Records</h3>
           <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">{profitData.profitRecords.length} total distributions</p>
@@ -172,7 +172,7 @@ export default function InvestmentProfitHistory() {
                   <span className={`px-2 py-1 rounded text-xs font-medium capitalize ${
                     record.type === 'daily'
                       ? 'bg-blue-500/10 text-blue-400'
-                      : 'bg-gold-500/10 text-gold-400'
+                      : 'bg-emerald-500/10 text-emerald-400'
                   }`}>
                     {record.type}
                   </span>

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Smartphone, Wifi, BellRing, Download } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 
 const AppDownload = () => {
   const [installPrompt, setInstallPrompt] = useState<any>(null);
@@ -39,7 +40,7 @@ const AppDownload = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/40" />
 
-          <div className="relative p-8 sm:p-14">
+          <Reveal className="relative p-8 sm:p-14">
             <span className="text-brand-400 text-xs sm:text-sm font-bold uppercase tracking-wider">Mobile App</span>
             <h2 className="text-2xl sm:text-4xl font-serif font-bold text-white mt-3 mb-4 leading-tight">
               Your Portfolio, In Your Pocket
@@ -76,7 +77,7 @@ const AppDownload = () => {
                 Open this site in a supported mobile browser and use &quot;Add to Home Screen&quot; from the browser menu.
               </p>
             )}
-          </div>
+          </Reveal>
           <div className="relative hidden md:flex items-center justify-center p-10">
             <div className="w-48 h-96 rounded-[2rem] border-4 border-slate-700 bg-slate-950 shadow-2xl flex items-center justify-center">
               <Smartphone className="text-brand-500/40" size={64} />

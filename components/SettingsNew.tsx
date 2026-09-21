@@ -349,7 +349,7 @@ export default function SettingsNew() {
         <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Manage your account settings and preferences</p>
       </div>
 
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         {/* Tabs */}
         <div className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
           {[
@@ -364,7 +364,7 @@ export default function SettingsNew() {
               onClick={() => setActiveTab(tab.key as any)}
               className={`flex-1 min-w-0 py-3 sm:py-4 text-xs sm:text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.key
-                  ? 'border-gold-500 text-slate-900 dark:text-white'
+                  ? 'border-emerald-500 text-slate-900 dark:text-white'
                   : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
@@ -412,7 +412,7 @@ export default function SettingsNew() {
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploading || isDeleting}
-                    className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-slate-900 dark:text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                   >
                     <Upload size={16} /> Upload Image
                   </button>
@@ -439,7 +439,7 @@ export default function SettingsNew() {
                     type="text"
                     value={profileForm.firstName}
                     onChange={(e) => setProfileForm({ ...profileForm, firstName: e.target.value })}
-                    className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 cursor-text"
+                    className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 cursor-text"
                   />
                 </div>
                 <div>
@@ -448,7 +448,7 @@ export default function SettingsNew() {
                     type="text"
                     value={profileForm.lastName}
                     onChange={(e) => setProfileForm({ ...profileForm, lastName: e.target.value })}
-                    className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-2 focus:ring-gold-500/20 cursor-text"
+                    className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 cursor-text"
                   />
                 </div>
                 <div className="md:col-span-2">
@@ -465,7 +465,7 @@ export default function SettingsNew() {
               <button
                 type="submit"
                 disabled={isUpdating}
-                className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-slate-900 dark:text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
               >
                 {isUpdating ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
                 {isUpdating ? 'Saving...' : 'Save Changes'}
@@ -484,7 +484,7 @@ export default function SettingsNew() {
                   type="password"
                   value={passwordForm.oldPassword}
                   onChange={(e) => setPasswordForm({ ...passwordForm, oldPassword: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                   required
                 />
               </div>
@@ -494,7 +494,7 @@ export default function SettingsNew() {
                   type="password"
                   value={passwordForm.newPassword}
                   onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                   required
                   minLength={8}
                 />
@@ -505,7 +505,7 @@ export default function SettingsNew() {
                   type="password"
                   value={passwordForm.confirmPassword}
                   onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                  className="w-full bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                   required
                 />
               </div>
@@ -513,7 +513,7 @@ export default function SettingsNew() {
               <button
                 type="submit"
                 disabled={isChangingPassword}
-                className="w-full flex items-center justify-center gap-2 bg-gold-500 hover:bg-gold-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-slate-900 dark:text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                className="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
               >
                 {isChangingPassword ? <Loader2 size={18} className="animate-spin" /> : <Lock size={18} />}
                 {isChangingPassword ? 'Updating...' : 'Update Password'}
@@ -531,7 +531,7 @@ export default function SettingsNew() {
                 </div>
                 <button
                   onClick={handleOpenAddModal}
-                  className="flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-slate-900 dark:text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors w-fit"
+                  className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors w-fit"
                 >
                   <Plus size={16} /> Add Account
                 </button>
@@ -539,7 +539,7 @@ export default function SettingsNew() {
 
               {loadingAccounts ? (
                 <div className="flex items-center justify-center py-12">
-                  <Loader2 className="animate-spin text-gold-500" size={32} />
+                  <Loader2 className="animate-spin text-emerald-500" size={32} />
                 </div>
               ) : savedAccounts.length === 0 ? (
                 <div className="text-center py-12 text-slate-500 dark:text-slate-400">
@@ -552,7 +552,7 @@ export default function SettingsNew() {
                   {savedAccounts.map((account: SavedAccount) => (
                     <div
                       key={account.id}
-                      className="bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                      className="bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-emerald-500/40 transition-colors"
                     >
                       <div className="flex items-center gap-3 sm:gap-4 min-w-0">
                         <div className={`p-2.5 sm:p-3 rounded-full flex-shrink-0 ${account.accountType === 'crypto' ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500'}`}>
@@ -562,7 +562,7 @@ export default function SettingsNew() {
                           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                             <span className="text-slate-900 dark:text-white font-medium text-sm">{account.label}</span>
                             {account.isDefault && (
-                              <span className="bg-gold-500/20 text-gold-500 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-medium">Default</span>
+                              <span className="bg-emerald-500/20 text-emerald-500 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-medium">Default</span>
                             )}
                             <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full capitalize">{account.accountType}</span>
                           </div>
@@ -578,7 +578,7 @@ export default function SettingsNew() {
                         {!account.isDefault && (
                           <button
                             onClick={() => handleSetDefault(account.id)}
-                            className="text-slate-500 dark:text-slate-400 hover:text-gold-500 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                            className="text-slate-500 dark:text-slate-400 hover:text-emerald-500 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
                             title="Set as default"
                           >
                             <Star size={16} />
@@ -619,7 +619,7 @@ export default function SettingsNew() {
                           <select
                             value={accountForm.accountType}
                             onChange={(e) => setAccountForm({ ...accountForm, accountType: e.target.value as any })}
-                            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                            className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                           >
                             <option value="crypto">Crypto Wallet</option>
                             <option value="bank">Bank Account</option>
@@ -636,7 +636,7 @@ export default function SettingsNew() {
                           value={accountForm.label}
                           onChange={(e) => setAccountForm({ ...accountForm, label: e.target.value })}
                           placeholder="e.g. My Bitcoin Wallet"
-                          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                          className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                           required
                           maxLength={50}
                         />
@@ -652,7 +652,7 @@ export default function SettingsNew() {
                               value={accountForm.currency}
                               onChange={(e) => setAccountForm({ ...accountForm, currency: e.target.value })}
                               placeholder="e.g. BTC, USDT, ETH"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                               required
                             />
                           </div>
@@ -663,7 +663,7 @@ export default function SettingsNew() {
                               value={accountForm.network}
                               onChange={(e) => setAccountForm({ ...accountForm, network: e.target.value })}
                               placeholder="e.g. ERC-20, TRC-20, BEP-20"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                             />
                           </div>
                           <div>
@@ -673,7 +673,7 @@ export default function SettingsNew() {
                               value={accountForm.walletAddress}
                               onChange={(e) => setAccountForm({ ...accountForm, walletAddress: e.target.value })}
                               placeholder="Enter wallet address"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 font-mono text-sm"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 font-mono text-sm"
                               required
                             />
                           </div>
@@ -690,7 +690,7 @@ export default function SettingsNew() {
                               value={accountForm.bankDetails.bankName}
                               onChange={(e) => setAccountForm({ ...accountForm, bankDetails: { ...accountForm.bankDetails, bankName: e.target.value } })}
                               placeholder="Enter bank name"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                               required
                             />
                           </div>
@@ -701,7 +701,7 @@ export default function SettingsNew() {
                               value={accountForm.bankDetails.accountNumber}
                               onChange={(e) => setAccountForm({ ...accountForm, bankDetails: { ...accountForm.bankDetails, accountNumber: e.target.value } })}
                               placeholder="Enter account number"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                               required
                             />
                           </div>
@@ -712,7 +712,7 @@ export default function SettingsNew() {
                               value={accountForm.bankDetails.accountName}
                               onChange={(e) => setAccountForm({ ...accountForm, bankDetails: { ...accountForm.bankDetails, accountName: e.target.value } })}
                               placeholder="Enter account holder name"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                               required
                             />
                           </div>
@@ -724,7 +724,7 @@ export default function SettingsNew() {
                                 value={accountForm.bankDetails.routingNumber}
                                 onChange={(e) => setAccountForm({ ...accountForm, bankDetails: { ...accountForm.bankDetails, routingNumber: e.target.value } })}
                                 placeholder="Optional"
-                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                               />
                             </div>
                             <div>
@@ -734,7 +734,7 @@ export default function SettingsNew() {
                                 value={accountForm.bankDetails.swiftCode}
                                 onChange={(e) => setAccountForm({ ...accountForm, bankDetails: { ...accountForm.bankDetails, swiftCode: e.target.value } })}
                                 placeholder="Optional"
-                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                               />
                             </div>
                           </div>
@@ -745,7 +745,7 @@ export default function SettingsNew() {
                               value={accountForm.bankDetails.iban}
                               onChange={(e) => setAccountForm({ ...accountForm, bankDetails: { ...accountForm.bankDetails, iban: e.target.value } })}
                               placeholder="Enter IBAN"
-                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500"
+                              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500"
                             />
                           </div>
                         </>
@@ -774,7 +774,7 @@ export default function SettingsNew() {
                         <button
                           type="submit"
                           disabled={isCreating || isUpdatingAccount}
-                          className="flex-1 bg-gold-500 hover:bg-gold-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-slate-900 dark:text-white px-4 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+                          className="flex-1 bg-emerald-500 hover:bg-emerald-600 disabled:bg-slate-300 dark:disabled:bg-slate-600 text-white px-4 py-3 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                         >
                           {(isCreating || isUpdatingAccount) && <Loader2 size={18} className="animate-spin" />}
                           {editingAccount ? 'Update' : 'Save Account'}
@@ -798,7 +798,7 @@ export default function SettingsNew() {
                   onClick={() => setTheme('light')}
                   className={`flex flex-col items-center gap-3 p-4 sm:p-5 rounded-xl border-2 transition-colors ${
                     theme === 'light'
-                      ? 'border-gold-500 bg-gold-500/5'
+                      ? 'border-emerald-500 bg-emerald-500/5'
                       : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
@@ -812,7 +812,7 @@ export default function SettingsNew() {
                   onClick={() => setTheme('dark')}
                   className={`flex flex-col items-center gap-3 p-4 sm:p-5 rounded-xl border-2 transition-colors ${
                     theme === 'dark'
-                      ? 'border-gold-500 bg-gold-500/5'
+                      ? 'border-emerald-500 bg-emerald-500/5'
                       : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >

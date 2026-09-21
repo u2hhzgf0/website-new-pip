@@ -50,29 +50,29 @@ export default function ForgotPassword() {
           </div>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">Check Your Email</h2>
           <p className="text-slate-500 dark:text-slate-400 mb-6">
-            We've sent a password reset link to <span className="text-gold-500 font-medium">{email}</span>.
+            We've sent a password reset link to <span className="text-brand-500 font-medium">{email}</span>.
             Please check your inbox and follow the instructions.
           </p>
           <div className="bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg p-4 mb-6 text-left">
             <p className="text-sm text-slate-600 dark:text-slate-300 mb-2 font-medium">Didn't receive the email?</p>
             <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-2">
               <li className="flex items-start gap-2">
-                <span className="text-gold-500 mt-0.5">•</span>
+                <span className="text-brand-500 mt-0.5">•</span>
                 <span>Check your spam/junk folder</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-gold-500 mt-0.5">•</span>
+                <span className="text-brand-500 mt-0.5">•</span>
                 <span>Verify the email address is correct</span>
               </li>
               <li className="flex items-start gap-2">
-                <span className="text-gold-500 mt-0.5">•</span>
+                <span className="text-brand-500 mt-0.5">•</span>
                 <span>Wait a few minutes and try again</span>
               </li>
             </ul>
           </div>
           <Link
             href="/login"
-            className="inline-flex items-center gap-2 text-gold-500 hover:text-gold-400 transition-colors text-sm font-medium"
+            className="inline-flex items-center gap-2 text-brand-500 hover:text-brand-400 transition-colors text-sm font-medium"
           >
             <ArrowLeft size={16} />
             Back to Login
@@ -98,7 +98,7 @@ export default function ForgotPassword() {
           <Link href="/" className="inline-block mb-6">
             <h1 className="text-3xl font-bold">
               <span className="text-slate-900 dark:text-white">Pip</span>
-              <span className="text-gold-500">guardian</span>
+              <span className="text-brand-500">guardian</span>
             </h1>
           </Link>
           <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Forgot Password?</h2>
@@ -119,7 +119,7 @@ export default function ForgotPassword() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
-                  className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg pl-12 pr-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-xl pl-12 pr-4 py-4 text-base text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-500 focus:border-brand-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   placeholder="Enter your email address"
                 />
               </div>
@@ -128,7 +128,7 @@ export default function ForgotPassword() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white font-bold py-3 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-brand-500 to-brand-700 hover:from-brand-400 hover:to-brand-600 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-brand-500/20 transform hover:-translate-y-0.5 active:translate-y-0 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>
@@ -144,7 +144,7 @@ export default function ForgotPassword() {
           <div className="mt-6 text-center">
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-gold-500 transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-brand-500 transition-colors text-sm"
             >
               <ArrowLeft size={16} />
               Back to Login
@@ -154,7 +154,7 @@ export default function ForgotPassword() {
 
         <p className="text-center text-sm text-slate-600 dark:text-slate-500 mt-6">
           Remember your password?{' '}
-          <Link href="/login" className="text-gold-500 hover:text-gold-400 transition-colors font-medium">
+          <Link href="/login" className="text-brand-500 hover:text-brand-400 transition-colors font-medium">
             Log in
           </Link>
         </p>

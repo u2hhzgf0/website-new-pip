@@ -1,12 +1,15 @@
 'use client'
 
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/store/store'
 import { Wallet, TrendingUp, TrendingDown, DollarSign, Calendar, ArrowUpRight, ArrowDownLeft } from 'lucide-react'
 import { AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts'
 import { useGetWalletStatsQuery } from '@/store/api/walletApi'
 
 export default function WalletStats() {
   const [timeRange, setTimeRange] = useState<'7d' | '30d' | '90d' | '1y'>('30d')
+  const currentUser = useSelector((state: RootState) => state.auth.user)
 
   // Fetch wallet stats from API
   const { data: statsResponse, isLoading, error } = useGetWalletStatsQuery({ timeRange })
@@ -15,7 +18,7 @@ export default function WalletStats() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-gold-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-500 dark:text-slate-400">Loading wallet statistics...</p>
         </div>
       </div>
@@ -40,13 +43,14 @@ export default function WalletStats() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
         <div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">{currentUser?.firstName} {currentUser?.lastName}</p>
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Wallet Statistics</h1>
           <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">Complete financial analytics and insights</p>
         </div>
         <select
           value={timeRange}
           onChange={(e) => setTimeRange(e.target.value as any)}
-          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gold-500/50"
+          className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
         >
           <option value="7d">Last 7 Days</option>
           <option value="30d">Last 30 Days</option>
@@ -57,45 +61,45 @@ export default function WalletStats() {
 
       {/* Main Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Current Balance</p>
-            <Wallet className="text-gold-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Current Balance</p>
+            <Wallet className="text-emerald-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${stats.balance.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${stats.balance.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Available funds</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Deposits</p>
-            <ArrowDownLeft className="text-emerald-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Total Deposits</p>
+            <ArrowDownLeft className="text-emerald-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${stats.totalDeposit.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${stats.totalDeposit.toLocaleString()}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">All-time deposits</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Withdrawals</p>
-            <ArrowUpRight className="text-rose-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Total Withdrawals</p>
+            <ArrowUpRight className="text-rose-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${stats.totalWithdraw.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${stats.totalWithdraw.toLocaleString()}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">All-time withdrawals</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Profit</p>
-            <TrendingUp className="text-blue-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Total Profit</p>
+            <TrendingUp className="text-blue-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${stats.totalProfit.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${stats.totalProfit.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Lifetime earnings</p>
         </div>
       </div>
 
       {/* Balance Trend Chart */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
         <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Balance Trend</h3>
         {stats.balanceTrend && stats.balanceTrend.length > 0 ? (
           <div className="h-[300px]">
@@ -103,8 +107,8 @@ export default function WalletStats() {
               <AreaChart data={stats.balanceTrend}>
               <defs>
                 <linearGradient id="balanceGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#F59E0B" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
+                  <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -121,7 +125,7 @@ export default function WalletStats() {
               <Area
                 type="monotone"
                 dataKey="balance"
-                stroke="#F59E0B"
+                stroke="#10B981"
                 strokeWidth={3}
                 fill="url(#balanceGradient)"
               />
@@ -137,58 +141,70 @@ export default function WalletStats() {
 
       {/* Income vs Expense */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Income vs Expense</h3>
           <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={stats.incomeExpense}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                <XAxis dataKey="month" stroke="#64748B" style={{ fontSize: '12px' }} />
-                <YAxis stroke="#64748B" style={{ fontSize: '12px' }} tickFormatter={(val) => `$${val}`} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1E293B',
-                    border: '1px solid #334155',
-                    borderRadius: '8px',
-                    color: '#fff',
-                  }}
-                />
-                <Legend />
-                <Bar dataKey="income" fill="#10B981" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="expense" fill="#EF4444" radius={[8, 8, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
+            {stats.incomeExpense?.some((row) => row.income || row.expense) ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={stats.incomeExpense}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                  <XAxis dataKey="month" stroke="#64748B" style={{ fontSize: '12px' }} />
+                  <YAxis stroke="#64748B" style={{ fontSize: '12px' }} tickFormatter={(val) => `$${val}`} />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#1E293B',
+                      border: '1px solid #334155',
+                      borderRadius: '8px',
+                      color: '#fff',
+                    }}
+                  />
+                  <Legend />
+                  <Bar dataKey="income" fill="#10B981" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="expense" fill="#EF4444" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <p className="text-slate-600 dark:text-slate-500 text-sm">No income or expense data available</p>
+              </div>
+            )}
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Transaction Distribution</h3>
           <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={stats.transactionDistribution}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {stats.transactionDistribution.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip />
-                <Legend />
-              </PieChart>
-            </ResponsiveContainer>
+            {stats.transactionDistribution?.some((row) => row.value) ? (
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={stats.transactionDistribution}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={100}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {stats.transactionDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <p className="text-slate-600 dark:text-slate-500 text-sm">No transactions to distribute yet</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Income Breakdown */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
         <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Income Breakdown</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {stats.incomeBreakdown.map((item, index) => (
@@ -199,7 +215,7 @@ export default function WalletStats() {
               </div>
               <div className="relative w-full h-2 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
-                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-gold-500 to-amber-600 transition-all"
+                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-600 transition-all"
                   style={{ width: `${item.percentage}%` }}
                 />
               </div>
@@ -210,9 +226,9 @@ export default function WalletStats() {
       </div>
 
       {/* Additional Info */}
-      <div className="bg-gradient-to-r from-gold-500/10 to-amber-600/10 border border-gold-500/30 rounded-xl p-4 sm:p-6">
+      <div className="bg-gradient-to-r from-emerald-500/10 to-emerald-600/10 border border-emerald-500/30 rounded-xl p-4 sm:p-6 card-lift">
         <div className="flex items-start gap-3">
-          <DollarSign className="text-gold-500 flex-shrink-0 mt-1" size={24} />
+          <DollarSign className="text-emerald-500 flex-shrink-0 mt-1" size={24} />
           <div>
             <h3 className="text-slate-900 dark:text-white font-semibold mb-2">Wallet Summary</h3>
             <p className="text-slate-600 dark:text-slate-300 text-sm mb-4">
@@ -231,7 +247,7 @@ export default function WalletStats() {
               </div>
               <div className="bg-white dark:bg-slate-900/50 rounded-lg px-4 py-2">
                 <p className="text-xs text-slate-500 dark:text-slate-400">Net Profit</p>
-                <p className="text-gold-500 font-bold">${(stats.totalProfit + stats.referralEarnings).toLocaleString()}</p>
+                <p className="text-emerald-500 font-bold">${(stats.totalProfit + stats.referralEarnings).toLocaleString()}</p>
               </div>
             </div>
           </div>

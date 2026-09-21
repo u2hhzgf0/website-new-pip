@@ -20,6 +20,10 @@ import {
   ZoomIn,
   ChevronLeft,
   ChevronRight,
+  Clock,
+  Copy,
+  Award,
+  LucideIcon,
 } from 'lucide-react';
 
 const IMG_HERO =
@@ -30,6 +34,12 @@ const IMG_CERT_INCORPORATION =
   'https://res.cloudinary.com/dshkbza19/image/upload/v1775466166/IMG_20260406_120348_xsrk0r.png';
 const IMG_CERT_EXTRA =
   'https://res.cloudinary.com/dhah2ypd9/image/upload/v1776789493/WhatsApp_Image_2026-04-20_at_1.31.29_PM_p6dkuk.jpg';
+
+const forexStats = [
+  { icon: TrendingUp, value: '$6T+', label: 'Daily trading volume' },
+  { icon: Clock, value: '24 / 5', label: 'Market hours' },
+  { icon: Globe2, value: 'Global', label: 'Financial centres' },
+];
 
 const hubs = [
   {
@@ -121,12 +131,33 @@ const compensationOverview = [
 function PipWordmark({ className = '' }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className="bg-gradient-to-br from-gold-400 to-gold-600 p-1.5 rounded-md">
+      <div className="bg-gradient-to-br from-brand-400 to-brand-600 p-1.5 rounded-md">
         <TrendingUp className="h-5 w-5 text-slate-950" />
       </div>
       <span className="text-xl font-serif font-bold tracking-wide text-slate-900 dark:text-white leading-none">
-        Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
+        Pip<span className="text-brand-500">guardian</span><span className="text-brand-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
       </span>
+    </div>
+  );
+}
+
+/** Small uppercase icon + label badge used to open every section — keeps the page's rhythm consistent. */
+function Eyebrow({
+  icon: Icon,
+  children,
+  dark = false,
+}: {
+  icon: LucideIcon;
+  children: React.ReactNode;
+  dark?: boolean;
+}) {
+  const wrapClass = dark
+    ? 'bg-white/5 border-white/10'
+    : 'bg-slate-100 dark:bg-slate-900 border-slate-200 dark:border-slate-800';
+  return (
+    <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 mb-4 ${wrapClass}`}>
+      <Icon size={15} className="text-brand-500 dark:text-brand-400" />
+      <span className="text-xs font-bold uppercase tracking-wider text-brand-500 dark:text-brand-400">{children}</span>
     </div>
   );
 }
@@ -180,19 +211,19 @@ const InvestingInfoContent = () => {
         <div className="absolute inset-0 bg-grid-pattern opacity-30 mix-blend-overlay" />
 
         {/* Floating depth orbs */}
-        <div className="absolute -top-10 right-[8%] w-72 h-72 rounded-full bg-emerald-500/20 blur-3xl animate-float-slow" />
-        <div className="absolute bottom-0 left-[6%] w-80 h-80 rounded-full bg-gold-500/10 blur-3xl animate-float-slower" />
+        <div className="absolute -top-10 right-[8%] w-72 h-72 rounded-full bg-brand-500/20 blur-3xl animate-float-slow" />
+        <div className="absolute bottom-0 left-[6%] w-80 h-80 rounded-full bg-brand-500/10 blur-3xl animate-float-slower" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[560px] sm:min-h-[640px] md:min-h-[720px] flex flex-col justify-center items-center text-center pt-28 sm:pt-32 pb-24 sm:pb-28">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[560px] sm:min-h-[640px] md:min-h-[720px] flex flex-col justify-center items-center text-center py-16 sm:py-20">
           <div className="inline-flex items-center justify-center gap-2 bg-black/30 border border-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6 shadow-lg shadow-black/30">
-            <Sparkles className="text-emerald-400 w-4 h-4" />
-            <span className="text-emerald-400/90 text-xs sm:text-sm font-bold uppercase tracking-wider">
+            <Sparkles className="text-brand-400 w-4 h-4" />
+            <span className="text-brand-400/90 text-xs sm:text-sm font-bold uppercase tracking-wider">
               Data-driven trading
             </span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-5 leading-tight max-w-4xl mx-auto drop-shadow-lg [text-shadow:0_8px_30px_rgba(0,0,0,0.45)]">
             Your trading platform for{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold-400 to-amber-500">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">
               every day
             </span>
           </h1>
@@ -203,7 +234,7 @@ const InvestingInfoContent = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4">
             <Link
               href="/register"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 to-amber-600 text-slate-950 font-bold text-sm shadow-xl shadow-gold-500/25 hover:shadow-gold-500/40 transition-all hover:-translate-y-1"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-gradient-to-r from-brand-500 to-brand-700 text-slate-950 font-bold text-sm shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 transition-all hover:-translate-y-1"
             >
               Get started
               <ArrowRight size={18} className="ml-2" />
@@ -238,10 +269,11 @@ const InvestingInfoContent = () => {
 
       {/* —— Certificates Gallery —— */}
       <section className="relative z-10 border-t border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#1b202c] py-14 sm:py-20 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-gold-500/[0.06] blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-brand-500/[0.06] blur-3xl pointer-events-none" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <PipWordmark className="justify-center mb-4" />
+            <Eyebrow icon={Award}>Legally registered</Eyebrow>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white">Official Registration</h2>
             <p className="text-slate-600 dark:text-slate-500 text-sm mt-2">Saint Lucia — Click any certificate to view full size</p>
           </div>
@@ -252,7 +284,7 @@ const InvestingInfoContent = () => {
               <button
                 key={i}
                 onClick={() => openLightbox(i)}
-                className="tilt-card group relative rounded-2xl overflow-hidden ring-1 ring-white/10 glow-ring bg-slate-50 dark:bg-[#0f1218] cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-gold-500"
+                className="tilt-card group relative rounded-2xl overflow-hidden ring-1 ring-white/10 glow-ring bg-slate-50 dark:bg-[#0f1218] cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-brand-500"
               >
                 <Image
                   src={cert.src}
@@ -324,12 +356,13 @@ const InvestingInfoContent = () => {
       )}
 
       {/* Forex intro */}
-      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-6">
-            <BookOpen className="text-gold-500 shrink-0" size={22} />
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white">Introduction to forex trading</h2>
+      <section className="relative z-10 py-14 sm:py-20 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c] overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full bg-brand-500/[0.06] blur-3xl pointer-events-none" />
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center">
+            <Eyebrow icon={BookOpen}>Investor education</Eyebrow>
           </div>
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-6">Introduction to forex trading</h2>
           <div className="prose prose-invert prose-sm sm:prose-base max-w-none text-slate-500 dark:text-slate-400 space-y-4 text-center mx-auto">
             <p>
               Forex (foreign exchange) is the global market for buying and selling currencies. It is the largest financial market in the world,
@@ -340,24 +373,40 @@ const InvestingInfoContent = () => {
               across major financial centres worldwide.
             </p>
           </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10 [perspective:1400px]">
+            {forexStats.map(({ icon: Icon, value, label }) => (
+              <div
+                key={label}
+                className="tilt-card-flat flex flex-col items-center gap-2 bg-white dark:bg-[#1b202c] border border-slate-200 dark:border-slate-800 rounded-2xl px-5 py-6"
+              >
+                <div className="w-10 h-10 rounded-full bg-brand-500/10 flex items-center justify-center text-brand-500">
+                  <Icon size={18} />
+                </div>
+                <p className="text-slate-900 dark:text-white font-bold text-lg leading-none">{value}</p>
+                <p className="text-slate-500 dark:text-slate-400 text-xs">{label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Top hubs */}
-      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c]">
+      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1a1d26]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-2">
-            <Globe2 className="text-gold-500 shrink-0" size={22} />
-            <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white">Top global trading centres</h2>
+          <div className="flex justify-center">
+            <Eyebrow icon={Globe2}>Where the market moves</Eyebrow>
           </div>
+          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-2">Top global trading centres</h2>
           <p className="text-slate-600 dark:text-slate-500 text-sm mb-8 max-w-2xl mx-auto">Three of the most active regions by volume and session overlap.</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 justify-items-center [perspective:1400px]">
             {hubs.map((h) => (
               <div
                 key={h.city}
-                className="tilt-card bg-white dark:bg-[#1b202c] border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 hover:shadow-2xl hover:shadow-emerald-500/10 rounded-2xl p-6 w-full max-w-md text-center"
+                className="tilt-card relative overflow-hidden bg-slate-50 dark:bg-[#1b202c] border border-slate-200 dark:border-slate-800 hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10 rounded-2xl p-6 w-full max-w-md text-center"
               >
-                <p className="text-emerald-400 font-bold text-lg mb-1">{h.city}</p>
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 to-brand-600" />
+                <p className="text-brand-500 dark:text-brand-400 font-bold text-lg mb-1">{h.city}</p>
                 <p className="text-slate-900 dark:text-white font-semibold mb-2">{h.title}</p>
                 <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">{h.detail}</p>
               </div>
@@ -367,10 +416,14 @@ const InvestingInfoContent = () => {
       </section>
 
       {/* Copy trading */}
-      <section className="relative z-10 py-10 border-t border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-r from-emerald-500/10 via-[#1b202c] to-[#12151c]">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center gap-3">
-          <p className="text-emerald-400 text-sm font-semibold uppercase tracking-wider">Copy trading</p>
-          <p className="text-white text-xl font-serif font-bold">Follow strategies that fit your risk profile</p>
+      <section className="relative z-10 py-12 border-t border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-r from-brand-500/10 via-[#1b202c] to-[#12151c] overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-brand-500/15 border border-brand-500/20 flex items-center justify-center text-brand-400 mb-1">
+            <Copy size={20} />
+          </div>
+          <p className="text-brand-400 text-sm font-semibold uppercase tracking-wider">Copy trading</p>
+          <p className="text-white text-xl sm:text-2xl font-serif font-bold">Follow strategies that fit your risk profile</p>
           <p className="text-slate-400 text-sm">Offered in line with PipGuardian platform rules and availability.</p>
           <span className="text-slate-500 text-sm font-mono">pipguardian.com</span>
         </div>
@@ -379,15 +432,18 @@ const InvestingInfoContent = () => {
       {/* Partnership */}
       <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center">
+            <Eyebrow icon={Trophy}>Partner with us</Eyebrow>
+          </div>
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-2">Partnership benefits</h2>
           <p className="text-slate-600 dark:text-slate-500 text-sm mb-10 max-w-2xl mx-auto">Six pillars of support and opportunity for partners.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center [perspective:1400px]">
             {partnershipBenefits.map(({ icon: Icon, title, text }) => (
               <div
                 key={title}
-                className="tilt-card flex flex-col items-center text-center gap-3 bg-white dark:bg-[#1b202c] border border-slate-200 dark:border-slate-800 hover:border-gold-500/30 hover:shadow-2xl hover:shadow-gold-500/10 rounded-xl p-5 w-full max-w-sm"
+                className="tilt-card flex flex-col items-center text-center gap-3 bg-white dark:bg-[#1b202c] border border-slate-200 dark:border-slate-800 hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10 rounded-xl p-5 w-full max-w-sm"
               >
-                <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-gold-500 shadow-inner">
+                <div className="w-11 h-11 rounded-lg bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-brand-500 shadow-inner">
                   <Icon size={20} />
                 </div>
                 <div>
@@ -401,14 +457,17 @@ const InvestingInfoContent = () => {
       </section>
 
       {/* Types of Income — brochure style */}
-      <section className="relative z-10 py-14 sm:py-20 border-t border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1a1d26]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center mb-10">
+      <section className="relative z-10 py-14 sm:py-20 border-t border-slate-800 bg-gradient-to-b from-[#161a24] to-[#0f1218] overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.08] pointer-events-none" />
+        <div className="absolute -top-20 left-1/3 w-96 h-96 rounded-full bg-brand-500/10 blur-3xl animate-float-slow pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/4 w-80 h-80 rounded-full bg-brand-500/10 blur-3xl animate-float-slower pointer-events-none" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center mb-8">
             <PipWordmark />
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-10 sm:mb-12">
-            <span className="text-slate-900 dark:text-white">Types of </span>
-            <span className="text-red-500">Income</span>
+            <span className="text-white">Types of </span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-600">Income</span>
           </h2>
           <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 max-w-3xl mx-auto [perspective:1400px]">
             {incomeTypesBrochure.map((label) => (
@@ -426,55 +485,64 @@ const InvestingInfoContent = () => {
       {/* Featured Executive rank — diagram + panels (brochure style) */}
       <section className="relative z-10 py-14 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1a1d26]">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex justify-center mb-10">
-            <PipWordmark className="justify-center" />
+          <div className="flex justify-center">
+            <Eyebrow icon={Users}>Growth path</Eyebrow>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-10">
             Rank, salary, incentive &amp; others
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start justify-items-center">
-            <div className="flex flex-col items-center w-full max-w-md">
-              <p className="text-slate-900 dark:text-white font-semibold mb-6 w-full">Executive structure</p>
-              <div className="flex flex-col items-center gap-4 mx-auto">
-                <div className="flex flex-col items-center gap-2">
-                  <div className="w-16 h-16 rounded-full border-2 border-white/90 bg-slate-100/80 dark:bg-slate-800/80 flex items-center justify-center text-slate-900 dark:text-white shadow-lg">
-                    <User size={28} strokeWidth={1.5} />
-                  </div>
-                  <span className="text-slate-900 dark:text-white font-medium text-sm">Executive</span>
-                </div>
-                <div className="h-8 w-px bg-white/40 shrink-0" />
-                <div className="flex gap-6 sm:gap-10 justify-center">
-                  {['A', 'B', 'C'].map((l) => (
-                    <div key={l} className="flex flex-col items-center gap-2">
-                      <div className="w-12 h-12 rounded-full border-2 border-white/80 bg-slate-100/60 dark:bg-slate-800/60 flex items-center justify-center text-slate-900 dark:text-white text-sm font-bold">
-                        <User size={18} strokeWidth={1.5} />
-                      </div>
-                      <span className="text-slate-900 dark:text-white text-sm font-medium">{l}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Always-dark spotlight panel — the diagram's white rings/borders are designed for a dark surface, so this stays dark in both themes */}
+          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 glow-ring px-6 py-10 sm:px-10 sm:py-14">
+            <div className="absolute inset-0 bg-grid-pattern opacity-[0.06] pointer-events-none" />
+            <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-brand-500/10 blur-3xl pointer-events-none" />
+            <div className="relative flex justify-center mb-10">
+              <PipWordmark className="justify-center" />
             </div>
 
-            <div className="space-y-6 max-w-xl w-full">
-              <div className="rounded-xl border-2 border-white/80 bg-transparent px-5 py-5 sm:px-6 sm:py-6 text-center">
-                <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-4">Executive conditions</h3>
-                <ul className="text-slate-700 dark:text-slate-200 text-sm space-y-2.5 list-none">
-                  <li>Create: 5 accounts</li>
-                  <li>Total team deposit $12,000</li>
-                  <li>1 leg 50% and other leg 50%</li>
-                  <li>Personal investment $500</li>
-                </ul>
+            <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start justify-items-center">
+              <div className="flex flex-col items-center w-full max-w-md">
+                <p className="text-white font-semibold mb-6 w-full">Executive structure</p>
+                <div className="flex flex-col items-center gap-4 mx-auto">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="w-16 h-16 rounded-full border-2 border-brand-400/80 bg-white/5 flex items-center justify-center text-white shadow-lg">
+                      <User size={28} strokeWidth={1.5} />
+                    </div>
+                    <span className="text-white font-medium text-sm">Executive</span>
+                  </div>
+                  <div className="h-8 w-px bg-white/30 shrink-0" />
+                  <div className="flex gap-6 sm:gap-10 justify-center">
+                    {['A', 'B', 'C'].map((l) => (
+                      <div key={l} className="flex flex-col items-center gap-2">
+                        <div className="w-12 h-12 rounded-full border-2 border-white/40 bg-white/5 flex items-center justify-center text-white text-sm font-bold">
+                          <User size={18} strokeWidth={1.5} />
+                        </div>
+                        <span className="text-white text-sm font-medium">{l}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="rounded-xl border-2 border-white/80 bg-transparent px-5 py-5 sm:px-6 sm:py-6 text-center">
-                <h3 className="text-slate-900 dark:text-white font-bold text-lg mb-4">Executive benefits</h3>
-                <ul className="text-slate-700 dark:text-slate-200 text-sm space-y-2.5 list-none">
-                  <li>Fixed salary $250</li>
-                  <li>Generation commission — team clients profit</li>
-                  <li>Global royalty 1% on total company clients profit</li>
-                  <li>Smartphone</li>
-                </ul>
+
+              <div className="space-y-6 max-w-xl w-full [perspective:1400px]">
+                <div className="tilt-card-flat rounded-xl border-2 border-white/15 bg-white/5 px-5 py-5 sm:px-6 sm:py-6 text-center">
+                  <h3 className="text-white font-bold text-lg mb-4">Executive conditions</h3>
+                  <ul className="text-slate-300 text-sm space-y-2.5 list-none">
+                    <li>Create: 5 accounts</li>
+                    <li>Total team deposit $12,000</li>
+                    <li>1 leg 50% and other leg 50%</li>
+                    <li>Personal investment $500</li>
+                  </ul>
+                </div>
+                <div className="tilt-card-flat rounded-xl border-2 border-brand-500/30 bg-brand-500/5 px-5 py-5 sm:px-6 sm:py-6 text-center">
+                  <h3 className="text-brand-400 font-bold text-lg mb-4">Executive benefits</h3>
+                  <ul className="text-slate-200 text-sm space-y-2.5 list-none">
+                    <li>Fixed salary $250</li>
+                    <li>Generation commission — team clients profit</li>
+                    <li>Global royalty 1% on total company clients profit</li>
+                    <li>Smartphone</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -484,19 +552,32 @@ const InvestingInfoContent = () => {
       {/* All ranks — cards */}
       <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center">
+            <Eyebrow icon={Trophy}>Every rank, in full</Eyebrow>
+          </div>
           <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-2">All ranks — conditions &amp; benefits</h2>
           <p className="text-slate-600 dark:text-slate-500 text-sm mb-10 max-w-3xl mx-auto">
             Progress from Starter toward Ambassador. Confirm current rules in your dashboard or with support.
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 justify-items-center [perspective:1400px]">
-            {rankDetailCards.map((card) => (
-              <div key={card.title} className="tilt-card-flat bg-white dark:bg-[#1b202c] border border-slate-200 dark:border-slate-800 hover:border-gold-500/30 hover:shadow-2xl hover:shadow-gold-500/10 rounded-2xl p-6 sm:p-7 w-full max-w-lg text-center">
-                <h3 className="text-xl font-bold text-gold-500 mb-4">{card.title}</h3>
+            {rankDetailCards.map((card, i) => (
+              <div
+                key={card.title}
+                className={`tilt-card-flat relative overflow-hidden bg-white dark:bg-[#1b202c] border rounded-2xl p-6 sm:p-7 w-full max-w-lg text-center transition-colors ${
+                  i === rankDetailCards.length - 1
+                    ? 'border-brand-500/40 shadow-2xl shadow-brand-500/10'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-brand-500/30 hover:shadow-2xl hover:shadow-brand-500/10'
+                }`}
+              >
+                {i === rankDetailCards.length - 1 && (
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-brand-400 to-brand-600" />
+                )}
+                <h3 className="text-xl font-bold text-brand-500 mb-4">{card.title}</h3>
                 <p className="text-xs uppercase tracking-wider text-slate-600 dark:text-slate-500 mb-2">Conditions</p>
                 <ul className="text-slate-600 dark:text-slate-300 text-sm space-y-2 mb-5 list-none text-center">
                   {card.conditions.map((c) => (
                     <li key={c}>
-                      <span className="text-gold-500/80 mr-1">·</span>
+                      <span className="text-brand-500/80 mr-1">·</span>
                       {c}
                     </li>
                   ))}
@@ -505,7 +586,7 @@ const InvestingInfoContent = () => {
                 <ul className="text-slate-500 dark:text-slate-400 text-sm space-y-2 list-none text-center">
                   {card.benefits.map((b) => (
                     <li key={b}>
-                      <span className="text-emerald-500/90 mr-1">✓</span>
+                      <span className="text-brand-500/90 mr-1">✓</span>
                       {b}
                     </li>
                   ))}
@@ -517,17 +598,17 @@ const InvestingInfoContent = () => {
       </section>
 
       {/* Summary table */}
-      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 overflow-hidden bg-slate-50 dark:bg-[#12151c]">
+      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 overflow-hidden bg-white dark:bg-[#1a1d26]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 mb-2">
-            <TrendingUp className="text-gold-500 shrink-0" size={22} />
-            <h2 className="text-2xl font-serif font-bold text-slate-900 dark:text-white">Rank overview table</h2>
+          <div className="flex justify-center">
+            <Eyebrow icon={TrendingUp}>At a glance</Eyebrow>
           </div>
+          <h2 className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-2">Rank overview table</h2>
           <p className="text-slate-600 dark:text-slate-500 text-sm mb-6 max-w-2xl mx-auto">See targets and conditions to upgrade your rank.</p>
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 overflow-x-auto bg-white/60 dark:bg-[#1b202c]/60 max-w-5xl mx-auto text-left">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 overflow-x-auto shadow-xl shadow-black/5 bg-white dark:bg-[#1b202c] max-w-5xl mx-auto text-left">
             <table className="w-full text-left text-sm min-w-[720px]">
               <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+                <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/80 text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
                   <th className="px-4 py-3 font-semibold">Rank</th>
                   <th className="px-4 py-3 font-semibold">Team deposit target</th>
                   <th className="px-4 py-3 font-semibold">Monthly salary</th>
@@ -535,11 +616,21 @@ const InvestingInfoContent = () => {
                 </tr>
               </thead>
               <tbody className="text-slate-600 dark:text-slate-300 divide-y divide-slate-200/90 dark:divide-slate-800/90">
-                {rankRows.map((row) => (
-                  <tr key={row.rank} className="hover:bg-slate-100/30 dark:hover:bg-slate-800/30 transition-colors">
-                    <td className="px-4 py-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap">{row.rank}</td>
+                {rankRows.map((row, i) => (
+                  <tr
+                    key={row.rank}
+                    className={`transition-colors hover:bg-brand-500/[0.04] dark:hover:bg-brand-500/[0.06] ${
+                      i === rankRows.length - 1 ? 'bg-brand-500/[0.05] dark:bg-brand-500/[0.05]' : ''
+                    }`}
+                  >
+                    <td className="px-4 py-3 font-semibold text-slate-900 dark:text-white whitespace-nowrap">
+                      <span className="inline-flex items-center gap-2">
+                        <span className={`w-1.5 h-1.5 rounded-full ${i === rankRows.length - 1 ? 'bg-brand-500' : 'bg-brand-500'}`} />
+                        {row.rank}
+                      </span>
+                    </td>
                     <td className="px-4 py-3 whitespace-nowrap">{row.target}</td>
-                    <td className="px-4 py-3 whitespace-nowrap text-gold-400/90">{row.salary}</td>
+                    <td className="px-4 py-3 whitespace-nowrap text-brand-500 dark:text-brand-400 font-semibold">{row.salary}</td>
                     <td className="px-4 py-3 text-slate-500 dark:text-slate-400 text-xs sm:text-sm">
                       {row.condition} · <span className="text-slate-600 dark:text-slate-300">{row.bonus}</span>
                     </td>
@@ -552,13 +643,16 @@ const InvestingInfoContent = () => {
       </section>
 
       {/* Compensation bullets */}
-      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#1a1d26]">
+      <section className="relative z-10 py-12 sm:py-16 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c]">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl font-serif font-bold text-slate-900 dark:text-white mb-6">Income at a glance</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto justify-items-center [perspective:1400px]">
             {compensationOverview.map((row) => (
-              <div key={row.label} className="border border-slate-300 dark:border-slate-700 rounded-xl px-4 py-3 bg-white/80 dark:bg-[#1b202c]/80 w-full max-w-sm text-center">
-                <p className="text-gold-500 text-xs font-semibold uppercase tracking-wider">{row.label}</p>
+              <div
+                key={row.label}
+                className="tilt-card-flat border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 bg-white dark:bg-[#1b202c] w-full max-w-sm text-center"
+              >
+                <p className="text-brand-500 text-xs font-semibold uppercase tracking-wider">{row.label}</p>
                 <p className="text-slate-900 dark:text-white text-sm mt-1">{row.value}</p>
               </div>
             ))}
@@ -570,25 +664,31 @@ const InvestingInfoContent = () => {
       </section>
 
       {/* CTA */}
-      <section className="relative z-10 py-14 sm:py-20 border-t border-slate-200/90 dark:border-slate-800/90 bg-slate-50 dark:bg-[#12151c]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-4">
+      <section className="relative z-10 py-16 sm:py-24 overflow-hidden bg-slate-950">
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.08] pointer-events-none" />
+        <div className="absolute -top-24 left-1/4 w-96 h-96 rounded-full bg-brand-500/15 blur-3xl animate-float-slow pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/4 w-96 h-96 rounded-full bg-brand-500/15 blur-3xl animate-float-slower pointer-events-none" />
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="flex justify-center">
+            <Eyebrow icon={Sparkles} dark>Your move</Eyebrow>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-serif font-bold text-white mb-4 leading-tight">
             From Starter to Global Leader — the position is open for you
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
+          <p className="text-slate-400 max-w-2xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
             Join PipGuardian and prove your potential. Your journey from beginner toward global success starts with a single step.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/register"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 to-amber-600 text-slate-950 font-bold text-sm shadow-lg shadow-gold-500/20 hover:shadow-gold-500/35 transition-all hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full bg-gradient-to-r from-brand-500 to-brand-700 text-slate-950 font-bold text-sm shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 transition-all hover:-translate-y-1"
             >
               Take the first step
               <ArrowRight size={18} className="ml-2" />
             </Link>
             <Link
               href="/#plans"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-slate-300 dark:border-slate-600 text-slate-900 dark:text-white font-semibold text-sm hover:bg-slate-100/80 dark:hover:bg-slate-800/80 transition-colors"
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white font-semibold text-sm hover:bg-white/10 transition-all hover:-translate-y-1"
             >
               View investment plans
             </Link>

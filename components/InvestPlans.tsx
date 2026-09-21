@@ -191,7 +191,7 @@ const InvestPlans = () => {
   if (plansLoading || walletLoading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <Loader2 className="animate-spin text-gold-500" size={48} />
+        <Loader2 className="animate-spin text-emerald-500" size={48} />
       </div>
     );
   }
@@ -203,7 +203,7 @@ const InvestPlans = () => {
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Invest & Earn</h2>
           <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Select a plan to start growing your portfolio today.</p>
         </div>
-        <div className="flex items-center space-x-2 text-gold-500 bg-gold-500/10 px-3 sm:px-4 py-2 rounded-lg w-fit">
+        <div className="flex items-center space-x-2 text-emerald-500 bg-emerald-500/10 px-3 sm:px-4 py-2 rounded-lg w-fit">
           <DollarSign size={18} />
           <span className="font-bold text-sm sm:text-base">Balance: ${balance.toLocaleString()}</span>
         </div>
@@ -216,14 +216,14 @@ const InvestPlans = () => {
           return (
             <div
               key={plan.id}
-              className={`relative bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl p-4 sm:p-6 border flex flex-col h-full transition-all duration-300 ${
+              className={`relative bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl p-4 sm:p-6 border flex flex-col h-full transition-all duration-300 tilt-card ${
                 plan.isPopular
-                  ? 'border-gold-500 shadow-xl shadow-gold-500/10'
+                  ? 'border-emerald-500 shadow-xl shadow-emerald-500/10'
                   : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
               }`}
             >
               {plan.isPopular && (
-                <div className="absolute top-0 right-0 bg-gold-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
+                <div className="absolute top-0 right-0 bg-emerald-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
                   Recommended
                 </div>
               )}
@@ -234,12 +234,12 @@ const InvestPlans = () => {
                  {plan.approximateRoi ? (
                    <>
                      <span className="block text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">Approximate Return</span>
-                     <span className="text-xl sm:text-2xl font-bold text-gold-500">{plan.approximateRoi}</span>
+                     <span className="text-xl sm:text-2xl font-bold text-emerald-500">{plan.approximateRoi}</span>
                    </>
                  ) : (
                    <>
                      <span className="block text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs uppercase tracking-wider mb-1">{plan.roiType} Return</span>
-                     <span className="text-3xl sm:text-4xl font-bold text-gold-500">{plan.roi}%</span>
+                     <span className="text-3xl sm:text-4xl font-bold text-emerald-500">{plan.roi}%</span>
                    </>
                  )}
                  <span className="block text-slate-600 dark:text-slate-500 text-xs mt-1">for {plan.duration} {plan.durationType}</span>
@@ -261,7 +261,7 @@ const InvestPlans = () => {
                     </div>
                      <div className="flex justify-between border-t border-slate-300/50 dark:border-slate-700/50 pt-2 mt-2">
                       <span className="text-slate-600 dark:text-slate-300">Total Return</span>
-                      <span className="text-gold-500 font-bold">${totalReturn.toLocaleString()}</span>
+                      <span className="text-emerald-500 font-bold">${totalReturn.toLocaleString()}</span>
                     </div>
                  </div>
               </div>
@@ -285,7 +285,7 @@ const InvestPlans = () => {
                    onClick={() => handleChoosePlan(plan.id)}
                    className={`w-full py-3.5 rounded-lg font-bold transition-all ${
                      plan.isPopular
-                       ? 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg shadow-gold-500/20'
+                       ? 'bg-emerald-500 hover:bg-emerald-600 text-slate-950 shadow-lg shadow-emerald-500/20'
                        : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white'
                    }`}
                  >
@@ -327,13 +327,13 @@ const InvestPlans = () => {
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.00"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-20 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-20 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
                     disabled={investing}
                   />
                   <button
                     type="button"
                     onClick={() => setAmount(Math.min(balance, selectedPlanData.maxDeposit).toString())}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs bg-slate-100 dark:bg-slate-800 text-gold-500 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs bg-slate-100 dark:bg-slate-800 text-emerald-500 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700"
                     disabled={investing}
                   >
                     MAX
@@ -362,7 +362,7 @@ const InvestPlans = () => {
                           </div>
                           <div className="flex justify-between border-t border-emerald-500/20 pt-2 mt-2">
                             <span className="text-slate-900 dark:text-white font-medium">Total Return:</span>
-                            <span className="text-gold-500 font-bold">${calc.totalReturn.toFixed(2)}</span>
+                            <span className="text-emerald-500 font-bold">${calc.totalReturn.toFixed(2)}</span>
                           </div>
                         </>
                       );
@@ -399,7 +399,7 @@ const InvestPlans = () => {
                 <button
                   onClick={handleInvest}
                   disabled={investing || !amount || parseFloat(amount) < selectedPlanData.minDeposit}
-                  className="flex-1 py-3 rounded-lg bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="flex-1 py-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                 >
                   {investing ? (
                     <>
@@ -435,7 +435,7 @@ const InvestPlans = () => {
           ))}
 
           {/* Celebration card */}
-          <div className="relative z-10 bg-white dark:bg-slate-900 border border-gold-500/40 rounded-2xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl shadow-gold-500/20">
+          <div className="relative z-10 bg-white dark:bg-slate-900 border border-emerald-500/40 rounded-2xl p-8 max-w-sm w-full mx-4 text-center shadow-2xl shadow-emerald-500/20">
             <button
               onClick={() => setShowCelebration(false)}
               className="absolute top-4 right-4 p-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
@@ -448,10 +448,10 @@ const InvestPlans = () => {
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Investment Confirmed!</h2>
             <p className="text-slate-500 dark:text-slate-400 text-sm mb-1">
               You invested{' '}
-              <span className="text-gold-400 font-bold">${celebrationInfo.amount.toLocaleString()}</span>
+              <span className="text-emerald-400 font-bold">${celebrationInfo.amount.toLocaleString()}</span>
             </p>
             <p className="text-slate-500 dark:text-slate-400 text-sm mb-5">
-              in <span className="text-gold-400 font-bold">{celebrationInfo.planName}</span>
+              in <span className="text-emerald-400 font-bold">{celebrationInfo.planName}</span>
             </p>
 
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 mb-6 flex items-center gap-3">
@@ -463,7 +463,7 @@ const InvestPlans = () => {
 
             <button
               onClick={() => setShowCelebration(false)}
-              className="w-full py-3 bg-gold-500 hover:bg-gold-600 text-slate-950 font-bold rounded-xl transition-colors text-base"
+              className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl transition-colors text-base"
             >
               Awesome!
             </button>

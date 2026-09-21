@@ -1,5 +1,8 @@
+'use client'
+
 import React from 'react';
 import { Check } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 
 const stages = [
   {
@@ -24,25 +27,29 @@ const AccountJourney = () => {
   return (
     <section className="py-12 sm:py-24 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
-        <div className="flex justify-center order-2 lg:order-1">
+        <Reveal direction="right" className="flex justify-center order-2 lg:order-1">
           <img src="/images/account-types-graphic.CQHdTBlY.gif" alt="" className="w-56 sm:w-80 object-contain" />
-        </div>
+        </Reveal>
         <div className="order-1 lg:order-2">
-          <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Your Journey</span>
-          <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mt-3 mb-6 sm:mb-8 leading-tight">
-            Built For Every Stage Of Investing
-          </h2>
+          <Reveal>
+            <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Your Journey</span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mt-3 mb-6 sm:mb-8 leading-tight">
+              Built For Every Stage Of Investing
+            </h2>
+          </Reveal>
           <div className="space-y-5 sm:space-y-6">
             {stages.map((stage, i) => (
-              <div key={i} className="flex items-start gap-4">
-                <div className="bg-brand-500/10 text-brand-500 rounded-full p-1.5 mt-0.5 shrink-0">
-                  <Check size={16} />
+              <Reveal key={i} delay={Math.min(i * 0.08, 0.4)}>
+                <div className="flex items-start gap-4">
+                  <div className="bg-brand-500/10 text-brand-500 rounded-full p-1.5 mt-0.5 shrink-0">
+                    <Check size={16} />
+                  </div>
+                  <div>
+                    <h4 className="text-slate-900 dark:text-white font-bold text-sm sm:text-base mb-1">{stage.title}</h4>
+                    <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">{stage.desc}</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-slate-900 dark:text-white font-bold text-sm sm:text-base mb-1">{stage.title}</h4>
-                  <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">{stage.desc}</p>
-                </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>

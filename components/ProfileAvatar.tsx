@@ -65,7 +65,7 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
         />
       ) : (
         <div
-          className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-br from-gold-500 to-amber-600 text-slate-900 dark:text-white flex items-center justify-center font-bold z-10 select-none"
+          className="absolute inset-0 w-full h-full rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 text-white flex items-center justify-center font-bold z-10 select-none"
           style={{ fontSize: '35%' }}
         >
           {initials}

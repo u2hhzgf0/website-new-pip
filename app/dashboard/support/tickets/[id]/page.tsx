@@ -191,7 +191,7 @@ export default function TicketDetail() {
           </div>
         </div>
         <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-12 text-center">
-          <Loader2 className="mx-auto text-gold-500 mb-4 animate-spin" size={48} />
+          <Loader2 className="mx-auto text-emerald-500 mb-4 animate-spin" size={48} />
           <p className="text-slate-500 dark:text-slate-400">Loading ticket details...</p>
         </div>
       </div>
@@ -262,7 +262,7 @@ export default function TicketDetail() {
       </div>
 
       {/* Ticket Info Card */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
           <div>
             <p className="text-slate-500 dark:text-slate-400 text-sm mb-1">Status</p>
@@ -294,7 +294,7 @@ export default function TicketDetail() {
               </div>
               <button
                 onClick={() => setShowRatingForm(true)}
-                className="px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 dark:text-white rounded-lg font-medium transition-colors"
+                className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium transition-colors"
               >
                 Rate Ticket
               </button>
@@ -310,7 +310,7 @@ export default function TicketDetail() {
                 <Star
                   key={star}
                   size={20}
-                  className={star <= ticket.rating! ? 'text-gold-500 fill-gold-500' : 'text-slate-600'}
+                  className={star <= ticket.rating! ? 'text-emerald-500 fill-emerald-500' : 'text-slate-600'}
                 />
               ))}
             </div>
@@ -322,7 +322,7 @@ export default function TicketDetail() {
       </div>
 
       {/* Conversation Thread */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800">
           <h2 className="text-slate-900 dark:text-white font-semibold">Conversation</h2>
           <p className="text-slate-600 dark:text-slate-500 text-sm mt-0.5">{(ticket.messages || []).length} message{(ticket.messages || []).length !== 1 ? 's' : ''}</p>
@@ -348,14 +348,14 @@ export default function TicketDetail() {
                   >
                     <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                       isUser
-                        ? 'bg-gold-500/10 text-gold-500'
+                        ? 'bg-emerald-500/10 text-emerald-500'
                         : 'bg-blue-500/10 text-blue-500'
                     }`}>
                       {isUser ? <User size={20} /> : <Shield size={20} />}
                     </div>
                     <div className={`flex-1 max-w-2xl ${isUser ? 'items-end' : 'items-start'} flex flex-col`}>
                       <div className={`flex items-center gap-2 mb-1 ${isUser ? 'flex-row-reverse' : ''}`}>
-                        <span className={`text-sm font-medium ${isUser ? 'text-gold-500' : 'text-blue-500'}`}>
+                        <span className={`text-sm font-medium ${isUser ? 'text-emerald-500' : 'text-blue-500'}`}>
                           {senderName}
                         </span>
                         {isAdmin && (
@@ -365,7 +365,7 @@ export default function TicketDetail() {
                       </div>
                       <div className={`p-4 rounded-lg ${
                         isUser
-                          ? 'bg-gold-500/10 border border-gold-500/30 rounded-tr-sm'
+                          ? 'bg-emerald-500/10 border border-emerald-500/30 rounded-tr-sm'
                           : 'bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-tl-sm'
                       }`}>
                         <p className="text-slate-700 dark:text-slate-200 text-sm whitespace-pre-wrap">{msg.message}</p>
@@ -382,14 +382,14 @@ export default function TicketDetail() {
 
       {/* Reply Form */}
       {ticket.status !== 'closed' ? (
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <form onSubmit={handleSendReply}>
             <label className="block text-slate-900 dark:text-white font-medium mb-3">Reply to Ticket</label>
             <textarea
               value={replyMessage}
               onChange={(e) => setReplyMessage(e.target.value)}
               rows={4}
-              className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500 resize-none"
+              className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 resize-none"
               placeholder="Type your message here..."
               disabled={isReplying}
             />
@@ -400,7 +400,7 @@ export default function TicketDetail() {
               <button
                 type="submit"
                 disabled={isReplying || !replyMessage.trim()}
-                className="flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white px-6 py-2.5 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white px-6 py-2.5 rounded-lg hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-500/20 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
               >
                 {isReplying ? (
                   <>
@@ -451,7 +451,7 @@ export default function TicketDetail() {
                 >
                   <Star
                     size={32}
-                    className={star <= rating ? 'text-gold-500 fill-gold-500' : 'text-slate-600 hover:text-slate-600 dark:hover:text-slate-500'}
+                    className={star <= rating ? 'text-emerald-500 fill-emerald-500' : 'text-slate-600 hover:text-slate-600 dark:hover:text-slate-500'}
                   />
                 </button>
               ))}
@@ -465,7 +465,7 @@ export default function TicketDetail() {
                 value={ratingFeedback}
                 onChange={(e) => setRatingFeedback(e.target.value)}
                 rows={3}
-                className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 resize-none"
+                className="w-full bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 resize-none"
                 placeholder="Tell us more about your experience..."
               />
             </div>
@@ -481,7 +481,7 @@ export default function TicketDetail() {
               <button
                 onClick={handleRateTicket}
                 disabled={isRating || rating === 0}
-                className="flex-1 py-2.5 bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="flex-1 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white rounded-lg hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-500/20 font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isRating ? (
                   <>

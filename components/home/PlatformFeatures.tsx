@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+import Reveal from '@/components/Reveal';
 
 const tabs = [
   {
@@ -41,12 +42,12 @@ const PlatformFeatures = () => {
   return (
     <section className="py-12 sm:py-24 bg-white dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+        <Reveal className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
           <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Platform</span>
           <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mt-3 mb-4">
             Everything You Need, In One Dashboard
           </h2>
-        </div>
+        </Reveal>
 
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-14">
           {tabs.map((tab, i) => (
@@ -65,17 +66,17 @@ const PlatformFeatures = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16 items-center">
-          <div className="order-2 md:order-1">
+          <Reveal className="order-2 md:order-1">
             <h3 className="text-xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">
               {tabs[active].title}
             </h3>
             <p className="text-slate-500 dark:text-slate-400 text-sm sm:text-lg leading-relaxed">
               {tabs[active].desc}
             </p>
-          </div>
-          <div className="order-1 md:order-2 flex justify-center">
+          </Reveal>
+          <Reveal delay={0.1} className="order-1 md:order-2 flex justify-center">
             <img src={tabs[active].img} alt={tabs[active].label} className="w-40 h-40 sm:w-64 sm:h-64 object-contain" />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

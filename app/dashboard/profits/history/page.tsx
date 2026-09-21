@@ -62,7 +62,7 @@ export default function ProfitHistory() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={48} />
+          <Loader2 className="animate-spin text-emerald-500 mx-auto mb-4" size={48} />
           <p className="text-slate-500 dark:text-slate-400">Loading profit history...</p>
         </div>
       </div>
@@ -97,7 +97,7 @@ export default function ProfitHistory() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Total Profit Earned</p>
             <DollarSign className="text-emerald-500" size={20} />
@@ -106,7 +106,7 @@ export default function ProfitHistory() {
           <p className="text-xs text-emerald-400 mt-2">All-time earnings</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Pending Profit</p>
             <TrendingUp className="text-amber-500" size={20} />
@@ -115,10 +115,10 @@ export default function ProfitHistory() {
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">To be distributed</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Distributions</p>
-            <TrendingUp className="text-gold-500" size={20} />
+            <TrendingUp className="text-emerald-500" size={20} />
           </div>
           <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{stats.distributionCount}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Total payments</p>
@@ -135,7 +135,7 @@ export default function ProfitHistory() {
             }}
             className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
               statusFilter === 'all'
-                ? 'bg-gold-500 text-slate-900 dark:text-white shadow-lg shadow-gold-500/20'
+                ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
                 : 'bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -148,7 +148,7 @@ export default function ProfitHistory() {
             }}
             className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
               statusFilter === 'completed'
-                ? 'bg-gold-500 text-slate-900 dark:text-white shadow-lg shadow-gold-500/20'
+                ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
                 : 'bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -161,7 +161,7 @@ export default function ProfitHistory() {
             }}
             className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
               statusFilter === 'pending'
-                ? 'bg-gold-500 text-slate-900 dark:text-white shadow-lg shadow-gold-500/20'
+                ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
                 : 'bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
@@ -171,7 +171,7 @@ export default function ProfitHistory() {
       </div>
 
       {/* Profit History Table */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead className="bg-slate-100/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
@@ -228,7 +228,7 @@ export default function ProfitHistory() {
                     <td className="p-4 text-center">
                       <Link
                         href={`/dashboard/transactions/${profit.id}`}
-                        className="text-gold-500 hover:text-gold-400 text-sm inline-flex items-center gap-1"
+                        className="text-emerald-500 hover:text-emerald-400 text-sm inline-flex items-center gap-1"
                       >
                         <Eye size={14} />
                         View

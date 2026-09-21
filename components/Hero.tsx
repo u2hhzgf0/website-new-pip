@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight, ChevronRight, Layers, Percent, Users, Headset } from 'lucide-react';
 import Link from 'next/link';
+import Reveal from '@/components/Reveal';
 
 const Hero = () => {
   const [tickerIndex, setTickerIndex] = useState(0);
@@ -49,16 +50,16 @@ const Hero = () => {
           muted
           loop
           playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-40"
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
         >
           <source src="/images/crypto-chart-bg.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_20%_10%,rgba(34,197,94,0.25),transparent)]" />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/85 to-slate-950/50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/40" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/65 to-slate-950/25" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 text-left pt-36 sm:pt-48 pb-16 sm:pb-24">
+      <Reveal as="div" duration={0.7} className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 text-left pt-36 sm:pt-48 pb-16 sm:pb-24">
         <div className="inline-flex items-center space-x-2 bg-slate-800/50 border border-slate-700 rounded-full px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 backdrop-blur-sm">
           <span className="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse"></span>
           <span className="text-xs sm:text-sm text-slate-300 font-medium">Platform Live &amp; Paying</span>
@@ -84,7 +85,7 @@ const Hero = () => {
             <ArrowRight className="ml-2 w-5 h-5" />
           </Link>
         </div>
-      </div>
+      </Reveal>
 
       {/* Live Ticker */}
       <div className="relative z-10 w-full bg-slate-900/80 border-t border-slate-800 backdrop-blur-md py-2.5 sm:py-4">

@@ -1,10 +1,13 @@
+'use client'
+
 import React from 'react';
 import Link from 'next/link';
+import Reveal from '@/components/Reveal';
 
 const FinalCTA = () => {
   return (
     <section className="py-12 sm:py-20 bg-slate-50 dark:bg-slate-950 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto rounded-3xl bg-gradient-to-br from-brand-700 via-brand-600 to-slate-900 p-8 sm:p-16 text-center">
+      <Reveal className="max-w-7xl mx-auto rounded-3xl bg-gradient-to-br from-brand-700 via-brand-600 to-slate-900 p-8 sm:p-16 text-center">
         <h2 className="text-2xl sm:text-4xl font-serif font-bold text-white mb-3 sm:mb-4">
           Choose How You Want To Grow With Pipguardian
         </h2>
@@ -31,7 +34,7 @@ const FinalCTA = () => {
             Become a Partner
           </Link>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 };

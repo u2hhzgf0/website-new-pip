@@ -89,6 +89,9 @@ export const baseApi = createApi({
     'SavedAccounts',
     'Ranks',
     'Announcements',
+    'Vendor',
+    'WalletPin',
+    'MemberCard',
   ],
   endpoints: () => ({}),
 });

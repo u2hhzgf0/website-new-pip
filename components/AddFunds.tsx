@@ -125,7 +125,7 @@ const AddFunds = () => {
         </p>
         <button
           onClick={resetForm}
-          className="bg-gold-500 hover:bg-gold-600 text-slate-950 px-8 py-3 rounded-lg font-bold transition-colors"
+          className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-3 rounded-lg font-bold transition-colors"
         >
           Make Another Deposit
         </button>
@@ -161,7 +161,7 @@ const AddFunds = () => {
             <>
               {loadingGateways ? (
                 <div className="flex items-center justify-center py-12">
-                  <Loader2 className="animate-spin text-gold-500" size={32} />
+                  <Loader2 className="animate-spin text-emerald-500" size={32} />
                 </div>
               ) : gateways.length === 0 ? (
                 <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
@@ -182,18 +182,18 @@ const AddFunds = () => {
                       <button
                         key={gateway.id}
                         onClick={() => handleGatewaySelect(gateway.id)}
-                        className={`relative p-4 sm:p-6 rounded-xl border flex flex-col items-start transition-all duration-200 ${
+                        className={`relative p-4 sm:p-6 rounded-xl border flex flex-col items-start transition-all duration-200 tilt-card-flat ${
                           selectedGateway === gateway.id
-                            ? 'bg-slate-100 dark:bg-slate-800 border-gold-500 shadow-[0_0_15px_rgba(234,179,8,0.1)]'
+                            ? 'bg-slate-100 dark:bg-slate-800 border-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.15)]'
                             : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                         }`}
                       >
                         {selectedGateway === gateway.id && (
-                          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 text-gold-500">
+                          <div className="absolute top-2 right-2 sm:top-3 sm:right-3 text-emerald-500">
                             <CheckCircle2 size={18} />
                           </div>
                         )}
-                        <div className={`p-2 sm:p-3 rounded-lg mb-3 sm:mb-4 ${selectedGateway === gateway.id ? 'bg-gold-500 text-slate-900' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}`}>
+                        <div className={`p-2 sm:p-3 rounded-lg mb-3 sm:mb-4 ${selectedGateway === gateway.id ? 'bg-emerald-500 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'}`}>
                           {icon}
                         </div>
                         <h3 className="text-slate-900 dark:text-white font-bold text-sm sm:text-lg">{gateway.name}</h3>
@@ -211,7 +211,7 @@ const AddFunds = () => {
                 </div>
               )}
 
-              <div className="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800">
+              <div className="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 card-lift">
                 <label className="block text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Enter Amount (USD)</label>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500 font-bold">$</span>
@@ -222,7 +222,7 @@ const AddFunds = () => {
                     placeholder="0.00"
                     min={selectedGatewayData?.minDeposit || 0}
                     max={selectedGatewayData?.maxDeposit || 0}
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-4 py-4 text-slate-900 dark:text-white text-lg focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-4 py-4 text-slate-900 dark:text-white text-lg focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
                   />
                 </div>
                 {selectedGateway && selectedGatewayData && (
@@ -236,7 +236,7 @@ const AddFunds = () => {
             /* STEP 2: Payment Details & Verification */
             <div className="space-y-6">
               {/* Payment Details Box */}
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 card-lift">
                 <div className="flex items-start mb-4">
                   <div className="bg-blue-500/10 p-2 rounded-lg text-blue-500 mr-3">
                     <AlertCircle size={24} />
@@ -244,7 +244,7 @@ const AddFunds = () => {
                   <div>
                     <h3 className="text-slate-900 dark:text-white font-bold mb-1">Payment Instructions</h3>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                      Please send exactly <span className="text-gold-500 font-bold">${calculateTotal().toFixed(2)}</span> to the address below.
+                      Please send exactly <span className="text-emerald-500 font-bold">${calculateTotal().toFixed(2)}</span> to the address below.
                     </p>
                   </div>
                 </div>
@@ -282,7 +282,7 @@ const AddFunds = () => {
               </div>
 
               {/* Verification Form */}
-              <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 space-y-6">
+              <form onSubmit={handleSubmit} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 space-y-6 card-lift">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">Confirm Payment</h3>
 
                 <div>
@@ -293,7 +293,7 @@ const AddFunds = () => {
                     value={transactionId}
                     onChange={(e) => setTransactionId(e.target.value)}
                     placeholder="Enter the transaction ID from your payment provider"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
                   />
                 </div>
 
@@ -301,7 +301,7 @@ const AddFunds = () => {
                   <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Upload Screenshot</label>
                   <div
                     className={`border-2 border-dashed rounded-xl p-5 sm:p-8 text-center transition-colors cursor-pointer ${
-                      screenshot ? 'border-gold-500/50 bg-gold-500/5' : 'border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-slate-50 dark:bg-slate-950'
+                      screenshot ? 'border-emerald-500/50 bg-emerald-500/5' : 'border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-slate-50 dark:bg-slate-950'
                     }`}
                     onClick={() => fileInputRef.current?.click()}
                     onDragOver={(e) => e.preventDefault()}
@@ -316,7 +316,7 @@ const AddFunds = () => {
                     />
 
                     {screenshot ? (
-                      <div className="flex items-center justify-center space-x-2 text-gold-500">
+                      <div className="flex items-center justify-center space-x-2 text-emerald-500">
                         <CheckCircle2 size={24} />
                         <span className="font-medium truncate max-w-xs">{screenshot.name}</span>
                         <button
@@ -348,7 +348,7 @@ const AddFunds = () => {
                   className={`w-full py-4 rounded-lg font-bold flex items-center justify-center transition-all ${
                     isSubmitting || !transactionId || !screenshot
                       ? 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-500 cursor-not-allowed'
-                      : 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg shadow-gold-500/20 transform hover:-translate-y-1'
+                      : 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transform hover:-translate-y-1'
                   }`}
                 >
                   {isSubmitting ? (
@@ -370,7 +370,7 @@ const AddFunds = () => {
 
         {/* Right Column: Summary */}
         <div className="lg:col-span-1">
-          <div className="bg-gradient-to-br from-slate-100 to-white dark:from-slate-900 dark:to-slate-800 rounded-xl p-4 sm:p-6 border border-slate-300 dark:border-slate-700 sticky top-6">
+          <div className="bg-gradient-to-br from-slate-100 to-white dark:from-slate-900 dark:to-slate-800 rounded-xl p-4 sm:p-6 border border-slate-300 dark:border-slate-700 sticky top-6 card-lift">
             <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-4 sm:mb-6">Payment Summary</h3>
 
             <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
@@ -393,7 +393,7 @@ const AddFunds = () => {
               <div className="border-t border-slate-300 dark:border-slate-700 my-2"></div>
               <div className="flex justify-between text-lg font-bold">
                 <span className="text-slate-900 dark:text-white">Payable Total</span>
-                <span className="text-gold-500">
+                <span className="text-emerald-500">
                    ${calculateTotal().toFixed(2)}
                 </span>
               </div>
@@ -424,7 +424,7 @@ const AddFunds = () => {
                   disabled={!selectedGateway || !amount}
                   className={`w-full py-4 rounded-lg font-bold flex items-center justify-center transition-all ${
                     selectedGateway && amount
-                      ? 'bg-gold-500 hover:bg-gold-600 text-slate-950 shadow-lg shadow-gold-500/20 transform hover:-translate-y-1'
+                      ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transform hover:-translate-y-1'
                       : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-500 cursor-not-allowed'
                   }`}
                 >

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Wallet, TrendingUp } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 
 const recentActivity = [
   { user: 'Muhammad W.', action: 'Withdrawal', amount: 51, time: 'Just now' },
@@ -16,7 +17,7 @@ const LiveActivity = () => {
     <section className="py-12 sm:py-24 bg-slate-50 dark:bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 items-start">
-          <div>
+          <Reveal direction="right">
             <span className="text-brand-500 text-sm font-bold uppercase tracking-wider">Live Activity</span>
             <h2 className="text-2xl sm:text-4xl font-serif font-bold text-slate-900 dark:text-white mt-3 mb-4 sm:mb-6 leading-tight">
               Real Money Moving On The Platform
@@ -36,9 +37,9 @@ const LiveActivity = () => {
                 <p className="text-slate-500 dark:text-slate-400 text-xs">Profit distribution</p>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden">
+          <Reveal direction="left" delay={0.1} className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl divide-y divide-slate-100 dark:divide-slate-800 overflow-hidden">
             {recentActivity.map((item, i) => (
               <div key={i} className="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4">
                 <div className="flex items-center gap-3">
@@ -55,7 +56,7 @@ const LiveActivity = () => {
                 </span>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

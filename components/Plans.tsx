@@ -4,6 +4,7 @@ import React from 'react';
 import { Check, Info, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useGetActivePlansQuery } from '@/store/api/investmentPlanApi';
+import Reveal from '@/components/Reveal';
 
 const Plans = () => {
   const { data: plansResponse, isLoading, error } = useGetActivePlansQuery();
@@ -61,18 +62,18 @@ const Plans = () => {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 dark:via-slate-800 to-transparent"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-16">
+        <Reveal className="text-center mb-8 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-slate-900 dark:text-white mb-3 sm:mb-4">Investment Plans</h2>
           <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto text-sm sm:text-base">Choose a plan that aligns with your financial goals. Transparent returns, zero hidden fees.</p>
-        </div>
+        </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 items-start">
-          {plans.map((plan) => {
+          {plans.map((plan, i) => {
             const { totalReturn, profit, daily } = calculateReturns(plan.minDeposit, plan.roi, plan.roiType, plan.duration);
 
             return (
+              <Reveal key={plan.id} delay={Math.min(i * 0.08, 0.4)} className="h-full">
               <div
-                key={plan.id}
                 className={`relative bg-white dark:bg-slate-900 rounded-xl sm:rounded-2xl p-5 sm:p-8 border ${
                   plan.isPopular
                     ? 'border-brand-500/50 shadow-2xl shadow-brand-500/10 md:scale-105 z-10'
@@ -156,6 +157,7 @@ const Plans = () => {
                   Invest Now
                 </Link>
               </div>
+              </Reveal>
             );
           })}
         </div>

@@ -28,3 +28,8 @@ export interface MenuItem {
   path?: string;
   subItems?: { label: string; path: string }[];
 }
+
+export interface MenuGroup {
+  section: string;
+  items: MenuItem[];
+}

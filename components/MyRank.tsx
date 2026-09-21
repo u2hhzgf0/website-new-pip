@@ -37,7 +37,7 @@ export default function MyRank() {
   if (!rankInfo) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="animate-spin text-gold-500" size={32} />
+        <Loader2 className="animate-spin text-emerald-500" size={32} />
       </div>
     );
   }
@@ -52,7 +52,7 @@ export default function MyRank() {
       </div>
 
       {/* Current Rank Card */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-5 space-y-4 card-lift">
         {/* Rank header */}
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-4">
@@ -67,7 +67,7 @@ export default function MyRank() {
               <p className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider">Current Rank</p>
               <p className="text-2xl font-bold text-slate-900 dark:text-white">{rankInfo.currentRankInfo.name}</p>
               {rankInfo.currentRankInfo.monthlySalary > 0 && (
-                <p className="text-xs text-gold-400 mt-0.5">
+                <p className="text-xs text-emerald-400 mt-0.5">
                   Monthly Salary: <span className="font-semibold">${rankInfo.currentRankInfo.monthlySalary}</span>
                 </p>
               )}
@@ -82,7 +82,7 @@ export default function MyRank() {
           <button
             onClick={handleCheckRankUpgrade}
             disabled={isCheckingUpgrade || rankInfo.currentRank >= 7}
-            className="flex items-center gap-2 bg-gold-500/10 hover:bg-gold-500/20 disabled:opacity-40 text-gold-400 border border-gold-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+            className="flex items-center gap-2 bg-emerald-500/10 hover:bg-emerald-500/20 disabled:opacity-40 text-emerald-400 border border-emerald-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
           >
             <Star size={14} />
             {rankInfo.currentRank >= 7 ? 'Max Rank' : isCheckingUpgrade ? 'Checking…' : 'Check Upgrade'}
@@ -106,7 +106,7 @@ export default function MyRank() {
               </div>
               <div className="h-1.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-gold-500 rounded-full transition-all"
+                  className="h-full bg-emerald-500 rounded-full transition-all"
                   style={{ width: `${Math.min(rankInfo.progress.businessVolume.percentage, 100)}%` }}
                 />
               </div>
@@ -154,7 +154,7 @@ export default function MyRank() {
               <div className="text-xs text-slate-500 dark:text-slate-400">
                 Next: <span className="text-slate-900 dark:text-white font-semibold">{rankInfo.nextRankInfo.name}</span>
                 {rankInfo.nextRankInfo.bonus && (
-                  <span className="text-gold-400"> · {rankInfo.nextRankInfo.bonus}</span>
+                  <span className="text-emerald-400"> · {rankInfo.nextRankInfo.bonus}</span>
                 )}
               </div>
             </div>

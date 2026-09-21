@@ -136,7 +136,7 @@ export default function InvestmentDetail() {
         </div>
         <Link
           href={`/dashboard/profits/investment/${investmentId}`}
-          className="px-3 sm:px-4 py-2 bg-gold-500 hover:bg-gold-600 text-slate-900 dark:text-white rounded-lg font-medium transition-colors text-sm"
+          className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-medium transition-colors text-sm"
         >
           Profit History
         </Link>
@@ -144,45 +144,45 @@ export default function InvestmentDetail() {
 
       {/* Overview Cards */}
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Investment Amount</p>
-            <DollarSign className="text-gold-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Investment Amount</p>
+            <DollarSign className="text-emerald-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${investment.amount.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${investment.amount.toLocaleString()}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Principal amount</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">ROI</p>
-            <Percent className="text-emerald-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">ROI</p>
+            <Percent className="text-emerald-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-emerald-400">{investment.roi}%</p>
+          <p className="text-lg sm:text-3xl font-bold text-emerald-400 truncate">{investment.roi}%</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Return rate</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Profit</p>
-            <TrendingUp className="text-blue-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Total Profit</p>
+            <TrendingUp className="text-blue-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${investment.totalProfit.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${investment.totalProfit.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Expected earnings</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Daily Profit</p>
-            <Calendar className="text-rose-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Daily Profit</p>
+            <Calendar className="text-rose-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${investment.dailyProfit.toFixed(2)}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${investment.dailyProfit.toFixed(2)}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Per day earning</p>
         </div>
       </div>
 
       {/* Progress Section */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-slate-900 dark:text-white font-semibold text-lg">Investment Progress</h3>
@@ -191,7 +191,7 @@ export default function InvestmentDetail() {
             </p>
           </div>
           <div className="text-right">
-            <p className="text-xl sm:text-2xl font-bold text-gold-500">{investment.progress.toFixed(1)}%</p>
+            <p className="text-xl sm:text-2xl font-bold text-emerald-500">{investment.progress.toFixed(1)}%</p>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Complete</p>
           </div>
         </div>
@@ -199,7 +199,7 @@ export default function InvestmentDetail() {
         {/* Progress Bar */}
         <div className="relative w-full h-4 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden mb-6">
           <div
-            className="absolute top-0 left-0 h-full bg-gradient-to-r from-gold-500 to-amber-600 transition-all duration-500"
+            className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-700 transition-all duration-500"
             style={{ width: `${investment.progress}%` }}
           />
         </div>
@@ -208,7 +208,7 @@ export default function InvestmentDetail() {
           <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-4">
             <p className="text-slate-500 dark:text-slate-400 text-xs mb-1">Time Remaining</p>
             <div className="flex items-center gap-2">
-              <Clock className="text-gold-500" size={16} />
+              <Clock className="text-emerald-500" size={16} />
               <p className="text-slate-900 dark:text-white font-semibold">{getRemainingTime()}</p>
             </div>
           </div>
@@ -231,7 +231,7 @@ export default function InvestmentDetail() {
 
       {/* Profit Breakdown */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Profit Breakdown</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-slate-100/30 dark:bg-slate-800/30 rounded-lg">
@@ -259,14 +259,14 @@ export default function InvestmentDetail() {
                 <p className="text-slate-500 dark:text-slate-400 text-sm">Remaining Profit</p>
                 <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">${investment.remainingProfit.toLocaleString()}</p>
               </div>
-              <div className="w-12 h-12 bg-gold-500/10 rounded-lg flex items-center justify-center">
-                <Clock className="text-gold-500" size={24} />
+              <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center">
+                <Clock className="text-emerald-500" size={24} />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Investment Details</h3>
           <div className="space-y-3">
             <div className="flex items-center justify-between py-3 border-b border-slate-200 dark:border-slate-800">
@@ -302,7 +302,7 @@ export default function InvestmentDetail() {
       </div>
 
       {/* Recent Profit History */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         <div className="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h3 className="text-slate-900 dark:text-white font-semibold text-base sm:text-lg">Recent Profit Distributions</h3>
@@ -310,7 +310,7 @@ export default function InvestmentDetail() {
           </div>
           <Link
             href={`/dashboard/profits/investment/${investmentId}`}
-            className="text-gold-500 hover:text-gold-400 text-sm font-medium flex items-center gap-1"
+            className="text-emerald-500 hover:text-emerald-400 text-sm font-medium flex items-center gap-1"
           >
             View All
             <ArrowLeft className="rotate-180" size={16} />

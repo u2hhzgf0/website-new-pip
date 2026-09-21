@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Calculator as CalcIcon } from 'lucide-react';
+import Reveal from '@/components/Reveal';
 
 const Calculator = () => {
   const [amount, setAmount] = useState<number>(1000);
@@ -19,7 +20,7 @@ const Calculator = () => {
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
       <div className="max-w-4xl mx-auto px-4 relative z-10">
-        <div className="bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <Reveal className="bg-slate-50 dark:bg-slate-950/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-12 border border-slate-200 dark:border-slate-800 shadow-2xl">
           <div className="flex items-center justify-center space-x-2 sm:space-x-3 mb-6 sm:mb-8">
             <CalcIcon className="text-brand-500 w-6 h-6 sm:w-8 sm:h-8" />
             <h2 className="text-xl sm:text-3xl font-serif font-bold text-slate-900 dark:text-white">Profit Calculator</h2>
@@ -89,7 +90,7 @@ const Calculator = () => {
               </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

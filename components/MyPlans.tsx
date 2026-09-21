@@ -1,11 +1,49 @@
 'use client'
 
-import React, { useState } from 'react';
-import { TrendingUp, AlertCircle, PlayCircle, Loader2, Clock, Trash2, AlertTriangle, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { TrendingUp, AlertCircle, PlayCircle, Loader2, Clock, Trash2, AlertTriangle, X, Timer } from 'lucide-react';
 import { useGetActiveInvestmentsQuery, useDestroyInvestmentMutation } from '@/store/api/investmentApi';
 import type { Investment } from '@/store/api/investmentApi';
 import Link from 'next/link';
 import { Toast, ToastType } from '@/components/Toast';
+
+/** Live countdown to a plan's end date — ticks down every second, no page refresh needed. */
+const CountdownTimer = ({ endDate }: { endDate: string }) => {
+  const [now, setNow] = useState(() => Date.now());
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+
+  const remaining = new Date(endDate).getTime() - now;
+
+  if (remaining <= 0) {
+    return (
+      <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold text-sm">
+        <Timer size={16} />
+        Matured — ready to complete
+      </div>
+    );
+  }
+
+  const days = Math.floor(remaining / 86_400_000);
+  const hours = Math.floor((remaining % 86_400_000) / 3_600_000);
+  const minutes = Math.floor((remaining % 3_600_000) / 60_000);
+  const seconds = Math.floor((remaining % 60_000) / 1_000);
+  const pad = (n: number) => n.toString().padStart(2, '0');
+
+  return (
+    <div className="flex items-center gap-2">
+      <Timer size={16} className="text-emerald-500 shrink-0" />
+      <span className="font-mono font-bold text-sm sm:text-base text-slate-900 dark:text-white tabular-nums">
+        {days > 0 && <span>{days}d </span>}
+        {pad(hours)}:{pad(minutes)}:{pad(seconds)}
+      </span>
+      <span className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-500">left</span>
+    </div>
+  );
+};
 
 const MyPlans = () => {
   const { data: investmentsResponse, isLoading, error } = useGetActiveInvestmentsQuery();
@@ -54,7 +92,7 @@ const MyPlans = () => {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={48} />
+          <Loader2 className="animate-spin text-emerald-500 mx-auto mb-4" size={48} />
           <p className="text-slate-500 dark:text-slate-400">Loading your investments...</p>
         </div>
       </div>
@@ -101,13 +139,13 @@ const MyPlans = () => {
              const currentProfit = investment.earnedProfit;
 
              return (
-              <div key={investment.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden">
+              <div key={investment.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden card-lift">
                 {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gold-500/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -mr-10 -mt-10"></div>
 
                 <div className="flex justify-between items-start mb-4 sm:mb-6 relative z-10">
                   <div className="flex items-center space-x-2 sm:space-x-3">
-                    <div className="bg-gradient-to-br from-gold-500 to-amber-600 p-2 sm:p-2.5 rounded-lg text-slate-950">
+                    <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 p-2 sm:p-2.5 rounded-lg text-slate-950">
                       <TrendingUp size={20} className="sm:hidden" />
                       <TrendingUp size={24} className="hidden sm:block" />
                     </div>
@@ -146,7 +184,7 @@ const MyPlans = () => {
                   </div>
                   <div className="bg-slate-50 dark:bg-slate-950/50 p-2.5 sm:p-3 rounded-lg border border-slate-200 dark:border-slate-800">
                     <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 mb-0.5 sm:mb-1">Expected Return</p>
-                    <p className="text-sm sm:text-lg font-bold text-gold-500">${(investment.amount + investment.expectedProfit).toLocaleString()}</p>
+                    <p className="text-sm sm:text-lg font-bold text-emerald-500">${(investment.amount + investment.expectedProfit).toLocaleString()}</p>
                   </div>
                   <div className="bg-slate-50 dark:bg-slate-950/50 p-2.5 sm:p-3 rounded-lg border border-slate-200 dark:border-slate-800">
                     <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 mb-0.5 sm:mb-1">Current Profit</p>
@@ -168,19 +206,26 @@ const MyPlans = () => {
                       <PlayCircle size={12} className="mr-1" />
                       Started: {formatDate(investment.startDate)}
                     </span>
-                    <span className="text-gold-500 font-medium">Ends: {formatDate(investment.endDate)}</span>
+                    <span className="text-emerald-500 font-medium">Ends: {formatDate(investment.endDate)}</span>
                   </div>
                 </div>
+
+                {/* Live countdown to completion */}
+                {investment.status === 'active' && (
+                  <div className="mb-4 bg-emerald-500/5 border border-emerald-500/20 rounded-lg px-3 sm:px-4 py-2.5 sm:py-3">
+                    <CountdownTimer endDate={investment.endDate} />
+                  </div>
+                )}
 
                 {/* Progress Bar */}
                 <div className="mb-2">
                   <div className="flex justify-between text-xs mb-2">
                     <span className="text-slate-500 dark:text-slate-400">Progress</span>
-                    <span className="text-gold-500 font-medium">{investment.totalProfitDistributions} distributions</span>
+                    <span className="text-emerald-500 font-medium">{investment.totalProfitDistributions} distributions</span>
                   </div>
                   <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-gradient-to-r from-gold-500 to-amber-600 rounded-full transition-all duration-1000"
+                      className="h-full bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-full transition-all duration-1000"
                       style={{ width: `${progress}%` }}
                     ></div>
                   </div>
@@ -216,7 +261,7 @@ const MyPlans = () => {
              </div>
              <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-2">No Active Plans</h3>
              <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">You don't have any active investments at the moment.</p>
-             <Link href="/dashboard/plans/invest" className="inline-block bg-gold-500 text-slate-950 px-6 py-2 rounded-lg font-bold hover:bg-gold-600 transition-colors">
+             <Link href="/dashboard/plans/invest" className="inline-block bg-emerald-500 text-slate-950 px-6 py-2 rounded-lg font-bold hover:bg-emerald-600 transition-colors">
                Start Investing
              </Link>
           </div>

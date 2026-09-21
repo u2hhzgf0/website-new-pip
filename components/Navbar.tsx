@@ -93,6 +93,7 @@ const Navbar = () => {
       items: [
         { label: 'About Us', href: '/about' },
         { label: 'Our Story', href: '/about#story' },
+        { label: 'Investing Info', href: '/investing-info' },
       ],
     },
     {
@@ -150,11 +151,11 @@ const Navbar = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center">
             {overHero ? (
-              <img src="/images/pip-light-lolgos.png" alt="Pipguardian" className="h-8 sm:h-9 w-auto" />
+              <img src="/images/pip-dark-logo.png" alt="Pipguardian" className="h-8 sm:h-9 w-auto" />
             ) : (
               <>
                 <img src="/images/pip-dark-logo.png" alt="Pipguardian" className="h-8 sm:h-9 w-auto dark:hidden" />
-                <img src="/images/pip-light-lolgos.png" alt="Pipguardian" className="h-8 sm:h-9 w-auto hidden dark:block" />
+                <img src="/images/pip-dark-logo.png" alt="Pipguardian" className="h-8 sm:h-9 w-auto hidden dark:block" />
               </>
             )}
           </Link>
@@ -197,6 +198,7 @@ const Navbar = () => {
 
             <a href={getLink('plans')} className={`whitespace-nowrap px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors text-sm font-medium ${navLinkClass}`}>Investment Plans</a>
             <a href={getLink('calculator')} className={`whitespace-nowrap px-3 py-1.5 rounded-full hover:bg-white/10 transition-colors text-sm font-medium ${navLinkClass}`}>Calculator</a>
+            <Link href="/investing-info" className={`whitespace-nowrap px-3 py-1.5 rounded-full transition-colors text-sm font-medium ${pathname === '/investing-info' ? 'bg-brand-500/15 text-brand-400' : `hover:bg-white/10 ${navLinkClass}`}`}>Investing Info</Link>
           </div>
 
           {/* Desktop Right — auth-aware, controls grouped in their own pill container */}
@@ -310,6 +312,7 @@ const Navbar = () => {
 
           <a href={getLink('plans')} onClick={() => setMobileMenuOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-brand-400 font-medium block">Investment Plans</a>
           <a href={getLink('calculator')} onClick={() => setMobileMenuOpen(false)} className="text-slate-600 dark:text-slate-300 hover:text-brand-400 font-medium block">Calculator</a>
+          <Link href="/investing-info" onClick={() => setMobileMenuOpen(false)} className={`font-medium block ${pathname === '/investing-info' ? 'text-brand-400' : 'text-slate-600 dark:text-slate-300 hover:text-brand-400'}`}>Investing Info</Link>
 
           <div className="h-px bg-slate-200 dark:bg-slate-800 my-2"></div>
 

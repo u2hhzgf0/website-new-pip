@@ -138,7 +138,7 @@ export default function MyTickets() {
         </div>
         <Link
           href="/dashboard/support"
-          className="flex items-center gap-2 bg-gradient-to-r from-gold-500 to-amber-600 text-slate-900 dark:text-white px-4 py-2.5 rounded-lg hover:from-gold-600 hover:to-amber-700 transition-all shadow-lg shadow-gold-500/20 font-medium"
+          className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white px-4 py-2.5 rounded-lg hover:from-emerald-600 hover:to-emerald-800 transition-all shadow-lg shadow-emerald-500/20 font-medium"
         >
           <Plus size={18} />
           New Ticket
@@ -147,16 +147,16 @@ export default function MyTickets() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 tilt-card-flat">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-500 dark:text-slate-400 text-sm">Total Tickets</p>
               <p className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1">{isLoading ? '-' : stats.total}</p>
             </div>
-            <MessageSquare className="text-gold-500" size={24} />
+            <MessageSquare className="text-emerald-500" size={24} />
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 tilt-card-flat">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-500 dark:text-slate-400 text-sm">Open</p>
@@ -165,7 +165,7 @@ export default function MyTickets() {
             <Clock className="text-blue-500" size={24} />
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 tilt-card-flat">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-500 dark:text-slate-400 text-sm">In Progress</p>
@@ -174,7 +174,7 @@ export default function MyTickets() {
             <AlertCircle className="text-amber-500" size={24} />
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 tilt-card-flat">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-slate-500 dark:text-slate-400 text-sm">Resolved</p>
@@ -194,7 +194,7 @@ export default function MyTickets() {
             placeholder="Search tickets by subject or ID..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg pl-12 pr-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50 focus:border-gold-500"
+            className="w-full bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-lg pl-12 pr-4 py-3 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
             disabled={isLoading}
           />
         </div>
@@ -206,7 +206,7 @@ export default function MyTickets() {
               disabled={isLoading}
               className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
                 filter === status
-                  ? 'bg-gold-500 text-slate-900 dark:text-white shadow-lg shadow-gold-500/20'
+                  ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20'
                   : 'bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               } disabled:opacity-50 disabled:cursor-not-allowed`}
             >
@@ -217,10 +217,10 @@ export default function MyTickets() {
       </div>
 
       {/* Tickets List */}
-      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+      <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         {isLoading ? (
           <div className="p-12 text-center">
-            <Loader2 className="mx-auto text-gold-500 mb-4 animate-spin" size={48} />
+            <Loader2 className="mx-auto text-emerald-500 mb-4 animate-spin" size={48} />
             <p className="text-slate-500 dark:text-slate-400">Loading tickets...</p>
           </div>
         ) : filteredTickets.length === 0 ? (
@@ -233,7 +233,7 @@ export default function MyTickets() {
             {!searchQuery && (
               <Link
                 href="/dashboard/support"
-                className="inline-flex items-center gap-2 mt-4 bg-gold-500 hover:bg-gold-600 text-slate-900 dark:text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                className="inline-flex items-center gap-2 mt-4 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium transition-colors"
               >
                 <Plus size={18} />
                 Create Ticket
@@ -252,7 +252,7 @@ export default function MyTickets() {
                   <div className="flex items-start gap-3 flex-1 min-w-0">
                     <div className="mt-1 flex-shrink-0">{getStatusIcon(ticket.status)}</div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-slate-900 dark:text-white font-medium group-hover:text-gold-500 transition-colors truncate mb-1">
+                      <h3 className="text-slate-900 dark:text-white font-medium group-hover:text-emerald-500 transition-colors truncate mb-1">
                         {ticket.subject}
                       </h3>
                       <p className="text-slate-600 dark:text-slate-500 text-xs sm:text-sm">#{ticket.id.substring(0, 8).toUpperCase()}</p>

@@ -5,9 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Users, Plus, Wallet, User } from 'lucide-react';
 
-const GOLD = '#F5A623';
-const INACTIVE = '#64748b';
-
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Home', icon: Home },
   { href: '/dashboard/referrals', label: 'Teams', icon: Users },
@@ -23,10 +20,7 @@ const BottomNav = () => {
     href === '/dashboard' ? pathname === '/dashboard' : pathname.startsWith(href);
 
   return (
-    <nav
-      className="lg:hidden fixed bottom-5 inset-x-5 z-40 max-w-[400px] mx-auto bg-white rounded-full flex items-stretch"
-      style={{ boxShadow: '0 6px 16px rgba(0,0,0,0.15)' }}
-    >
+    <nav className="lg:hidden fixed bottom-5 inset-x-5 z-40 max-w-[400px] mx-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-lg shadow-black/10 rounded-full flex items-stretch">
       {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
         const active = isActive(href);
         return (
@@ -36,7 +30,11 @@ const BottomNav = () => {
             aria-label={label}
             className="flex-1 flex items-center justify-center py-4"
           >
-            <Icon size={24} strokeWidth={2} style={{ color: active ? GOLD : INACTIVE }} />
+            <Icon
+              size={24}
+              strokeWidth={2}
+              className={active ? 'text-emerald-500' : 'text-slate-400 dark:text-slate-500'}
+            />
           </Link>
         );
       })}

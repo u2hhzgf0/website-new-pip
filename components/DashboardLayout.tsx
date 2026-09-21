@@ -23,10 +23,18 @@ import {
   TrendingUp,
   BookOpen,
   Trophy,
+  CreditCard,
+  QrCode,
+  ShoppingBag,
+  Store,
+  Bot,
+  Gift,
+  Award,
+  Target,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { MenuItem } from '@/types';
+import { MenuGroup } from '@/types';
 import NotificationsDropdown from './NotificationsDropdown';
 import { useGetMyNotificationsQuery, useGetUnreadCountQuery, useMarkAllAsReadMutation, type Notification } from '@/store/api/notificationApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
@@ -34,6 +42,7 @@ import { useGetMyRankQuery } from '@/store/api/rankApi';
 import { useGetActiveAnnouncementQuery } from '@/store/api/announcementApi';
 import { ProfileAvatar } from './ProfileAvatar';
 import BottomNav from './BottomNav';
+import PageTransition from './PageTransition';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -123,62 +132,95 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     }
   };
 
-  const menuItems: MenuItem[] = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { label: 'Investing Info', icon: BookOpen, path: '/investing-info' },
+  const menuGroups: MenuGroup[] = [
     {
-      label: 'Wallet',
-      icon: ArrowDownLeft,
-      subItems: [
-        { label: 'Deposit', path: '/dashboard/deposit' },
-        { label: 'Wallet Stats', path: '/dashboard/wallet/stats' }
-      ]
+      section: 'Overview',
+      items: [
+        { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+        { label: 'Investing Info', icon: BookOpen, path: '/investing-info' },
+        { label: 'Smart Member', icon: CreditCard, path: '/dashboard/smart-member' },
+        { label: 'Scan QR', icon: QrCode, path: '/dashboard/scan-qr' },
+        { label: 'Shop', icon: ShoppingBag, path: '/dashboard/shop' },
+        { label: 'Become a Vendor', icon: Store, path: '/dashboard/become-vendor' },
+      ],
     },
     {
-      label: 'Withdraw',
-      icon: ArrowUpRight,
-      subItems: [
-        { label: 'Request', path: '/dashboard/withdraw' },
-        { label: 'History', path: '/dashboard/withdraw/history' }
-      ]
+      section: 'Financial',
+      items: [
+        {
+          label: 'Wallet',
+          icon: ArrowDownLeft,
+          subItems: [
+            { label: 'Overview', path: '/dashboard/wallet' },
+            { label: 'Deposit', path: '/dashboard/deposit' },
+            { label: 'Wallet Stats', path: '/dashboard/wallet/stats' }
+          ]
+        },
+        {
+          label: 'Withdraw',
+          icon: ArrowUpRight,
+          subItems: [
+            { label: 'Request', path: '/dashboard/withdraw' },
+            { label: 'History', path: '/dashboard/withdraw/history' }
+          ]
+        },
+        {
+          label: 'Plans',
+          icon: PieChart,
+          subItems: [
+            { label: 'Invest', path: '/dashboard/plans/invest' },
+            { label: 'My Plans', path: '/dashboard/plans/my-plans' }
+          ]
+        },
+        { label: 'Transactions', icon: History, path: '/dashboard/transactions' },
+        { label: 'Profit History', icon: TrendingUp, path: '/dashboard/profits/history' },
+      ],
     },
     {
-      label: 'Plans',
-      icon: PieChart,
-      subItems: [
-        { label: 'Invest', path: '/dashboard/plans/invest' },
-        { label: 'My Plans', path: '/dashboard/plans/my-plans' }
-      ]
-    },
-    { label: 'Transactions', icon: History, path: '/dashboard/transactions' },
-    { label: 'Profit History', icon: TrendingUp, path: '/dashboard/profits/history' },
-    {
-      label: 'Referral',
-      icon: Users,
-      subItems: [
-        { label: 'Overview', path: '/dashboard/referrals' },
-        { label: '7-Level Network', path: '/dashboard/referrals/network' }
-      ]
+      section: 'Network',
+      items: [
+        {
+          label: 'Referral',
+          icon: Users,
+          subItems: [
+            { label: 'Overview', path: '/dashboard/referrals' },
+            { label: '7-Level Network', path: '/dashboard/referrals/network' }
+          ]
+        },
+      ],
     },
     {
-      label: 'Support',
-      icon: Ticket,
-      subItems: [
-        { label: 'Create Ticket', path: '/dashboard/support' },
-        { label: 'My Tickets', path: '/dashboard/support/tickets' }
-      ]
+      section: 'Rewards',
+      items: [
+        { label: 'My Rank', icon: Trophy, path: '/dashboard/my-rank' },
+        { label: 'AutoBots', icon: Bot, path: '/dashboard/autobots' },
+        { label: 'Incentives', icon: Gift, path: '/dashboard/incentives' },
+        { label: 'Achievements', icon: Award, path: '/dashboard/achievements' },
+        { label: 'Challenges', icon: Target, path: '/dashboard/challenges' },
+      ],
     },
-    { label: 'My Rank', icon: Trophy, path: '/dashboard/my-rank' },
-    { label: 'Notifications', icon: Bell, path: '/dashboard/notifications' },
-    { label: 'Settings', icon: Settings, path: '/dashboard/settings' },
+    {
+      section: 'Account',
+      items: [
+        {
+          label: 'Support',
+          icon: Ticket,
+          subItems: [
+            { label: 'Create Ticket', path: '/dashboard/support' },
+            { label: 'My Tickets', path: '/dashboard/support/tickets' }
+          ]
+        },
+        { label: 'Notifications', icon: Bell, path: '/dashboard/notifications' },
+        { label: 'Settings', icon: Settings, path: '/dashboard/settings' },
+      ],
+    },
   ];
 
   const isActive = (path?: string) => {
     if (!path) return false;
-    if (path === '/dashboard' && pathname === '/dashboard') return true;
     if (path === '/investing-info') return false;
-    if (path !== '/dashboard' && pathname.startsWith(path)) return true;
-    return false;
+    if (path === '/dashboard') return pathname === '/dashboard';
+    return pathname === path || pathname.startsWith(`${path}/`);
   };
 
   return (
@@ -251,78 +293,90 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
       {/* Sidebar */}
       <aside className={`
-        fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transform transition-transform duration-300 ease-in-out
+        fixed lg:static inset-y-0 left-0 z-30 w-64 bg-[#F7F7FC] dark:bg-slate-900 transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div className="h-full flex flex-col">
           {/* Logo Area */}
-          <div className="h-20 flex items-center px-6 border-b border-slate-200 dark:border-slate-800">
-            <span className="text-xl font-serif font-bold tracking-wide leading-none">
-              Pip<span className="text-gold-500">guardian</span><span className="text-green-400 text-xs font-bold ml-0.5 align-bottom">elt</span>
-            </span>
+          <div className="h-20 flex items-center px-6 border-b border-slate-200/70 dark:border-slate-800">
+            <Link href="/dashboard" className="flex items-center">
+              <img src="/images/pip-dark-logo.png" alt="Pipguardian" className="h-8 w-auto dark:hidden" />
+              <img src="/images/pip-dark-logo.png" alt="Pipguardian" className="h-8 w-auto hidden dark:block" />
+            </Link>
           </div>
 
           {/* Navigation */}
-          <div className="flex-1 overflow-y-auto py-6 px-4 space-y-1">
-            {menuItems.map((item) => (
-              <div key={item.label}>
-                {item.subItems ? (
-                  <div>
-                    <button
-                      onClick={() => toggleMenu(item.label)}
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
-                        item.subItems.some(sub => isActive(sub.path)) ? 'text-slate-900 dark:text-white bg-slate-100 dark:bg-slate-800' : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <div className="flex items-center space-x-3">
-                        <item.icon size={20} />
-                        <span className="font-medium">{item.label}</span>
-                      </div>
-                      {expandedMenus[item.label] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
-                    </button>
-                    {expandedMenus[item.label] && (
-                      <div className="ml-10 mt-1 space-y-1 border-l border-slate-300 dark:border-slate-700 pl-2">
-                        {item.subItems.map((sub) => (
-                          <Link
-                            key={sub.label}
-                            href={sub.path || '#'}
-                            onClick={() => setSidebarOpen(false)}
-                            className={`block px-4 py-2 text-sm transition-colors ${
-                              isActive(sub.path) ? 'text-gold-500 font-medium' : 'text-slate-600 dark:text-slate-500 hover:text-gold-400'
+          <div className="flex-1 overflow-y-auto py-4 px-3 space-y-0.5">
+            {menuGroups.map((group) => (
+              <div key={group.section}>
+                <p className="px-3 pt-4 pb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-600 first:pt-1">
+                  {group.section}
+                </p>
+                <div className="space-y-0.5">
+                  {group.items.map((item) => (
+                    <div key={item.label}>
+                      {item.subItems ? (
+                        <div>
+                          <button
+                            onClick={() => toggleMenu(item.label)}
+                            className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
+                              item.subItems.some(sub => isActive(sub.path))
+                                ? 'text-slate-900 dark:text-white bg-white dark:bg-slate-800 shadow-sm shadow-slate-900/5'
+                                : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/70 dark:hover:bg-slate-800/60'
                             }`}
                           >
-                            {sub.label}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link
-                    href={item.path || '#'}
-                    onClick={() => setSidebarOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
-                      isActive(item.path)
-                        ? 'bg-gold-500/10 text-gold-500 border border-gold-500/20'
-                        : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-                    }`}
-                  >
-                    <item.icon size={20} />
-                    <span className="font-medium">{item.label}</span>
-                  </Link>
-                )}
+                            <div className="flex items-center space-x-3">
+                              <item.icon size={19} />
+                              <span className="font-medium text-sm">{item.label}</span>
+                            </div>
+                            {expandedMenus[item.label] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                          </button>
+                          {expandedMenus[item.label] && (
+                            <div className="ml-9 mt-1 space-y-1 border-l border-slate-300 dark:border-slate-700 pl-3">
+                              {item.subItems.map((sub) => (
+                                <Link
+                                  key={sub.label}
+                                  href={sub.path || '#'}
+                                  onClick={() => setSidebarOpen(false)}
+                                  className={`block px-3 py-1.5 text-sm transition-colors rounded-lg ${
+                                    isActive(sub.path) ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-slate-500 dark:text-slate-500 hover:text-emerald-500'
+                                  }`}
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <Link
+                          href={item.path || '#'}
+                          onClick={() => setSidebarOpen(false)}
+                          className={`flex items-center space-x-3 px-3 py-2.5 rounded-xl transition-colors ${
+                            isActive(item.path)
+                              ? 'bg-white dark:bg-slate-800 text-emerald-600 dark:text-emerald-400 shadow-sm shadow-slate-900/5'
+                              : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/70 dark:hover:bg-slate-800/60'
+                          }`}
+                        >
+                          <item.icon size={19} />
+                          <span className="font-medium text-sm">{item.label}</span>
+                        </Link>
+                      )}
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
 
           {/* User Profile Snippet in Sidebar Bottom */}
-          <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div className="p-3 border-t border-slate-200/70 dark:border-slate-800">
             <button
               onClick={() => setShowLogoutConfirm(true)}
-              className="w-full flex items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
+              className="w-full flex items-center space-x-3 px-3 py-2.5 text-red-500 hover:bg-red-500/10 rounded-xl transition-colors"
             >
-              <LogOut size={20} />
-              <span className="font-medium">Logout</span>
+              <LogOut size={19} />
+              <span className="font-medium text-sm">Sign Out</span>
             </button>
           </div>
         </div>
@@ -386,7 +440,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
                 <p className="text-sm font-medium text-slate-900 dark:text-white">
                   {user?.firstName} {user?.lastName}
                 </p>
-                <p className="text-xs text-gold-400 font-medium">
+                <p className="text-xs text-emerald-500 dark:text-emerald-400 font-medium">
                   {rankInfo?.currentRankInfo?.name || 'Starter'}
                 </p>
               </div>
@@ -396,18 +450,18 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
         {/* Announcement Banner — below navbar, above content */}
         {activeAnnouncement && (
-          <div className="w-full bg-gold-500/10 border-b border-gold-500/30 overflow-hidden py-2 flex-shrink-0">
+          <div className="w-full bg-amber-500/10 border-b border-amber-500/30 overflow-hidden py-2 flex-shrink-0">
             <div className="ticker-track">
-              <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
-              <span className="ticker-item text-sm font-medium text-gold-400">{activeAnnouncement.text}</span>
+              <span className="ticker-item text-sm font-medium text-amber-600 dark:text-amber-400">{activeAnnouncement.text}</span>
+              <span className="ticker-item text-sm font-medium text-amber-600 dark:text-amber-400">{activeAnnouncement.text}</span>
             </div>
           </div>
         )}
 
         {/* Scrollable Content Area */}
         <main className="flex-1 overflow-y-auto p-3 pb-24 sm:p-6 lg:p-8 lg:pb-8">
-          <div className="max-w-7xl mx-auto">
-            {children}
+          <div className="max-w-[1600px] mx-auto">
+            <PageTransition>{children}</PageTransition>
           </div>
         </main>
       </div>

@@ -166,7 +166,7 @@ const BinanceLivePrices = () => {
             load()
           }}
           disabled={loading}
-          className="inline-flex items-center gap-2 self-start sm:self-auto text-xs text-gold-500 hover:text-gold-400 font-medium disabled:opacity-50"
+          className="inline-flex items-center gap-2 self-start sm:self-auto text-xs text-brand-500 hover:text-brand-400 font-medium disabled:opacity-50"
         >
           <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
           Refresh
@@ -182,7 +182,7 @@ const BinanceLivePrices = () => {
 
       {loading && latest.length === 0 ? (
         <div className="flex items-center justify-center py-16 text-slate-600 dark:text-slate-500">
-          <Loader2 className="animate-spin text-gold-500 mr-2" size={24} />
+          <Loader2 className="animate-spin text-brand-500 mr-2" size={24} />
           Loading…
         </div>
       ) : latest.length === 0 ? (
@@ -195,7 +195,7 @@ const BinanceLivePrices = () => {
               setLoading(true)
               load()
             }}
-            className="mt-4 text-gold-500 text-sm font-medium hover:underline"
+            className="mt-4 text-brand-500 text-sm font-medium hover:underline"
           >
             Try again
           </button>
@@ -261,91 +261,6 @@ const BinanceLivePrices = () => {
             Lines show % of each asset’s price vs the first point in this window (not 24h change). Updates every{' '}
             {POLL_MS / 1000}s.
           </p>
-
-          {/* Market table — Binance-style (24h ticker API) */}
-          {markets24h.length > 0 && (
-            <div className="pt-2 border-t border-slate-200 dark:border-slate-800">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white">Market overview</h4>
-                <span className="text-[10px] text-slate-600 dark:text-slate-500">24h · Binance spot</span>
-              </div>
-              <div className="overflow-x-auto rounded-xl border border-slate-200/80 dark:border-slate-800/80 bg-[#0b0e11]">
-                <table className="w-full text-left min-w-[720px]">
-                  <thead>
-                    <tr className="text-[10px] uppercase tracking-wider text-slate-600 dark:text-slate-500 border-b border-slate-200 dark:border-slate-800">
-                      <th className="px-3 py-3 font-medium sm:px-4">Asset</th>
-                      <th className="px-3 py-3 font-medium sm:px-4">Price</th>
-                      <th className="px-3 py-3 font-medium sm:px-4">24h change</th>
-                      <th className="px-3 py-3 font-medium sm:px-4">24h volume</th>
-                      <th className="px-3 py-3 font-medium sm:px-4">Market cap</th>
-                      <th className="px-3 py-3 font-medium w-20 sm:w-24 text-right sm:px-4" />
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-200/90 dark:divide-slate-800/90 text-sm">
-                    {markets24h.map((m) => {
-                      const up = m.priceChangePercent >= 0
-                      const ring = ICON_RING[m.displaySymbol] || 'bg-slate-200/40 dark:bg-slate-700/40 text-slate-600 dark:text-slate-300 border-slate-300 dark:border-slate-600'
-                      const tradeUrl = `https://www.binance.com/en/trade/${m.tradeSlug}`
-                      return (
-                        <tr key={m.pairSymbol} className="hover:bg-slate-100/40 dark:hover:bg-slate-800/40 transition-colors">
-                          <td className="px-3 py-3 sm:px-4">
-                            <div className="flex items-center gap-3">
-                              <div
-                                className={`w-9 h-9 rounded-full border flex items-center justify-center text-[10px] font-bold shrink-0 ${ring}`}
-                              >
-                                {m.displaySymbol.slice(0, 2)}
-                              </div>
-                              <div>
-                                <span className="font-bold text-slate-900 dark:text-white">{m.displaySymbol}</span>
-                                <span className="text-slate-600 dark:text-slate-500 text-xs ml-2">{m.name}</span>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="px-3 py-3 sm:px-4 align-top">
-                            <p className="text-slate-900 dark:text-white font-semibold tabular-nums">{formatPriceTable(m.lastPrice)}</p>
-                            <p className="text-slate-600 dark:text-slate-500 text-xs tabular-nums mt-0.5">{formatPriceTable(m.lastPrice)}</p>
-                          </td>
-                          <td className={`px-3 py-3 sm:px-4 font-medium tabular-nums ${up ? 'text-[#0ECB81]' : 'text-[#F6465D]'}`}>
-                            {up ? '+' : ''}
-                            {m.priceChangePercent.toFixed(2)}%
-                          </td>
-                          <td className="px-3 py-3 sm:px-4 text-slate-600 dark:text-slate-300 tabular-nums">{formatQuoteVol(m.quoteVolumeUsd)}</td>
-                          <td className="px-3 py-3 sm:px-4 text-slate-600 dark:text-slate-500 text-xs" title="Not provided by Binance REST API">
-                            —
-                          </td>
-                          <td className="px-3 py-3 sm:px-4 text-right">
-                            <div className="inline-flex items-center justify-end gap-1 text-slate-600 dark:text-slate-500">
-                              <a
-                                href={tradeUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-gold-500 transition-colors"
-                                title="Trade on Binance"
-                              >
-                                <LineChartIcon size={16} />
-                              </a>
-                              <a
-                                href={tradeUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-gold-500 transition-colors"
-                                title="Charts on Binance"
-                              >
-                                <BarChart2 size={16} />
-                              </a>
-                            </div>
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-              <p className="text-[10px] text-slate-600 mt-2 text-center">
-                Volume = 24h quote volume (USDT). Market cap is not returned by Binance ticker — shown as &quot;—&quot;.
-              </p>
-            </div>
-          )}
         </div>
       )}
     </div>

@@ -26,7 +26,7 @@ const DepositHistory = () => {
         </div>
         <div className="flex space-x-2">
            <div className="relative w-full sm:w-auto">
-             <input type="text" placeholder="Search ID..." className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-gold-500" />
+             <input type="text" placeholder="Search ID..." className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg pl-10 pr-4 py-2 text-sm text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500" />
              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500" />
            </div>
            <button className="p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
@@ -35,7 +35,7 @@ const DepositHistory = () => {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl overflow-hidden shadow-lg card-lift">
         {/* Desktop Table */}
         <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-left">
@@ -71,7 +71,7 @@ const DepositHistory = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 text-right">
-                    <button className="text-gold-500 hover:text-gold-400 text-xs font-medium border border-gold-500/20 px-3 py-1 rounded hover:bg-gold-500/10 transition-colors">
+                    <button className="text-emerald-500 hover:text-emerald-400 text-xs font-medium border border-emerald-500/20 px-3 py-1 rounded hover:bg-emerald-500/10 transition-colors">
                       View
                     </button>
                   </td>

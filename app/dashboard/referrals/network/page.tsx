@@ -135,8 +135,8 @@ export default function ReferralNetwork() {
 
   const getLevelColor = (level: number) => {
     const colors = [
-      'from-gold-500 to-amber-600',
-      'from-emerald-500 to-teal-600',
+      'from-emerald-500 to-amber-600',
+      'from-teal-500 to-emerald-600',
       'from-blue-500 to-cyan-600',
       'from-purple-500 to-pink-600',
       'from-rose-500 to-red-600',
@@ -148,8 +148,8 @@ export default function ReferralNetwork() {
 
   const getLevelBorderColor = (level: number) => {
     const colors = [
-      'border-gold-500/30',
       'border-emerald-500/30',
+      'border-teal-500/30',
       'border-blue-500/30',
       'border-purple-500/30',
       'border-rose-500/30',
@@ -183,7 +183,7 @@ export default function ReferralNetwork() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-24">
-        <Loader2 className="animate-spin text-gold-500" size={36} />
+        <Loader2 className="animate-spin text-emerald-500" size={36} />
       </div>
     )
   }
@@ -198,30 +198,30 @@ export default function ReferralNetwork() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Referrals</p>
-            <Users className="text-gold-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Total Referrals</p>
+            <Users className="text-emerald-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{totalStats.totalReferrals.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">{totalStats.totalReferrals.toLocaleString()}</p>
           <p className="text-xs text-emerald-400 mt-2">Across all 7 levels</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Total Commission</p>
-            <DollarSign className="text-emerald-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Total Commission</p>
+            <DollarSign className="text-emerald-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${totalStats.totalCommission.toFixed(2)}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${totalStats.totalCommission.toFixed(2)}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">All-time earnings</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">Active Referrals</p>
-            <Activity className="text-blue-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Active Referrals</p>
+            <Activity className="text-blue-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">{totalStats.activeReferrals.toLocaleString()}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">{totalStats.activeReferrals.toLocaleString()}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
             {totalStats.totalReferrals > 0
               ? `${((totalStats.activeReferrals / totalStats.totalReferrals) * 100).toFixed(1)}% active rate`
@@ -229,20 +229,20 @@ export default function ReferralNetwork() {
           </p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-6 tilt-card-flat min-w-0">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-slate-500 dark:text-slate-400 text-sm">This Month</p>
-            <TrendingUp className="text-rose-500" size={20} />
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">This Month</p>
+            <TrendingUp className="text-rose-500 shrink-0" size={20} />
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${totalStats.thisMonthCommission.toFixed(2)}</p>
+          <p className="text-lg sm:text-3xl font-bold text-slate-900 dark:text-white truncate">${totalStats.thisMonthCommission.toFixed(2)}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Monthly commission</p>
         </div>
       </div>
 
       {/* Commission Structure Info */}
-      <div className="bg-gradient-to-r from-gold-500/10 to-amber-600/10 border border-gold-500/30 rounded-xl p-4 sm:p-6">
+      <div className="bg-gradient-to-r from-emerald-500/10 to-amber-600/10 border border-emerald-500/30 rounded-xl p-4 sm:p-6 card-lift">
         <div className="flex items-start gap-3">
-          <Award className="text-gold-500 flex-shrink-0 mt-1" size={24} />
+          <Award className="text-emerald-500 flex-shrink-0 mt-1" size={24} />
           <div>
             <h3 className="text-slate-900 dark:text-white font-semibold mb-2">7-Level Commission Structure</h3>
             <p className="text-slate-600 dark:text-slate-300 text-sm mb-3">
@@ -251,7 +251,7 @@ export default function ReferralNetwork() {
             <div className="flex flex-wrap gap-2">
               {levelData.map((level) => (
                 <span key={level.level} className="text-xs bg-white dark:bg-slate-900/50 border border-slate-300 dark:border-slate-700 px-3 py-1 rounded-full text-slate-600 dark:text-slate-300">
-                  Level {level.level}: <span className="text-gold-500 font-bold">{level.commission}%</span>
+                  Level {level.level}: <span className="text-emerald-500 font-bold">{level.commission}%</span>
                 </span>
               ))}
             </div>
@@ -267,7 +267,7 @@ export default function ReferralNetwork() {
             <button
               key={level.level}
               onClick={() => setSelectedLevel(level.level)}
-              className={`bg-white dark:bg-slate-900/50 border ${getLevelBorderColor(level.level)} rounded-xl p-4 sm:p-6 text-left hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all group relative overflow-hidden`}
+              className={`bg-white dark:bg-slate-900/50 border ${getLevelBorderColor(level.level)} rounded-xl p-4 sm:p-6 text-left hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all group relative overflow-hidden tilt-card`}
             >
               {/* Background Gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${getLevelColor(level.level)} opacity-5 group-hover:opacity-10 transition-opacity`} />
@@ -278,7 +278,7 @@ export default function ReferralNetwork() {
                   <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${getLevelColor(level.level)} flex items-center justify-center text-slate-900 dark:text-white font-bold text-lg shadow-lg`}>
                     L{level.level}
                   </div>
-                  <ChevronRight className="text-slate-600 group-hover:text-gold-500 transition-colors" size={20} />
+                  <ChevronRight className="text-slate-600 group-hover:text-emerald-500 transition-colors" size={20} />
                 </div>
 
                 <h3 className="text-slate-900 dark:text-white font-semibold mb-1">Level {level.level}</h3>
@@ -297,7 +297,7 @@ export default function ReferralNetwork() {
 
                 {level.count > 0 && (
                   <div className="mt-4 pt-4 border-t border-slate-300 dark:border-slate-700">
-                    <span className="text-xs text-gold-500 font-medium flex items-center gap-1">
+                    <span className="text-xs text-emerald-500 font-medium flex items-center gap-1">
                       Click to view {level.count} users
                       <ChevronRight size={14} />
                     </span>
@@ -337,17 +337,17 @@ export default function ReferralNetwork() {
 
               {/* Level Stats */}
               <div className="grid grid-cols-3 gap-2 sm:gap-4 mt-4 sm:mt-6">
-                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 sm:p-4">
-                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1">Total Users</p>
-                  <p className="text-lg sm:text-2xl font-bold text-slate-900 dark:text-white">{selectedLevelData.count}</p>
+                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-2 sm:p-4 min-w-0">
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1 truncate">Total Users</p>
+                  <p className="text-sm sm:text-2xl font-bold text-slate-900 dark:text-white truncate">{selectedLevelData.count}</p>
                 </div>
-                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 sm:p-4">
-                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1">Commission</p>
-                  <p className="text-lg sm:text-2xl font-bold text-gold-500">{selectedLevelData.commission}%</p>
+                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-2 sm:p-4 min-w-0">
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1 truncate">Commission</p>
+                  <p className="text-sm sm:text-2xl font-bold text-emerald-500 truncate">{selectedLevelData.commission}%</p>
                 </div>
-                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 sm:p-4">
-                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1">Earned</p>
-                  <p className="text-lg sm:text-2xl font-bold text-emerald-400">${selectedLevelData.totalCommission.toFixed(2)}</p>
+                <div className="bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-2 sm:p-4 min-w-0">
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] sm:text-xs mb-1 truncate">Earned</p>
+                  <p className="text-sm sm:text-2xl font-bold text-emerald-400 truncate">${selectedLevelData.totalCommission.toFixed(2)}</p>
                 </div>
               </div>
 
@@ -359,12 +359,12 @@ export default function ReferralNetwork() {
                     placeholder="Search by name or email..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="flex-1 bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-gold-500/50"
+                    className="flex-1 bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white placeholder:text-slate-600 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   />
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value as any)}
-                    className="bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-gold-500/50"
+                    className="bg-slate-100/50 dark:bg-slate-800/50 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-2 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   >
                     <option value="all">All Status</option>
                     <option value="active">Active Only</option>
@@ -378,7 +378,7 @@ export default function ReferralNetwork() {
             <div className="flex-1 overflow-y-auto p-4 sm:p-6">
               {isLoadingNetwork ? (
                 <div className="text-center py-12">
-                  <Loader2 className="mx-auto text-gold-500 mb-4 animate-spin" size={36} />
+                  <Loader2 className="mx-auto text-emerald-500 mb-4 animate-spin" size={36} />
                   <p className="text-slate-500 dark:text-slate-400">Loading network data...</p>
                 </div>
               ) : selectedLevelData.users.length === 0 ? (
@@ -396,7 +396,7 @@ export default function ReferralNetwork() {
                     >
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex items-start gap-3">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gold-500 to-amber-600 flex items-center justify-center text-slate-900 dark:text-white font-bold text-sm">
+                          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white font-bold text-sm">
                             {user.name.split(' ').map(n => n[0]).join('').substring(0, 2)}
                           </div>
                           <div>
@@ -420,7 +420,7 @@ export default function ReferralNetwork() {
                         </div>
                         <div>
                           <p className="text-xs text-slate-600 dark:text-slate-500 mb-1">Your Commission</p>
-                          <p className="text-sm text-gold-500 font-bold">${user.commissionEarned.toFixed(2)}</p>
+                          <p className="text-sm text-emerald-500 font-bold">${user.commissionEarned.toFixed(2)}</p>
                         </div>
                         <div>
                           <p className="text-xs text-slate-600 dark:text-slate-500 mb-1">Their Referrals</p>

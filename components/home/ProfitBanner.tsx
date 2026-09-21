@@ -1,10 +1,13 @@
+'use client'
+
 import React from 'react';
+import Reveal from '@/components/Reveal';
 
 const ProfitBanner = () => {
   return (
     <section className="py-12 sm:py-24 bg-white dark:bg-slate-950 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
-        <div>
+        <Reveal>
           <span className="text-brand-500 text-xs sm:text-sm font-bold uppercase tracking-wider">Daily Profit Distribution</span>
           <h2 className="text-3xl sm:text-5xl font-serif font-bold mt-3 mb-4 leading-tight">
             <span className="text-brand-500">Earn Daily.</span>
@@ -33,11 +36,11 @@ const ProfitBanner = () => {
             Profit distribution and rates vary by investment plan. See each plan&apos;s details for exact terms.{' '}
             <a href="/investing-info" className="underline hover:text-brand-500">Terms apply</a>
           </p>
-        </div>
+        </Reveal>
 
-        <div className="flex items-center justify-center">
+        <Reveal delay={0.1} direction="left" className="flex items-center justify-center">
           <img src="/images/download.webp" alt="" className="w-full max-w-md object-contain" />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

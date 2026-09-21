@@ -2,14 +2,41 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark, X, TrendingUp } from 'lucide-react';
+import { useSelector } from 'react-redux';
+import type { RootState } from '@/store/store';
+import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark, X, TrendingUp, Clock, Landmark, Check } from 'lucide-react';
 import { useGetActiveGatewaysQuery } from '@/store/api/paymentGatewayApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
-import { useCreateWithdrawalMutation } from '@/store/api/transactionApi';
+import { useCreateWithdrawalMutation, useGetMyTransactionsQuery } from '@/store/api/transactionApi';
 import { useGetSavedAccountsQuery } from '@/store/api/savedAccountApi';
 import type { SavedAccount } from '@/store/api/savedAccountApi';
 
+const timeAgo = (dateString: string) => {
+  const diffMs = Date.now() - new Date(dateString).getTime();
+  const minutes = Math.floor(diffMs / 60000);
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes}m ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h ago`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days}d ago`;
+  const months = Math.floor(days / 30);
+  return `${months}mo ago`;
+};
+
+const getStatusColor = (status: string) => {
+  switch (status.toLowerCase()) {
+    case 'completed': return 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
+    case 'pending': return 'bg-amber-500/10 text-amber-500 border border-amber-500/20';
+    case 'processing': return 'bg-blue-500/10 text-blue-500 border border-blue-500/20';
+    case 'rejected':
+    case 'cancelled': return 'bg-rose-500/10 text-rose-500 border border-rose-500/20';
+    default: return 'bg-slate-300/10 dark:bg-slate-500/10 text-slate-600 dark:text-slate-500 border border-slate-300/20 dark:border-slate-500/20';
+  }
+};
+
 const WithdrawRequest = () => {
+  const currentUser = useSelector((state: RootState) => state.auth.user);
   const [selectedGateway, setSelectedGateway] = useState('');
   const [amount, setAmount] = useState('');
   const [walletAddress, setWalletAddress] = useState('');
@@ -19,14 +46,20 @@ const WithdrawRequest = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [showInvestFirstModal, setShowInvestFirstModal] = useState(false);
+  const [requestsStatusFilter, setRequestsStatusFilter] = useState('all');
 
   // Fetch wallet data
   const { data: walletResponse, isLoading: walletLoading } = useGetWalletQuery();
   const wallet = walletResponse?.data?.attributes;
   const balance = wallet?.balance || 0;
   const totalDeposit = Number(wallet?.totalDeposit ?? 0);
+  const pendingWithdrawals = Number(wallet?.pendingWithdrawals ?? 0);
   /** Withdrawals require at least one deposit / investment on record */
   const canRequestWithdrawal = totalDeposit > 0;
+
+  // Recent withdrawal requests, for the "Recent Requests" panel
+  const { data: transactionsData } = useGetMyTransactionsQuery({ page: 1, limit: 20, type: 'withdraw' });
+  const recentRequests = (transactionsData?.data?.attributes?.results || []) as any[];
 
   const openInvestFirstModal = () => setShowInvestFirstModal(true);
 
@@ -160,7 +193,7 @@ const WithdrawRequest = () => {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={32} />
+          <Loader2 className="animate-spin text-emerald-500 mx-auto mb-4" size={32} />
           <p className="text-slate-500 dark:text-slate-400">Loading...</p>
         </div>
       </div>
@@ -194,7 +227,7 @@ const WithdrawRequest = () => {
               <Link
                 href="/dashboard/plans/invest"
                 onClick={() => setShowInvestFirstModal(false)}
-                className="flex-1 text-center py-3 rounded-lg bg-gradient-to-r from-gold-500 to-amber-600 text-slate-950 font-bold text-sm hover:opacity-95 transition-opacity"
+                className="flex-1 text-center py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold text-sm hover:opacity-95 transition-opacity"
               >
                 View investment plans
               </Link>
@@ -210,26 +243,35 @@ const WithdrawRequest = () => {
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 mb-4 sm:mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Withdraw Funds</h2>
-        <span className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Request a secure payout to your wallet</span>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-1 mb-4 sm:mb-6">
+        <div>
+          <p className="text-slate-500 dark:text-slate-400 text-sm">{currentUser?.firstName} {currentUser?.lastName}</p>
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">Withdraw Funds</h2>
+          <span className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm">Request a secure payout to your wallet</span>
+        </div>
+        <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full">
+          <Wallet size={14} /> Available ${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}
+        </span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         {/* Left Column: Form */}
         <div className="lg:col-span-2">
-          <div className="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <div className="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-xl card-lift">
 
-            {/* Balance Card */}
-            <div className="bg-gradient-to-r from-indigo-600 to-blue-700 rounded-lg p-4 sm:p-6 mb-5 sm:mb-8 flex items-center justify-between text-white shadow-lg">
-              <div>
-                <p className="text-indigo-200 text-xs sm:text-sm font-medium mb-1">Available for Withdrawal</p>
-                <h3 className="text-xl sm:text-3xl font-bold">${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</h3>
-                <p className="text-indigo-200/90 text-xs mt-1">Total deposit: ${totalDeposit.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+            {/* Stats row */}
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-5 sm:mb-8">
+              <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-lg p-2 sm:p-3 text-center tilt-card-flat min-w-0">
+                <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-500 font-semibold mb-1 truncate">Withdrawable</p>
+                <p className="text-xs sm:text-base font-bold text-slate-900 dark:text-white truncate">${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
               </div>
-              <div className="bg-white/20 p-2 sm:p-3 rounded-full">
-                <Wallet size={24} className="sm:hidden" />
-                <Wallet size={32} className="hidden sm:block" />
+              <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-lg p-2 sm:p-3 text-center tilt-card-flat min-w-0">
+                <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-500 font-semibold mb-1 truncate">Confirmed</p>
+                <p className="text-xs sm:text-base font-bold text-slate-900 dark:text-white truncate">${balance.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+              </div>
+              <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-lg p-2 sm:p-3 text-center tilt-card-flat min-w-0">
+                <p className="text-[9px] sm:text-[10px] uppercase tracking-wider text-slate-500 dark:text-slate-500 font-semibold mb-1 truncate">In Queue</p>
+                <p className="text-xs sm:text-base font-bold text-slate-900 dark:text-white truncate">${pendingWithdrawals.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
               </div>
             </div>
 
@@ -243,7 +285,7 @@ const WithdrawRequest = () => {
                     <button
                       type="button"
                       onClick={openInvestFirstModal}
-                      className="text-gold-400 font-semibold underline hover:text-gold-300"
+                      className="text-emerald-400 font-semibold underline hover:text-emerald-300"
                     >
                       Learn more
                     </button>
@@ -275,42 +317,11 @@ const WithdrawRequest = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Step 1: Withdraw Method */}
-              <div>
-                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Withdraw Method</label>
-                <select
-                  value={selectedGateway}
-                  onChange={(e) => {
-                    setSelectedGateway(e.target.value);
-                    setSelectedSavedAccount('');
-                    setWalletAddress('');
-                    setAccountNumber('');
-                    setAccountName('');
-                  }}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
-                  required
-                >
-                  <option value="">Select withdrawal method</option>
-                  {gateways.map((gateway: any) => (
-                    <option key={gateway.id} value={gateway.id}>
-                      {gateway.name} ({gateway.currency})
-                      {gateway.withdrawFee > 0 && ` - Fee: ${gateway.withdrawFeeType === 'percentage' ? gateway.withdrawFee + '%' : '$' + gateway.withdrawFee}`}
-                    </option>
-                  ))}
-                </select>
-                {selectedGatewayData && (
-                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">
-                    Min: ${selectedGatewayData.minWithdraw} | Max: ${selectedGatewayData.maxWithdraw}
-                    {selectedGatewayData.processingTime && ` | Processing: ${selectedGatewayData.processingTime}`}
-                  </p>
-                )}
-              </div>
-
-              {/* Step 2: Withdraw Amount */}
+              {/* Step 1: Withdraw Amount */}
               <div>
                 <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Withdraw Amount</label>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 dark:text-slate-500 font-bold">$</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-600 font-bold text-2xl">$</span>
                   <input
                     type="number"
                     value={amount}
@@ -318,39 +329,92 @@ const WithdrawRequest = () => {
                     placeholder="0.00"
                     step="0.01"
                     min="0"
-                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-8 pr-20 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                    className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg pl-10 pr-20 py-4 text-slate-900 dark:text-white text-2xl sm:text-3xl font-bold focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setAmount((Math.floor((balance / 1.15) * 100) / 100).toString())}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs bg-slate-100 dark:bg-slate-800 text-gold-500 px-2 py-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-emerald-500 px-2.5 py-1.5 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
                   >
                     MAX
                   </button>
                 </div>
+                <p className="text-xs text-slate-500 dark:text-slate-500 mt-2 text-center">
+                  You can request up to ${(balance / 1.15).toLocaleString('en-US', { maximumFractionDigits: 2 })} right now
+                  {selectedGatewayData && ` — minimum ${selectedGatewayData.minWithdraw}`}
+                </p>
+                {balance > 0 && (
+                  <div className="flex flex-wrap justify-center gap-2 mt-3">
+                    {[0.25, 0.5, 0.75, 1].map((pct) => {
+                      const maxRequestable = balance / 1.15;
+                      const value = Math.floor(maxRequestable * pct * 100) / 100;
+                      return (
+                        <button
+                          key={pct}
+                          type="button"
+                          onClick={() => setAmount(value.toString())}
+                          className="text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1.5 rounded-full hover:bg-emerald-500/10 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+                        >
+                          {pct === 1 ? 'Max' : `${pct * 100}%`}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
                 {parseFloat(amount) > 0 && parseFloat(amount) * 1.15 > balance && (
-                  <p className="text-red-500 text-xs mt-2 flex items-center">
+                  <p className="text-red-500 text-xs mt-3 flex items-center justify-center">
                     <AlertCircle size={12} className="mr-1" />
                     Insufficient balance. Required: ${(parseFloat(amount) * 1.15).toFixed(2)} (amount + 15% service fee)
                   </p>
                 )}
-                {parseFloat(amount) > 0 && parseFloat(amount) * 1.15 <= balance && (
-                  <div className="text-xs mt-2 space-y-1 bg-slate-100/50 dark:bg-slate-800/50 rounded-lg p-3 border border-slate-300 dark:border-slate-700">
-                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
-                      <span>Service fee (15%)</span>
-                      <span className="text-rose-400">-${(parseFloat(amount) * 0.15).toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between text-slate-500 dark:text-slate-400">
-                      <span>Total deducted from balance</span>
-                      <span className="text-slate-600 dark:text-slate-300">${(parseFloat(amount) * 1.15).toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between font-medium border-t border-slate-300 dark:border-slate-700 pt-1 mt-1">
-                      <span className="text-slate-600 dark:text-slate-300">You will receive</span>
-                      <span className="text-emerald-400">${parseFloat(amount).toFixed(2)}</span>
-                    </div>
-                  </div>
-                )}
+              </div>
+
+              {/* Step 2: Payment Method */}
+              <div>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-1">Payment Method</label>
+                <p className="text-xs text-slate-500 dark:text-slate-500 mb-3">Choose where you want to receive funds</p>
+                <div className="space-y-2">
+                  {gateways.map((gateway: any) => (
+                    <button
+                      key={gateway.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedGateway(gateway.id);
+                        setSelectedSavedAccount('');
+                        setWalletAddress('');
+                        setAccountNumber('');
+                        setAccountName('');
+                      }}
+                      className={`w-full flex items-center justify-between gap-3 p-3.5 rounded-lg border transition-colors ${
+                        selectedGateway === gateway.id
+                          ? 'border-emerald-500 bg-emerald-500/5'
+                          : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        {gateway.type === 'crypto' ? <Wallet size={18} className="text-slate-500 dark:text-slate-400" /> : <Landmark size={18} className="text-slate-500 dark:text-slate-400" />}
+                        <div className="text-left">
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white">{gateway.name} <span className="text-slate-400 dark:text-slate-600 font-normal">({gateway.currency})</span></p>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-500">
+                            Min ${gateway.minWithdraw} · Max ${gateway.maxWithdraw}
+                            {gateway.withdrawFee > 0 && ` · Fee ${gateway.withdrawFeeType === 'percentage' ? gateway.withdrawFee + '%' : '$' + gateway.withdrawFee}`}
+                          </p>
+                        </div>
+                      </div>
+                      <span className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
+                        selectedGateway === gateway.id ? 'border-emerald-500 bg-emerald-500' : 'border-slate-300 dark:border-slate-600'
+                      }`}>
+                        {selectedGateway === gateway.id && <Check size={12} className="text-white" strokeWidth={3} />}
+                      </span>
+                    </button>
+                  ))}
+                  {gateways.length === 0 && (
+                    <p className="text-slate-500 dark:text-slate-500 text-sm py-4 text-center border border-dashed border-slate-300 dark:border-slate-700 rounded-lg">
+                      No payment methods available right now
+                    </p>
+                  )}
+                </div>
               </div>
 
               {/* Step 3: Withdrawal Account Details */}
@@ -364,7 +428,7 @@ const WithdrawRequest = () => {
                   {filteredSavedAccounts.length > 0 && (
                     <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-300 dark:border-slate-700 rounded-xl p-4 space-y-3">
                       <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
-                        <Bookmark size={14} className="text-gold-500" />
+                        <Bookmark size={14} className="text-emerald-500" />
                         <span className="font-medium">Your Saved Accounts</span>
                       </div>
                       <div className="grid gap-2">
@@ -375,13 +439,13 @@ const WithdrawRequest = () => {
                             onClick={() => handleSavedAccountSelect(account.id)}
                             className={`w-full text-left p-3 rounded-lg border transition-all flex items-center justify-between ${
                               selectedSavedAccount === account.id
-                                ? 'border-gold-500 bg-gold-500/10 text-slate-900 dark:text-white'
+                                ? 'border-emerald-500 bg-emerald-500/10 text-slate-900 dark:text-white'
                                 : 'border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'
                             }`}
                           >
                             <div className="flex items-center gap-3">
                               <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                selectedSavedAccount === account.id ? 'bg-gold-500/20 text-gold-500' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
+                                selectedSavedAccount === account.id ? 'bg-emerald-500/20 text-emerald-500' : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400'
                               }`}>
                                 {account.accountType === 'crypto' ? <Wallet size={14} /> : <Bookmark size={14} />}
                               </div>
@@ -389,7 +453,7 @@ const WithdrawRequest = () => {
                                 <div className="flex items-center gap-2">
                                   <span className="text-sm font-medium">{account.label}</span>
                                   {account.isDefault && (
-                                    <Star size={12} className="text-gold-500 fill-gold-500" />
+                                    <Star size={12} className="text-emerald-500 fill-emerald-500" />
                                   )}
                                 </div>
                                 <p className="text-xs text-slate-600 dark:text-slate-500 mt-0.5 font-mono">
@@ -401,7 +465,7 @@ const WithdrawRequest = () => {
                               </div>
                             </div>
                             {selectedSavedAccount === account.id && (
-                              <CheckCircle size={16} className="text-gold-500 flex-shrink-0" />
+                              <CheckCircle size={16} className="text-emerald-500 flex-shrink-0" />
                             )}
                           </button>
                         ))}
@@ -432,7 +496,7 @@ const WithdrawRequest = () => {
                         value={walletAddress}
                         onChange={(e) => { setWalletAddress(e.target.value); if (selectedSavedAccount) setSelectedSavedAccount(''); }}
                         placeholder="e.g. 1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa"
-                        className={`w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors font-mono text-sm ${selectedSavedAccount ? 'opacity-60' : ''}`}
+                        className={`w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors font-mono text-sm ${selectedSavedAccount ? 'opacity-60' : ''}`}
                         readOnly={!!selectedSavedAccount}
                         required
                       />
@@ -456,7 +520,7 @@ const WithdrawRequest = () => {
                           value={accountNumber}
                           onChange={(e) => { setAccountNumber(e.target.value); if (selectedSavedAccount) setSelectedSavedAccount(''); }}
                           placeholder="Enter your account number"
-                          className={`w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors ${selectedSavedAccount ? 'opacity-60' : ''}`}
+                          className={`w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors ${selectedSavedAccount ? 'opacity-60' : ''}`}
                           readOnly={!!selectedSavedAccount}
                           required
                         />
@@ -468,7 +532,7 @@ const WithdrawRequest = () => {
                           value={accountName}
                           onChange={(e) => { setAccountName(e.target.value); if (selectedSavedAccount) setSelectedSavedAccount(''); }}
                           placeholder="Enter account holder name"
-                          className={`w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors ${selectedSavedAccount ? 'opacity-60' : ''}`}
+                          className={`w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors ${selectedSavedAccount ? 'opacity-60' : ''}`}
                           readOnly={!!selectedSavedAccount}
                           required
                         />
@@ -495,6 +559,32 @@ const WithdrawRequest = () => {
                 </div>
               )}
 
+              {/* Summary */}
+              <div>
+                <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-2">Summary</h4>
+                <div className="bg-slate-50 dark:bg-slate-950/50 border border-slate-200 dark:border-slate-800 rounded-lg divide-y divide-slate-200 dark:divide-slate-800 text-sm">
+                  <div className="flex justify-between px-4 py-2.5">
+                    <span className="text-slate-500 dark:text-slate-400">Requested Amount</span>
+                    <span className="font-semibold text-slate-900 dark:text-white">${(parseFloat(amount) || 0).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between px-4 py-2.5">
+                    <span className="text-slate-500 dark:text-slate-400">Payment Method</span>
+                    <span className="font-semibold text-slate-900 dark:text-white">{selectedGatewayData?.name || '—'}</span>
+                  </div>
+                  <div className="flex justify-between px-4 py-2.5">
+                    <span className="text-slate-500 dark:text-slate-400">Service Charge (15%)</span>
+                    <span className="font-semibold text-rose-500">-${((parseFloat(amount) || 0) * 0.15).toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between px-4 py-3 bg-emerald-500/5">
+                    <span className="font-bold text-slate-900 dark:text-white">You will Receive</span>
+                    <span className="font-bold text-emerald-600 dark:text-emerald-400">${(parseFloat(amount) || 0).toFixed(2)}</span>
+                  </div>
+                </div>
+                <p className="text-[11px] text-slate-500 dark:text-slate-500 mt-2">
+                  The 15% service charge is deducted from your wallet balance in addition to the amount you receive.
+                </p>
+              </div>
+
               <div className="pt-4">
                 <button
                   type="submit"
@@ -504,7 +594,7 @@ const WithdrawRequest = () => {
                     !amount ||
                     parseFloat(amount) * 1.15 > balance
                   }
-                  className="w-full bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-slate-950 font-bold py-4 px-4 rounded-lg shadow-lg shadow-gold-500/20 transform hover:-translate-y-1 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                  className="w-full bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white font-bold py-4 px-4 rounded-lg shadow-lg shadow-emerald-500/20 transform hover:-translate-y-1 transition-all flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                 >
                   {submitting ? (
                     <>
@@ -525,23 +615,78 @@ const WithdrawRequest = () => {
 
         {/* Right Column: Info */}
         <div className="lg:col-span-1 space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <h4 className="text-slate-900 dark:text-white font-bold text-sm sm:text-base">Recent Requests</h4>
+              <span className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-500 flex items-center gap-1">
+                <Clock size={11} /> Latest {Math.min(recentRequests.length, 12)}
+              </span>
+            </div>
+            {recentRequests.length > 0 && (
+              <select
+                value={requestsStatusFilter}
+                onChange={(e) => setRequestsStatusFilter(e.target.value)}
+                className="w-full mb-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-700 dark:text-slate-300 focus:outline-none focus:border-emerald-500"
+              >
+                <option value="all">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="completed">Completed</option>
+                <option value="rejected">Rejected</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            )}
+            {recentRequests.length === 0 ? (
+              <p className="text-slate-500 dark:text-slate-500 text-sm py-6 text-center">No withdrawal requests yet</p>
+            ) : recentRequests.filter((tx) => requestsStatusFilter === 'all' || tx.status === requestsStatusFilter).length === 0 ? (
+              <p className="text-slate-500 dark:text-slate-500 text-sm py-6 text-center">No requests match this filter</p>
+            ) : (
+              <div className="space-y-3">
+                {recentRequests
+                  .filter((tx) => requestsStatusFilter === 'all' || tx.status === requestsStatusFilter)
+                  .slice(0, 12)
+                  .map((tx) => (
+                  <div key={tx.id} className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-8 h-8 rounded-full bg-rose-500/10 text-rose-500 flex items-center justify-center shrink-0">
+                        <Clock size={14} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white">
+                          ${(tx.amount ?? tx.netAmount ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2 })}
+                        </p>
+                        <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-500">{timeAgo(tx.createdAt)}</p>
+                      </div>
+                    </div>
+                    <span className={`shrink-0 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase ${getStatusColor(tx.status)}`}>
+                      {tx.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <Link href="/dashboard/withdraw/history" className="block text-center text-emerald-600 dark:text-emerald-400 text-xs sm:text-sm hover:underline font-medium mt-4">
+              View full history
+            </Link>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
             <h4 className="text-slate-900 dark:text-white font-bold text-sm sm:text-base mb-3 sm:mb-4">Important Information</h4>
             <ul className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
               <li className="flex items-start">
-                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
                 Withdrawals are processed within 24 hours.
               </li>
               <li className="flex items-start">
-                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
                 Minimum withdrawal amount is $10.00.
               </li>
               <li className="flex items-start">
-                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
                 Ensure your wallet address is correct. We are not responsible for funds sent to wrong addresses.
               </li>
               <li className="flex items-start">
-                <span className="w-1.5 h-1.5 bg-gold-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-1.5 mr-2 shrink-0"></span>
                 A 2% fee applies to bank transfers. Crypto withdrawals are free.
               </li>
             </ul>

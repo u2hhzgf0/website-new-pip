@@ -56,7 +56,7 @@ const SupportTicket = () => {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={48} />
+          <Loader2 className="animate-spin text-emerald-500 mx-auto mb-4" size={48} />
           <p className="text-slate-500 dark:text-slate-400">Loading...</p>
         </div>
       </div>
@@ -73,7 +73,7 @@ const SupportTicket = () => {
 
         {/* Balance Display for Context */}
         <div className="flex items-center space-x-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-lg">
-          <div className="bg-gold-500/10 p-2 rounded-full text-gold-500">
+          <div className="bg-emerald-500/10 p-2 rounded-full text-emerald-500">
             <Wallet size={18} />
           </div>
           <div>
@@ -86,9 +86,9 @@ const SupportTicket = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         {/* Left Column: Ticket Form */}
         <div className="lg:col-span-2">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-8 relative overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl sm:rounded-2xl p-4 sm:p-8 relative overflow-hidden card-lift">
              {/* Fee Badge */}
-            <div className="absolute top-0 right-0 bg-gold-500 text-slate-950 text-xs font-bold px-4 py-1.5 rounded-bl-xl z-10">
+            <div className="absolute top-0 right-0 bg-emerald-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl z-10">
               Fee: ${TICKET_COST.toFixed(2)} / Ticket
             </div>
 
@@ -122,7 +122,7 @@ const SupportTicket = () => {
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors"
                 >
                   <option value="deposit">Deposit Issues</option>
                   <option value="withdrawal">Withdrawal Issues</option>
@@ -148,7 +148,7 @@ const SupportTicket = () => {
                       onClick={() => setPriority(level.value)}
                       className={`py-2 rounded-lg text-sm font-medium border transition-all ${
                         priority === level.value
-                          ? 'bg-gold-500 text-slate-950 border-gold-500'
+                          ? 'bg-emerald-500 text-white border-emerald-500'
                           : 'bg-slate-50 dark:bg-slate-950 text-slate-500 dark:text-slate-400 border-slate-300 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                       }`}
                     >
@@ -166,19 +166,19 @@ const SupportTicket = () => {
                   onChange={(e) => setSubject(e.target.value)}
                   required
                   placeholder="Brief summary of your issue"
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600"
                 />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">Message Description</label>
-                <textarea 
+                <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   required
                   rows={6}
                   placeholder="Please describe your issue in detail..."
-                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-gold-500 focus:ring-1 focus:ring-gold-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600 resize-none"
+                  className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-lg px-4 py-3 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors placeholder-slate-400 dark:placeholder-slate-600 resize-none"
                 ></textarea>
               </div>
 
@@ -190,7 +190,7 @@ const SupportTicket = () => {
                 <button 
                   type="submit" 
                   disabled={isSubmitting}
-                  className={`w-full md:w-auto px-8 py-3.5 bg-gradient-to-r from-gold-500 to-amber-600 text-slate-950 rounded-lg font-bold shadow-lg shadow-gold-500/20 transform hover:-translate-y-1 transition-all flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  className={`w-full md:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-700 text-white rounded-lg font-bold shadow-lg shadow-emerald-500/20 transform hover:-translate-y-1 transition-all flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
                   {isSubmitting ? 'Processing...' : `Open Ticket ($${TICKET_COST.toFixed(2)})`}
                   {!isSubmitting && <Send size={18} className="ml-2" />}
@@ -202,9 +202,9 @@ const SupportTicket = () => {
 
         {/* Right Column: Info & FAQs */}
         <div className="lg:col-span-1 space-y-4 sm:space-y-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
             <div className="flex items-center space-x-2 text-slate-900 dark:text-white font-bold mb-4">
-               <HelpCircle size={20} className="text-gold-500" />
+               <HelpCircle size={20} className="text-emerald-500" />
                <h3>Quick Help</h3>
             </div>
             <div className="space-y-4">
@@ -225,7 +225,7 @@ const SupportTicket = () => {
             </div>
           </div>
 
-          <div className="bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-900/50 dark:to-slate-900 border border-indigo-200 dark:border-indigo-500/20 rounded-xl p-4 sm:p-6 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-900/50 dark:to-slate-900 border border-indigo-200 dark:border-indigo-500/20 rounded-xl p-4 sm:p-6 relative overflow-hidden tilt-card-flat">
              <div className="relative z-10">
                <h4 className="text-slate-900 dark:text-white font-bold mb-2">Live Chat</h4>
                <p className="text-sm text-indigo-700 dark:text-indigo-200 mb-4">Need urgent help? Connect with an agent instantly.</p>

@@ -42,6 +42,7 @@ const Footer = () => {
             <h4 className="text-slate-900 dark:text-white font-bold text-sm sm:text-base mb-4 sm:mb-6">Company</h4>
             <ul className="space-y-3 text-slate-500 dark:text-slate-400 text-sm">
               <li><Link href="/about" className="hover:text-brand-500 transition-colors">About Us</Link></li>
+              <li><Link href="/investing-info" className="hover:text-brand-500 transition-colors">Investing Info</Link></li>
               <li><a href="/#about" className="hover:text-brand-500 transition-colors">Why Pipguardian</a></li>
               <li><a href="/#" className="hover:text-brand-500 transition-colors">Referral Program</a></li>
             </ul>

@@ -23,7 +23,7 @@ export default function TransactionDetail() {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
-          <Loader2 className="animate-spin text-gold-500 mx-auto mb-4" size={32} />
+          <Loader2 className="animate-spin text-emerald-500 mx-auto mb-4" size={32} />
           <p className="text-slate-500 dark:text-slate-400">Loading transaction details...</p>
         </div>
       </div>
@@ -84,7 +84,7 @@ export default function TransactionDetail() {
       deposit: 'text-emerald-500 bg-emerald-500/10',
       withdraw: 'text-rose-500 bg-rose-500/10',
       investment: 'text-blue-500 bg-blue-500/10',
-      profit: 'text-gold-500 bg-gold-500/10',
+      profit: 'text-emerald-500 bg-emerald-500/10',
       referral: 'text-amber-500 bg-amber-500/10',
       bonus: 'text-purple-500 bg-purple-500/10',
     }
@@ -113,7 +113,7 @@ export default function TransactionDetail() {
       </div>
 
       {/* Status Banner */}
-      <div className={`rounded-xl p-4 sm:p-6 border ${
+      <div className={`rounded-xl p-4 sm:p-6 border card-lift ${
         transaction.status === 'completed'
           ? 'bg-emerald-500/5 border-emerald-500/30'
           : transaction.status === 'rejected'
@@ -147,16 +147,16 @@ export default function TransactionDetail() {
 
       {/* Transaction Overview */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Amount</p>
-            <DollarSign className="text-gold-500" size={20} />
+            <DollarSign className="text-emerald-500" size={20} />
           </div>
           <p className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">${transaction.amount.toFixed(2)}</p>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2 capitalize">{transaction.type} amount</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Fee</p>
             <CreditCard className="text-blue-500" size={20} />
@@ -165,7 +165,7 @@ export default function TransactionDetail() {
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-2">Transaction fee</p>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 tilt-card-flat">
           <div className="flex items-center justify-between mb-2">
             <p className="text-slate-500 dark:text-slate-400 text-sm">Net Amount</p>
             <CheckCircle className="text-emerald-500" size={20} />
@@ -177,7 +177,7 @@ export default function TransactionDetail() {
 
       {/* Transaction Information */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Transaction Information</h3>
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-3 bg-slate-100/30 dark:bg-slate-800/30 rounded-lg">
@@ -238,7 +238,7 @@ export default function TransactionDetail() {
           </div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Timeline</h3>
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-3 bg-slate-100/30 dark:bg-slate-800/30 rounded-lg">
@@ -284,7 +284,7 @@ export default function TransactionDetail() {
                   <p className="text-slate-500 dark:text-slate-400 text-xs mb-1">Payment Proof</p>
                   <button
                     onClick={() => setShowProofImage(true)}
-                    className="text-gold-500 hover:text-gold-400 text-sm font-medium flex items-center gap-1"
+                    className="text-emerald-500 hover:text-emerald-400 text-sm font-medium flex items-center gap-1"
                   >
                     View Screenshot
                     <Eye size={14} />
@@ -298,7 +298,7 @@ export default function TransactionDetail() {
 
       {/* Admin Notes */}
       {transaction.adminNotes && (
-        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6">
+        <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl p-4 sm:p-6 card-lift">
           <h3 className="text-slate-900 dark:text-white font-semibold text-lg mb-4">Admin Notes</h3>
           <div className="p-4 bg-blue-500/5 border border-blue-500/30 rounded-lg">
             <p className="text-slate-600 dark:text-slate-300 text-sm">{transaction.adminNotes}</p>
