@@ -607,11 +607,12 @@ export default function SettingsNew() {
               {/* Add/Edit Account Modal */}
               {showAddAccountModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm">
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
-                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4">
-                      {editingAccount ? 'Edit Account' : 'Add Withdrawal Account'}
-                    </h3>
-                    <form onSubmit={handleSaveAccount} className="space-y-4">
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
+                    <form onSubmit={handleSaveAccount} className="flex flex-col min-h-0 flex-1">
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white px-6 pt-6 pb-4 shrink-0">
+                        {editingAccount ? 'Edit Account' : 'Add Withdrawal Account'}
+                      </h3>
+                      <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-6 space-y-4">
                       {/* Account Type (only for new) */}
                       {!editingAccount && (
                         <div>
@@ -752,7 +753,7 @@ export default function SettingsNew() {
                       )}
 
                       {/* Default checkbox */}
-                      <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 cursor-pointer">
+                      <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 cursor-pointer pb-6">
                         <input
                           type="checkbox"
                           checked={accountForm.isDefault}
@@ -761,9 +762,10 @@ export default function SettingsNew() {
                         />
                         Set as default withdrawal account
                       </label>
+                      </div>
 
                       {/* Buttons */}
-                      <div className="flex gap-3 pt-2">
+                      <div className="flex gap-3 p-6 pt-4 shrink-0 border-t border-slate-200 dark:border-slate-800">
                         <button
                           type="button"
                           onClick={() => { setShowAddAccountModal(false); resetAccountForm(); }}

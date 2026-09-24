@@ -79,7 +79,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
   // Initialize expanded state based on current path to keep menus open
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
-    'Wallet': pathname.includes('/deposit') || pathname.includes('/wallet'),
+    'Pip Wallet': pathname.includes('/deposit') || pathname.includes('/wallet'),
     'Withdraw': pathname.includes('/withdraw'),
     'Plans': pathname.includes('/plans'),
     'Referral': pathname.includes('/referrals'),
@@ -138,7 +138,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       items: [
         { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
         { label: 'Investing Info', icon: BookOpen, path: '/investing-info' },
-        { label: 'Smart Member', icon: CreditCard, path: '/dashboard/smart-member' },
+        { label: 'Pip Cards', icon: CreditCard, path: '/dashboard/smart-member' },
         { label: 'Scan QR', icon: QrCode, path: '/dashboard/scan-qr' },
         { label: 'Shop', icon: ShoppingBag, path: '/dashboard/shop' },
         { label: 'Become a Vendor', icon: Store, path: '/dashboard/become-vendor' },
@@ -148,7 +148,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       section: 'Financial',
       items: [
         {
-          label: 'Wallet',
+          label: 'Pip Wallet',
           icon: ArrowDownLeft,
           subItems: [
             { label: 'Overview', path: '/dashboard/wallet' },
@@ -241,7 +241,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
       {/* Sidebar Overlay for Mobile */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-20 lg:hidden backdrop-blur-sm"
+          className="fixed inset-0 bg-black/50 z-[45] lg:hidden backdrop-blur-sm"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}
@@ -293,7 +293,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
 
       {/* Sidebar */}
       <aside className={`
-        fixed lg:static inset-y-0 left-0 z-30 w-64 bg-[#F7F7FC] dark:bg-slate-900 transform transition-transform duration-300 ease-in-out
+        fixed lg:static inset-y-0 left-0 z-[46] w-64 bg-[#F7F7FC] dark:bg-slate-900 transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         <div className="h-full flex flex-col">
