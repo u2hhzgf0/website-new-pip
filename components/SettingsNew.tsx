@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
 import { setUser } from '../store/slices/authSlice';
@@ -604,8 +605,10 @@ export default function SettingsNew() {
                 </div>
               )}
 
-              {/* Add/Edit Account Modal */}
-              {showAddAccountModal && (
+              {/* Add/Edit Account Modal — portaled to <body> so it isn't boxed in by the
+                  page-transition wrapper's transform (which would turn `fixed` into
+                  "fixed to that box" instead of the real viewport) */}
+              {showAddAccountModal && createPortal(
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm">
                   <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
                     <form onSubmit={handleSaveAccount} className="flex flex-col min-h-0 flex-1">
@@ -784,7 +787,8 @@ export default function SettingsNew() {
                       </div>
                     </form>
                   </div>
-                </div>
+                </div>,
+                document.body
               )}
             </div>
           )}
