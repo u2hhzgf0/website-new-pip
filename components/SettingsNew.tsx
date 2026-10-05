@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../store/store';
@@ -13,7 +13,8 @@ import {
 } from '../store/api/userApi';
 import { useChangePasswordMutation, useDeleteAccountMutation } from '../store/api/authApi';
 import { Toast, ToastType } from './Toast';
-import { Save, Lock, User, Upload, Trash2, Loader2, AlertTriangle, Wallet, Plus, Edit3, Star, CreditCard, Palette, Sun, Moon } from 'lucide-react';
+import { Save, Lock, User, Upload, Trash2, Loader2, AlertTriangle, Wallet, Plus, Edit3, Star, CreditCard, Palette, Sun, Moon, ShieldCheck } from 'lucide-react';
+import KycVerification from './KycVerification';
 import { useGetMyRankQuery } from '../store/api/rankApi';
 import { ProfileAvatar } from './ProfileAvatar';
 import { useTheme } from './ThemeProvider';
@@ -31,7 +32,25 @@ export default function SettingsNew() {
   const user = useSelector((state: RootState) => state.auth.user);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'wallets' | 'appearance' | 'account'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'kyc' | 'wallets' | 'appearance' | 'account'>('profile');
+
+  // Keep the active tab visible in the scrollable tab bar on small screens
+  const tabsRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const container = tabsRef.current;
+    const tab = container?.querySelector<HTMLElement>(`[data-tab="${activeTab}"]`);
+    if (!container || !tab) return;
+    const left = tab.offsetLeft - (container.clientWidth - tab.offsetWidth) / 2;
+    container.scrollTo({ left: Math.max(0, left), behavior: 'smooth' });
+  }, [activeTab]);
+
+  // Allow deep links such as /dashboard/settings?tab=kyc (used by the withdraw page)
+  useEffect(() => {
+    const tab = new URLSearchParams(window.location.search).get('tab');
+    if (tab && ['profile', 'security', 'kyc', 'wallets', 'appearance', 'account'].includes(tab)) {
+      setActiveTab(tab as typeof activeTab);
+    }
+  }, []);
   const { theme, setTheme } = useTheme();
   const [toast, setToast] = useState<{ message: string; type: ToastType } | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -352,24 +371,30 @@ export default function SettingsNew() {
 
       <div className="bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden card-lift">
         {/* Tabs */}
-        <div className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
+        {/* Scrolls sideways on small screens; tabs share the full width from md up */}
+        <div
+          ref={tabsRef}
+          className="flex border-b border-slate-200 dark:border-slate-800 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {[
             { key: 'profile', label: 'Profile', icon: User },
             { key: 'security', label: 'Security', icon: Lock },
+            { key: 'kyc', label: 'KYC', icon: ShieldCheck },
             { key: 'wallets', label: 'Wallets', icon: Wallet },
             { key: 'appearance', label: 'Appearance', icon: Palette },
             { key: 'account', label: 'Account', icon: AlertTriangle },
           ].map((tab) => (
             <button
               key={tab.key}
+              data-tab={tab.key}
               onClick={() => setActiveTab(tab.key as any)}
-              className={`flex-1 min-w-0 py-3 sm:py-4 text-xs sm:text-sm font-medium flex items-center justify-center gap-1 sm:gap-2 border-b-2 transition-colors whitespace-nowrap ${
+              className={`flex-shrink-0 md:flex-1 px-4 md:px-2 py-3 sm:py-4 text-sm font-medium flex items-center justify-center gap-2 border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.key
                   ? 'border-emerald-500 text-slate-900 dark:text-white'
                   : 'border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              <tab.icon size={16} /> <span className="hidden sm:inline">{tab.label}</span><span className="sm:hidden">{tab.label}</span>
+              <tab.icon size={16} className="flex-shrink-0" /> <span>{tab.label}</span>
             </button>
           ))}
         </div>
@@ -521,6 +546,9 @@ export default function SettingsNew() {
               </button>
             </form>
           )}
+
+          {/* KYC Tab */}
+          {activeTab === 'kyc' && <KycVerification />}
 
           {/* Wallets & Bank Tab */}
           {activeTab === 'wallets' && (

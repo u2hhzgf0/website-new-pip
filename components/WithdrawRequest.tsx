@@ -1,15 +1,16 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import type { RootState } from '@/store/store';
-import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark, X, TrendingUp, Clock, Landmark, Check } from 'lucide-react';
+import { Wallet, AlertCircle, ArrowUpRight, CheckCircle, Loader2, Star, Bookmark, X, TrendingUp, Clock, Landmark, Check, ShieldCheck } from 'lucide-react';
 import { useGetActiveGatewaysQuery } from '@/store/api/paymentGatewayApi';
 import { useGetWalletQuery } from '@/store/api/walletApi';
 import { useCreateWithdrawalMutation, useGetMyTransactionsQuery } from '@/store/api/transactionApi';
 import { useGetSavedAccountsQuery } from '@/store/api/savedAccountApi';
 import type { SavedAccount } from '@/store/api/savedAccountApi';
+import { useGetMyKycQuery } from '@/store/api/kycApi';
 
 const timeAgo = (dateString: string) => {
   const diffMs = Date.now() - new Date(dateString).getTime();
@@ -63,6 +64,16 @@ const WithdrawRequest = () => {
 
   const openInvestFirstModal = () => setShowInvestFirstModal(true);
 
+  // Withdrawals require a verified KYC; show the popup as soon as the page opens if it isn't
+  const { data: kycResponse, isLoading: kycLoading } = useGetMyKycQuery();
+  const kycStatus: string | undefined = kycResponse?.data?.attributes?.status;
+  const isKycVerified = kycStatus === 'verified';
+  const [showKycModal, setShowKycModal] = useState(false);
+
+  useEffect(() => {
+    if (kycStatus && kycStatus !== 'verified') setShowKycModal(true);
+  }, [kycStatus]);
+
   // Fetch active gateways for withdrawal
   const { data: gatewaysResponse, isLoading: gatewaysLoading } = useGetActiveGatewaysQuery({ purpose: 'withdraw' });
   const gateways = gatewaysResponse?.data?.attributes || [];
@@ -110,6 +121,11 @@ const WithdrawRequest = () => {
     e.preventDefault();
     setError('');
     setSuccess(false);
+
+    if (!isKycVerified) {
+      setShowKycModal(true);
+      return;
+    }
 
     if (!canRequestWithdrawal) {
       openInvestFirstModal();
@@ -189,7 +205,7 @@ const WithdrawRequest = () => {
     }
   };
 
-  if (walletLoading || gatewaysLoading) {
+  if (walletLoading || gatewaysLoading || kycLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
@@ -202,6 +218,52 @@ const WithdrawRequest = () => {
 
   return (
     <div className="space-y-6 relative">
+      {showKycModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm">
+          <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
+            <button
+              type="button"
+              onClick={() => setShowKycModal(false)}
+              className="absolute top-4 right-4 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+              aria-label="Close"
+            >
+              <X size={20} />
+            </button>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-emerald-500/15 p-3 rounded-xl text-emerald-500">
+                <ShieldCheck size={24} />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white pr-8">
+                {kycStatus === 'submitted' ? 'KYC under review' : 'Verify your KYC first'}
+              </h3>
+            </div>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed mb-6">
+              {kycStatus === 'submitted'
+                ? 'Your KYC documents are being reviewed. You can request a withdrawal once your identity is verified.'
+                : kycStatus === 'rejected'
+                ? 'Your KYC verification was not approved. Please resubmit your documents to enable withdrawals.'
+                : 'For your security, you need to complete KYC verification before you can request a withdrawal.'}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/dashboard/settings?tab=kyc"
+                onClick={() => setShowKycModal(false)}
+                className="flex-1 text-center py-3 rounded-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold text-sm hover:opacity-95 transition-opacity"
+              >
+                {kycStatus === 'submitted' ? 'View KYC status' : kycStatus === 'rejected' ? 'Resubmit KYC' : 'Verify KYC'}
+              </Link>
+              <button
+                type="button"
+                onClick={() => setShowKycModal(false)}
+                className="flex-1 py-3 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-300 font-medium text-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {showInvestFirstModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 dark:bg-slate-950/80 backdrop-blur-sm">
           <div className="bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-2xl p-6 max-w-md w-full shadow-2xl relative">
@@ -274,6 +336,23 @@ const WithdrawRequest = () => {
                 <p className="text-xs sm:text-base font-bold text-slate-900 dark:text-white truncate">${pendingWithdrawals.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
               </div>
             </div>
+
+            {!isKycVerified && (
+              <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4 mb-6 flex items-start gap-3">
+                <ShieldCheck className="text-emerald-500 flex-shrink-0 mt-0.5" size={20} />
+                <div>
+                  <p className="text-slate-900 dark:text-white font-medium text-sm">KYC verification required</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-xs mt-1">
+                    {kycStatus === 'submitted'
+                      ? 'Your documents are under review. Withdrawals unlock once your KYC is approved. '
+                      : 'You must verify your identity before you can request a withdrawal. '}
+                    <Link href="/dashboard/settings?tab=kyc" className="text-emerald-500 font-semibold underline hover:text-emerald-400">
+                      {kycStatus === 'submitted' ? 'View status' : 'Verify now'}
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            )}
 
             {!canRequestWithdrawal && (
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-6 flex items-start gap-3">

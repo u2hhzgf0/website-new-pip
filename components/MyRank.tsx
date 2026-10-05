@@ -4,6 +4,7 @@ import React from 'react';
 import { Star, Loader2 } from 'lucide-react';
 import { useGetMyRankQuery, useCheckAndUpgradeRankMutation, useGetRankDefinitionsQuery } from '../store/api/rankApi';
 import { RankJourney } from './RankJourney';
+import { ReferralRankBalances } from './ReferralRankBalances';
 import { Toast, ToastType } from './Toast';
 import { useState } from 'react';
 
@@ -178,6 +179,9 @@ export default function MyRank() {
           </p>
         )}
       </div>
+
+      {/* Direct referrals' wallet balance, grouped by rank */}
+      <ReferralRankBalances imageBase={IMAGE_BASE} />
 
       {/* Rank Journey */}
       {rankDefinitions.length > 0 && (

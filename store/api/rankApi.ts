@@ -59,11 +59,31 @@ export interface UserRankInfo {
   lastCheckedAt: string | null;
 }
 
+export interface ReferralRankBalance {
+  level: number;
+  name: string;
+  badgeImage: string;
+  referralCount: number;
+  totalBalance: number;
+}
+
+export interface ReferralBalancesByRank {
+  ranks: ReferralRankBalance[];
+  totalReferrals: number;
+  totalBalance: number;
+}
+
 export const rankApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getMyRank: builder.query<{ data: { attributes: UserRankInfo } }, void>({
       query: () => '/ranks/my',
       providesTags: ['Ranks'],
+    }),
+
+    // Total wallet balance of my direct referrals, grouped by their rank (first 3 ranks)
+    getMyReferralBalancesByRank: builder.query<{ data: { attributes: ReferralBalancesByRank } }, void>({
+      query: () => '/ranks/my/referral-balances',
+      providesTags: ['Ranks', 'Referrals'],
     }),
 
     checkAndUpgradeRank: builder.mutation<{ data: { attributes: { upgraded: boolean; oldRank: number; newRank: number } } }, void>({
@@ -88,6 +108,7 @@ export const rankApi = baseApi.injectEndpoints({
 
 export const {
   useGetMyRankQuery,
+  useGetMyReferralBalancesByRankQuery,
   useCheckAndUpgradeRankMutation,
   useGetRankDefinitionsQuery,
   useCheckEligibilityQuery,

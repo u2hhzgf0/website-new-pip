@@ -92,6 +92,7 @@ export const baseApi = createApi({
     'Vendor',
     'WalletPin',
     'MemberCard',
+    'Kyc',
   ],
   endpoints: () => ({}),
 });
